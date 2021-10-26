@@ -26,6 +26,21 @@ class mqtt2 extends eqLogic {
    /*     * ***********************Methode static*************************** */
 
    public static function installMosquitto() {
+      $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
+      $compose = str_replace('#path#', __DIR__ . '/../../resources', $compose);
+      $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
+      if (!is_object($docker)) {
+         $docker = new docker2();
+      }
+      $docker->setName('mqtt2_mosquitto');
+      $docker->setIsEnable(1);
+      $docker->setEqType_name('docker2');
+      $docker->setConfiguration('name', 'mqtt2_mosquitto');
+      $docker->setConfiguration('docker_number', 1);
+      $docker->setConfiguration('create::mode', 'jeedom_compose');
+      $docker->setConfiguration('create::compose', $compose);
+      $docker->setIsEnable(1);
+      $docker->save();
    }
 
 

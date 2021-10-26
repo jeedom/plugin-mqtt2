@@ -1,0 +1,17 @@
+services:
+  app:
+    container_name: mqtt2_mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - #path#/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-logs:/mosquitto/log
+volumes:
+  mosquitto-data:
+  mosquitto-logs:
