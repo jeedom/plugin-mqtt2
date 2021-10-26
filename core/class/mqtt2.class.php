@@ -25,6 +25,9 @@ class mqtt2 extends eqLogic {
 
    /*     * ***********************Methode static*************************** */
 
+   public static function installMosquitto() {
+   }
+
 
    /*     * *********************Méthodes d'instance************************* */
 

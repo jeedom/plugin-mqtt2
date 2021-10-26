@@ -33,11 +33,51 @@ if (!isConnect()) {
         </select>
       </div>
     </div>
-    <div class="form-group mode distant">
+    <div class="form-group mqtt2Mode remote">
       <label class="col-md-4 control-label">{{IP}}</label>
       <div class="col-md-4">
         <input class="configKey form-control" data-l1key="remote::ip" />
       </div>
     </div>
+    <div class="form-group mqtt2Mode local">
+      <label class="col-md-4 control-label">{{Installer}}</label>
+      <div class="col-md-4">
+        <a class="btn btn-warning" id="bt_mqtt2InstallMosquitto">{{Installer mosquitto}}</a>
+      </div>
+    </div>
   </fieldset>
 </form>
+<script>
+  $('.configKey[data-l1key=mode]').off('change').on('change', function() {
+    $('.mqtt2Mode').hide();
+    $('.mqtt2Mode.' + $(this).value()).show();
+  });
+
+  $('#bt_mqtt2InstallMosquitto').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "installMosquitto"
+      },
+      dataType: 'json',
+      error: function(request, status, error) {
+        handleAjaxError(request, status, error);
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $('#div_alert').showAlert({
+            message: data.result,
+            level: 'danger'
+          });
+          return;
+        } else {
+          $('#div_alert').showAlert({
+            message: '{{Installation lancée}}',
+            level: 'success'
+          });
+        }
+      }
+    });
+  });
+</script>
