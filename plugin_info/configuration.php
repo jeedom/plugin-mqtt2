@@ -25,31 +25,18 @@ if (!isConnect()) {
 <form class="form-horizontal">
   <fieldset>
     <div class="form-group">
-      <label class="col-md-4 control-label">{{Global param 1}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Renseignez le paramètre 1 du plugin}}"></i></sup>
-      </label>
+      <label class="col-md-4 control-label">{{Mode}}</label>
       <div class="col-md-4">
-        <input class="configKey form-control" data-l1key="param1"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-md-4 control-label">{{Global param 2}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Renseignez le paramètre 2 du plugin}}"></i></sup>
-      </label>
-      <div class="col-md-4">
-        <input class="configKey form-control" data-l1key="param2"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-md-4 control-label">{{Global param 3}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionnez du paramètre 3 du plugin}}"></i></sup>
-      </label>
-      <div class="col-md-4">
-        <select class="configKey form-control" data-l1key="param3">
-          <option value=""></option>
-          <option value="value1">value1</option>
-          <option value="value2">value2</option>
+        <select class="configKey form-control" data-l1key="mode">
+          <option value="remote">{{Brocker distant}}</option>
+          <option value="local">{{Brocker local}}</option>
         </select>
+      </div>
+    </div>
+    <div class="form-group mode distant">
+      <label class="col-md-4 control-label">{{IP}}</label>
+      <div class="col-md-4">
+        <input class="configKey form-control" data-l1key="remote::ip" />
       </div>
     </div>
   </fieldset>

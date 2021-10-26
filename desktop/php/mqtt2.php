@@ -3,7 +3,7 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 // Déclaration des variables obligatoires
-$plugin = plugin::byId('template');
+$plugin = plugin::byId('mqtt2');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 ?>
@@ -11,7 +11,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 <div class="row row-overflow">
 	<!-- Page d'accueil du plugin -->
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
+		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<!-- Boutons de gestion du plugin -->
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoPrimary" data-action="add">
@@ -42,7 +42,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			echo '<div class="eqLogicThumbnailContainer">';
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
 				echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
@@ -60,7 +60,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<span class="input-group-btn">
 				<!-- Les balises <a></a> sont volontairement fermées à la ligne suivante pour éviter les espaces entre les boutons. Ne pas modifier -->
 				<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i><span class="hidden-xs"> {{Configuration avancée}}</span>
-				</a><a class="btn btn-sm btn-default eqLogicAction" data-action="copy"><i class="fas fa-copy"></i><span class="hidden-xs">  {{Dupliquer}}</span>
+				</a><a class="btn btn-sm btn-default eqLogicAction" data-action="copy"><i class="fas fa-copy"></i><span class="hidden-xs"> {{Dupliquer}}</span>
 				</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 				</a><a class="btn btn-sm btn-danger eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}
 				</a>
@@ -84,12 +84,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement}}</label>
 								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;"/>
-									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement}}"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement}}" />
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label" >{{Objet parent}}</label>
+								<label class="col-sm-3 control-label">{{Objet parent}}</label>
 								<div class="col-sm-7">
 									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
 										<option value="">{{Aucun}}</option>
@@ -118,8 +118,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Options}}</label>
 								<div class="col-sm-7">
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked />{{Activer}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked />{{Visible}}</label>
 								</div>
 							</div>
 
@@ -129,7 +129,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<sup><i class="fas fa-question-circle tooltips" title="{{Renseignez le paramètre n°1 de l'équipement}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="param1" placeholder="{{Paramètre n°1}}"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="param1" placeholder="{{Paramètre n°1}}" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -137,7 +137,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<sup><i class="fas fa-question-circle tooltips" title="{{Renseignez le mot de passe}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control inputPassword" data-l1key="configuration" data-l2key="password"/>
+									<input type="text" class="eqLogicAttr form-control inputPassword" data-l1key="configuration" data-l2key="password" />
 								</div>
 							</div>
 							<!-- Champ de saisie du cron d'auto-actualisation + assistant cron -->
@@ -148,7 +148,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</label>
 								<div class="col-sm-7">
 									<div class="input-group">
-										<input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="autorefresh" placeholder="{{Cliquer sur ? pour afficher l'assistant cron}}"/>
+										<input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="autorefresh" placeholder="{{Cliquer sur ? pour afficher l'assistant cron}}" />
 										<span class="input-group-btn">
 											<a class="btn btn-default cursor jeeHelper roundedRight" data-helper="cron" title="Assistant cron">
 												<i class="fas fa-question-circle"></i>
@@ -165,7 +165,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<legend><i class="fas fa-info"></i> {{Informations}}</legend>
 							<div class="form-group">
 								<div class="text-center">
-									<img name="icon_visu" src="<?= $plugin->getPathImgIcon(); ?>" style="max-width:160px;"/>
+									<img name="icon_visu" src="<?= $plugin->getPathImgIcon(); ?>" style="max-width:160px;" />
 								</div>
 							</div>
 						</div>
@@ -177,7 +177,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<!-- Onglet des commandes de l'équipement -->
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<a class="btn btn-default btn-sm pull-right cmdAction" data-action="add" style="margin-top:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une commande}}</a>
-				<br/><br/>
+				<br /><br />
 				<div class="table-responsive">
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
@@ -201,6 +201,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 </div><!-- /.row row-overflow -->
 
 <!-- Inclusion du fichier javascript du plugin (dossier, nom_du_fichier, extension_du_fichier, id_du_plugin) -->
-<?php include_file('desktop', 'template', 'js', 'template');?>
+<?php include_file('desktop', 'mqtt2', 'js', 'mqtt2'); ?>
 <!-- Inclusion du fichier javascript du core - NE PAS MODIFIER NI SUPPRIMER -->
-<?php include_file('core', 'plugin.template', 'js');?>
+<?php include_file('core', 'plugin.template', 'js'); ?>

@@ -19,18 +19,16 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-  function template_install() {
+  function mqtt2_install() {
 
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-  function template_update() {
+  function mqtt2_update() {
 
   }
 
 // Fonction exécutée automatiquement après la suppression du plugin
-  function template_remove() {
+  function mqtt2_remove() {
 
   }
-
-?>
