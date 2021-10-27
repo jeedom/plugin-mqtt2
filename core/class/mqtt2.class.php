@@ -109,7 +109,11 @@ class mqtt2 extends eqLogic {
       $cmd = 'sudo /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
       $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
-      $cmd .= ' --mqtt_server mqtt://127.0.0.1:1883';
+      if (config::byKey('mode', 'mqtt2') == 'local') {
+         $cmd .= ' --mqtt_server mqtt://127.0.0.1:1883';
+      } else {
+         $cmd .= ' --mqtt_server ' . config::byKey('remote::ip', 'mqtt2');
+      }
       $cmd .= ' --username ' . $authentifications[0];
       $cmd .= ' --password ' . $authentifications[1];
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
