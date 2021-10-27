@@ -65,6 +65,7 @@ class mqtt2 extends eqLogic {
       if (!is_object($docker)) {
          $docker = new docker2();
       }
+      $docker->setLogicalId('1::mqtt2_mosquitto');
       $docker->setName('mqtt2_mosquitto');
       $docker->setIsEnable(1);
       $docker->setEqType_name('docker2');
