@@ -48,8 +48,18 @@ class mqtt2 extends eqLogic {
       config::save('ssl::ca', trim(file_get_contents($path . '/mosq-ca.crt')), 'mqtt2');
    }
 
+   public static function setPassword() {
+      $path = __DIR__ . '/../../data/passwords';
+      if (config::byKey('mqtt::password', 'mqtt2') == '') {
+         config::save('mqtt::password', "jeedom:" . config::genKey(), 'mqtt2');
+      }
+      file_put_contents($path, config::byKey('mqtt::password', 'mqtt2'));
+      shell_exec('mosquitto_passwd -U ' . $path);
+   }
+
    public static function installMosquitto() {
       self::generateCertificates();
+      self::setPassword();
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
@@ -96,9 +106,13 @@ class mqtt2 extends eqLogic {
       }
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
+      $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', 'mqtt2'))[0]);
       $cmd = 'sudo /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
       $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
+      $cmd .= ' --mqtt_server mqtts://127.0.0.1:1883';
+      $cmd .= ' --username ' . $authentifications[0];
+      $cmd .= ' --password ' . $authentifications[1];
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey('mqtt2');
       $cmd .= ' --cycle ' . config::byKey('cycle', 'mqtt2');

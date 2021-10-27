@@ -25,7 +25,10 @@ Jeedom.log.setLevel(args.loglevel)
 Jeedom.log.info('Start dysond')
 Jeedom.log.info('Log level on  : '+args.loglevel)
 Jeedom.log.info('Socket port : '+args.socketport)
-Jeedom.log.info('CA file : '+args.ca_file)
+Jeedom.log.info('CA file : '+args.mqtt_ca)
+Jeedom.log.info('MQTT : '+args.mqtt_server)
+Jeedom.log.info('Username : '+args.username)
+Jeedom.log.info('Password : '+args.password)
 Jeedom.log.info('PID file : '+args.pid)
 Jeedom.log.info('Apikey : '+args.apikey)
 Jeedom.log.info('Callback : '+args.callback)
@@ -34,5 +37,24 @@ Jeedom.log.info('Cycle : '+args.cycle)
 Jeedom.write_pid(args.pid)
 Jeedom.com.config(args.apikey,args.callback,args.cycle)
 Jeedom.com.test();
+
+var mqtt = require('mqtt')
+var client  = mqtt.connect(args.mqtt_server,{
+  clientId:"mqtt-jeedom",
+  rejectUnauthorized: false,
+  username: args.username,
+  password: args.password
+})
+
+Jeedom.log.info('Connect to mqtt server')
+
+client.on('error', function (error) {
+  Jeedom.log.error('Error on connection to mqtt server : '+error)
+});
+
+client.on('connect', function () {
+  Jeedom.log.info('Connection to mqtt server successfull')
+})
+
 
 Jeedom.http.config(args.socketport,args.apikey)

@@ -51,6 +51,12 @@ if (!isConnect()) {
         <textarea class="configKey form-control" rows="22" data-l1key="ssl::ca"></textarea>
       </div>
     </div>
+    <div class="form-group mqtt2Mode local">
+      <label class="col-md-4 control-label">{{Authentification}}</label>
+      <div class="col-md-5">
+        <textarea class="configKey form-control" data-l1key="mqtt::password"></textarea>
+      </div>
+    </div>
   </fieldset>
 </form>
 <script>
