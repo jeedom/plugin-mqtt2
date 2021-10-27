@@ -25,10 +25,33 @@ class mqtt2 extends eqLogic {
 
    /*     * ***********************Methode static*************************** */
 
+   public static function generateCertificates() {
+      $path = __DIR__ . '/../../data/ssl';
+      if (!file_exists($path)) {
+         mkdir($path);
+      }
+      if (!file_exists($path . '/mosq-ca.key')) {
+         shell_exec('openssl genrsa -out ' . $path . '/mosq-ca.key 2048');
+      }
+      if (!file_exists($path . '/mosq-ca.crt')) {
+         shell_exec('openssl req -new -x509 -days 3650 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=mosquitto_server" -key ' . $path . '/mosq-ca.key -out ' . $path . '/mosq-ca.crt');
+      }
+      if (!file_exists($path . '/mosq-serv.key')) {
+         shell_exec('openssl genrsa -out ' . $path . '/mosq-serv.key 2048');
+      }
+      if (!file_exists($path . '/mosq-serv.csr')) {
+         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=mosquitto_server" -key ' . $path . '/mosq-serv.key -out ' . $path . '/mosq-serv.csr');
+      }
+      if (!file_exists($path . '/mosq-serv.crt')) {
+         shell_exec('openssl x509 -req -in ' . $path . '/mosq-serv.csr -CA ' . $path . '/mosq-ca.crt -CAkey ' . $path . '/mosq-ca.key -CAcreateserial -out ' . $path . '/mosq-serv.crt -days 3650 -sha256');
+      }
+      config::save('ssl::ca', trim(file_get_contents($path . '/mosq-ca.crt')), 'mqtt2');
+   }
+
    public static function installMosquitto() {
+      self::generateCertificates();
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
-      touch(__DIR__ . '/../../../..//log/mqtt2_mosquittod');
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
       if (!is_object($docker)) {
          $docker = new docker2();

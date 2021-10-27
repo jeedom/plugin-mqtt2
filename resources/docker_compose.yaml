@@ -9,4 +9,4 @@ services:
       - #jeedom_path#/plugins/mqtt2/resources/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - #jeedom_path#/logs/mqtt2_mosquittod:/mosquitto/log/mosquitto.log
+      - #jeedom_path#/plugins/mqtt2/data/ssl:/mosquitto/ssl-jeedom/
