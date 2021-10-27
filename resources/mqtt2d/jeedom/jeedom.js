@@ -162,6 +162,7 @@ Jeedom.com.test = function(){
 Jeedom.http.config = function(_port,_apikey){
   Jeedom.http.apikey = _apikey;
   Jeedom.http.app = express();
+  Jeedom.http.app.use(express.json());
   Jeedom.http.app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Not found');
@@ -172,7 +173,7 @@ Jeedom.http.config = function(_port,_apikey){
 }
 
 Jeedom.http.checkApikey = function(_req){
-  return (_req.query.apikey == Jeedom.http.apikey)
+  return (_req.query.apikey === Jeedom.http.apikey)
 }
 
 /***************************EXPORTS*******************************/

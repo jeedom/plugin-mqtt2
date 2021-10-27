@@ -169,6 +169,21 @@ class mqtt2 extends eqLogic {
       log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
    }
 
+   public static function publish($_topic, $_message) {
+      $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', 'mqtt2') . '/publish?apikey=' . jeedom::getApiKey('mqtt2'));
+      $request_http->setHeader(array(
+         'Content-Type: application/json'
+      ));
+      if (is_array($_message) || is_object($_message)) {
+         $_message = json_encode($_message);
+      }
+      $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message)));
+      $result = json_decode($request_http->exec(30), true);
+      if ($result['state'] != 'ok') {
+         throw new Exception(json_encode($result));
+      }
+   }
+
 
    /*     * *********************Méthodes d'instance************************* */
 

@@ -72,3 +72,30 @@ client.on('message', function (topic, message) {
 
 
 Jeedom.http.config(args.socketport,args.apikey)
+
+Jeedom.http.app.post('/publish', function(req, res) {
+  try {
+    if(!Jeedom.http.checkApikey(req)){
+      res.setHeader('Content-Type', 'application/json');
+      res.send({state:"nok",result : 'Invalid apikey'});
+      return;
+    }
+    Jeedom.log.debug('Publish message on topic : '+req.body.topic+' => '+req.body.message);
+    client.publish(req.body.topic, req.body.message,function(err){
+      if(err){
+        Jeedom.log.debug('Error on message publish : '+error);
+        res.setHeader('Content-Type', 'application/json');
+        res.send({state:"nok",result : JSON.stringify(error)});
+        return;
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send({state:"ok"});
+      return;
+    });
+  } catch (error) {
+    Jeedom.log.debug('Error on message publish : '+error);
+    res.setHeader('Content-Type', 'application/json');
+    res.send({state:"nok",result : JSON.stringify(error)});
+  }
+});
+
