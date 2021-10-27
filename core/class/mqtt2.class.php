@@ -217,6 +217,23 @@ class mqtt2Cmd extends cmd {
 
 
    public function execute($_options = array()) {
+      if ($this->getType() != 'action') {
+         return;
+      }
+      $eqLogic = $this->getEqLogic();
+      $value = $this->getConfiguration('message');
+      switch ($this->getSubType()) {
+         case 'slider':
+            $value = str_replace('#slider#', $_options['slider'], $value);
+            break;
+         case 'color':
+            $value = str_replace('#color#', $_options['color'], $value);
+            break;
+         case 'select':
+            $value = str_replace('#select#', $_options['select'], $value);
+            break;
+      }
+      mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value);
    }
 
    /*     * **********************Getteur Setteur*************************** */
