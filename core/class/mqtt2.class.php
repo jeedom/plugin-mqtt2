@@ -75,8 +75,11 @@ class mqtt2 extends eqLogic {
       $docker->setConfiguration('create::compose', $compose);
       $docker->setIsEnable(1);
       $docker->save();
-      $docker->rm();
-      sleep(5);
+      try {
+         $docker->rm();
+         sleep(5);
+      } catch (\Throwable $th) {
+      }
       $docker->create();
       docker2::pull();
    }
