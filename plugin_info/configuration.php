@@ -53,7 +53,7 @@ if (!isConnect()) {
       </div>
     </div>
 -->
-    <div class="form-group mqtt2Mode local">
+    <div class="form-group">
       <label class="col-md-4 control-label">{{Authentification}}</label>
       <div class="col-md-5">
         <textarea class="configKey form-control" data-l1key="mqtt::password"></textarea>
