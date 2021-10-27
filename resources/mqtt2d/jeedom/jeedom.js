@@ -148,7 +148,7 @@ Jeedom.com.send_change_immediate = function(_changes){
   })
 }
 
-Jeedom.com.test = function(_changes){
+Jeedom.com.test = function(){
   request.post({url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey, json: {}}, function(error, response, body){
     if(response.statusCode != 200){
       Jeedom.log.error('Callback error.Please check your network configuration page : '+JSON.stringify(error));

@@ -71,6 +71,67 @@ class mqtt2 extends eqLogic {
       docker2::pull();
    }
 
+   public static function deamon_info() {
+      $return = array();
+      $return['log'] = 'mqtt2';
+      $return['state'] = 'nok';
+      $pid_file = jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
+      if (file_exists($pid_file)) {
+         if (@posix_getsid(trim(file_get_contents($pid_file)))) {
+            $return['state'] = 'ok';
+         } else {
+            shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+         }
+      }
+      $return['launchable'] = 'ok';
+      return $return;
+   }
+
+   public static function deamon_start() {
+      log::remove(__CLASS__ . '_update');
+      self::deamon_stop();
+      $deamon_info = self::deamon_info();
+      if ($deamon_info['launchable'] != 'ok') {
+         throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+      }
+      $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
+      chdir($mqtt2_path);
+      $cmd = 'sudo /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
+      $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
+      $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
+      $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
+      $cmd .= ' --apikey ' . jeedom::getApiKey('mqtt2');
+      $cmd .= ' --cycle ' . config::byKey('cycle', 'mqtt2');
+      $cmd .= ' --pid ' . jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
+      log::add('mqtt2', 'info', 'Lancement démon mqtt2 : ' . $cmd);
+      $result = exec($cmd . ' >> ' . log::getPathToLog('mqtt2') . ' 2>&1 &');
+      $i = 0;
+      while ($i < 30) {
+         $deamon_info = self::deamon_info();
+         if ($deamon_info['state'] == 'ok') {
+            break;
+         }
+         sleep(1);
+         $i++;
+      }
+      if ($i >= 30) {
+         log::add('mqtt2', 'error', 'Impossible de lancer le démon mqtt2d, vérifiez le log', 'unableStartDeamon');
+         return false;
+      }
+      message::removeAll('mqtt2', 'unableStartDeamon');
+      return true;
+   }
+
+   public static function deamon_stop() {
+      $pid_file = jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
+      if (file_exists($pid_file)) {
+         $pid = intval(trim(file_get_contents($pid_file)));
+         system::kill($pid);
+      }
+      system::kill('mqtt2d.js');
+      system::fuserk(config::byKey('socketport', 'mqtt2'));
+   }
+
 
    /*     * *********************Méthodes d'instance************************* */
 
