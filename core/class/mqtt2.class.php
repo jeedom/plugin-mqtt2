@@ -171,6 +171,18 @@ class mqtt2 extends eqLogic {
 
    public static function handleMqttMessage($_message) {
       log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
+      foreach ($_message as $topic => $message) {
+         $eqlogics = self::byLogicalId($topic, 'mqtt2', true);
+         if (count($eqlogics) == 0) {
+            continue;
+         }
+         $values = implode_recursive($message, '/');
+         foreach ($eqlogics as $eqlogic) {
+            foreach ($values as $key => $value) {
+               $eqlogic->checkAndUpdateCmd($key, $value);
+            }
+         }
+      }
    }
 
    public static function publish($_topic, $_message) {
