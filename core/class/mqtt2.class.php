@@ -34,13 +34,13 @@ class mqtt2 extends eqLogic {
          shell_exec('openssl genrsa -out ' . $path . '/mosq-ca.key 2048');
       }
       if (!file_exists($path . '/mosq-ca.crt')) {
-         shell_exec('openssl req -new -x509 -days 3650 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=mosquitto_server" -key ' . $path . '/mosq-ca.key -out ' . $path . '/mosq-ca.crt');
+         shell_exec('openssl req -new -x509 -days 3650 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=127.0.0.1" -key ' . $path . '/mosq-ca.key -out ' . $path . '/mosq-ca.crt');
       }
       if (!file_exists($path . '/mosq-serv.key')) {
          shell_exec('openssl genrsa -out ' . $path . '/mosq-serv.key 2048');
       }
       if (!file_exists($path . '/mosq-serv.csr')) {
-         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=mosquitto_server" -key ' . $path . '/mosq-serv.key -out ' . $path . '/mosq-serv.csr');
+         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=127.0.0.1" -key ' . $path . '/mosq-serv.key -out ' . $path . '/mosq-serv.csr');
       }
       if (!file_exists($path . '/mosq-serv.crt')) {
          shell_exec('openssl x509 -req -in ' . $path . '/mosq-serv.csr -CA ' . $path . '/mosq-ca.crt -CAkey ' . $path . '/mosq-ca.key -CAcreateserial -out ' . $path . '/mosq-serv.crt -days 3650 -sha256');
@@ -58,7 +58,6 @@ class mqtt2 extends eqLogic {
    }
 
    public static function installMosquitto() {
-      self::generateCertificates();
       self::setPassword();
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
@@ -110,7 +109,7 @@ class mqtt2 extends eqLogic {
       $cmd = 'sudo /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
       $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
-      $cmd .= ' --mqtt_server mqtts://127.0.0.1:1883';
+      $cmd .= ' --mqtt_server mqtt://127.0.0.1:1883';
       $cmd .= ' --username ' . $authentifications[0];
       $cmd .= ' --password ' . $authentifications[1];
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
@@ -118,7 +117,7 @@ class mqtt2 extends eqLogic {
       $cmd .= ' --cycle ' . config::byKey('cycle', 'mqtt2');
       $cmd .= ' --pid ' . jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
       log::add('mqtt2', 'info', 'Lancement démon mqtt2 : ' . $cmd);
-      $result = exec($cmd . ' >> ' . log::getPathToLog('mqtt2') . ' 2>&1 &');
+      $result = exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
       while ($i < 30) {
          $deamon_info = self::deamon_info();
@@ -144,6 +143,30 @@ class mqtt2 extends eqLogic {
       }
       system::kill('mqtt2d.js');
       system::fuserk(config::byKey('socketport', 'mqtt2'));
+   }
+
+   public static function getPluginForTopic($_topic) {
+      $mapping = config::byKey('mapping', 'mqtt2');
+      if (isset($mapping[$_topic])) {
+         return $mapping[$_topic];
+      }
+      return 'mqtt2';
+   }
+
+   public static function addPluginTopic($_plugin, $_topic) {
+      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping[$_topic] = $_plugin;
+      config::save('mapping', $mapping, 'mqtt2');
+   }
+
+   public static function removePluginTopic($_topic) {
+      $mapping = config::byKey('mapping', 'mqtt2');
+      unset($mapping[$_topic]);
+      config::save('mapping', $mapping, 'mqtt2');
+   }
+
+   public static function handleMqttMessage($_message) {
+      log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
    }
 
 

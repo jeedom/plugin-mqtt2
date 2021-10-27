@@ -50,10 +50,24 @@ Jeedom.log.info('Connect to mqtt server')
 
 client.on('error', function (error) {
   Jeedom.log.error('Error on connection to mqtt server : '+error)
+  process.exit();
 });
 
 client.on('connect', function () {
   Jeedom.log.info('Connection to mqtt server successfull')
+  Jeedom.log.info('Subscription to all topics')
+  client.subscribe('#', function (err) {
+    if (err) {
+      Jeedom.log.error('Error on Subscription : '+err)
+      process.exit();
+    }
+    Jeedom.log.info('Subscription to all topics succesfull')
+  })
+})
+
+client.on('message', function (topic, message) {
+  Jeedom.log.debug('Received message on topis : '+topic+' => '+message.toString())
+  Jeedom.com.add_changes(topic.replace(/\//g, '::'),message.toString());
 })
 
 
