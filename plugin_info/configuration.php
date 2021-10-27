@@ -25,8 +25,20 @@ if (!isConnect()) {
 <form class="form-horizontal">
   <fieldset>
     <div class="form-group">
+      <label class="col-sm-4 control-label">{{Port socket interne}}</label>
+      <div class="col-sm-2">
+        <input class="configKey form-control" data-l1key="socketport" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label">{{Cycle (s)}}</label>
+      <div class="col-sm-2">
+        <input class="configKey form-control" data-l1key="cycle" />
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-md-4 control-label">{{Mode}}</label>
-      <div class="col-md-4">
+      <div class="col-md-2">
         <select class="configKey form-control" data-l1key="mode">
           <option value="remote">{{Brocker distant}}</option>
           <option value="local">{{Brocker local}}</option>
