@@ -27,7 +27,8 @@ class mqtt2 extends eqLogic {
 
    public static function installMosquitto() {
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
-      $compose = str_replace('#path#', __DIR__ . '/../../resources', $compose);
+      $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
+      touch(__DIR__ . '/../../../..//log/mqtt2_mosquittod');
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
       if (!is_object($docker)) {
          $docker = new docker2();
@@ -41,6 +42,10 @@ class mqtt2 extends eqLogic {
       $docker->setConfiguration('create::compose', $compose);
       $docker->setIsEnable(1);
       $docker->save();
+      $docker->rm();
+      sleep(5);
+      $docker->create();
+      docker2::pull();
    }
 
 

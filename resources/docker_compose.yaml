@@ -5,13 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - 1883:1883
-      - 9001:9001
     volumes:
-      - #path#/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - #jeedom_path#/plugins/mqtt2/resources/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - mosquitto-data:/mosquitto/data
-      - mosquitto-logs:/mosquitto/log
-volumes:
-  mosquitto-data:
-  mosquitto-logs:
+      - #jeedom_path#/logs/mqtt2_mosquittod:/mosquitto/log/mosquitto.log
