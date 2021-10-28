@@ -25,6 +25,17 @@ class mqtt2 extends eqLogic {
 
    /*     * ***********************Methode static*************************** */
 
+   public static function dependancy_end() {
+      if (config::byKey('mode', 'mqtt2') != 'local') {
+         return;
+      }
+      $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
+      if (is_object($docker)) {
+         return;
+      }
+      self::installMosquitto();
+   }
+
    public static function generateCertificates() {
       $path = __DIR__ . '/../../data/ssl';
       if (!file_exists($path)) {
