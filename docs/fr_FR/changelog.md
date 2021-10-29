@@ -1,4 +1,4 @@
-# Changelog plugin template
+# Changelog plugin MQTT
 
 >**IMPORTANT**
 >
