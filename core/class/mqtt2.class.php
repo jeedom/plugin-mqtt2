@@ -239,6 +239,30 @@ class mqtt2 extends eqLogic {
    }
 
 
+   public static function handleEvent($_option) {
+      self::publish('jeedom/cmd/event/' . $_option['event_id'], (string) $_option['value']);
+   }
+
+   public static function postConfig_sendEvent($_value) {
+      if ($_value == 0) {
+         $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+         if (is_object($listener)) {
+            $listener->remove();
+         }
+      } else {
+         $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+         if (!is_object($listener)) {
+            $listener = new listener();
+         }
+         $listener->setClass('mqtt2');
+         $listener->setFunction('handleEvent');
+         $listener->emptyEvent();
+         $listener->addEvent('*');
+         $listener->save();
+      }
+   }
+
+
    /*     * *********************Méthodes d'instance************************* */
 
    /*     * **********************Getteur Setteur*************************** */

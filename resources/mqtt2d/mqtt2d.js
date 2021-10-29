@@ -15,6 +15,7 @@
 */
 var Jeedom = require('./jeedom/jeedom.js');
 const fs = require('fs');
+var LAST_SEND_TOPIC={};
 
 const args = Jeedom.getArgs()
 if(typeof args.loglevel == 'undefined'){
@@ -65,6 +66,13 @@ client.on('connect', function () {
 })
 
 client.on('message', function (topic, message) {
+  if(LAST_SEND_TOPIC[topic]){
+    let time = LAST_SEND_TOPIC[topic];
+    delete LAST_SEND_TOPIC[topic];
+    if((time + 5000) >  (new Date().getTime())){
+      return;
+    }
+  }
   Jeedom.log.debug('Received message on topis : '+topic+' => '+message.toString())
   Jeedom.com.add_changes(topic.replace(/\//g, '::'),message.toString());
 })
@@ -87,6 +95,7 @@ Jeedom.http.app.post('/publish', function(req, res) {
         res.send({state:"nok",result : JSON.stringify(error)});
         return;
       }
+      LAST_SEND_TOPIC[req.body.topic] = (new Date().getTime());
       res.setHeader('Content-Type', 'application/json');
       res.send({state:"ok"});
       return;

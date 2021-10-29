@@ -71,6 +71,12 @@ if (!isConnect()) {
         <textarea class="configKey form-control" data-l1key="mqtt::password"></textarea>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label">{{Transmettre tous les evènements des commandes}}</label>
+      <div class="col-md-5">
+        <input type="checkbox" class="configKey" data-l1key="sendEvent" />
+      </div>
+    </div>
   </fieldset>
 </form>
 <script>
