@@ -92,7 +92,6 @@ class mqtt2 extends eqLogic {
       } catch (\Throwable $th) {
       }
       $docker->create();
-      docker2::pull();
    }
 
    public static function deamon_info() {
