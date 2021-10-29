@@ -72,9 +72,9 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group mqtt2Mode local">
-      <label class="col-md-4 control-label">{{Parametres additionnel Mosquitto}}</label>
+      <label class="col-md-4 control-label">{{Parametres Mosquitto}}</label>
       <div class="col-md-5">
-        <textarea class="configKey form-control" data-l1key="mqtt::additionalParameters"></textarea>
+        <textarea class="configKey form-control" rows="10" data-l1key="mosquitto::parameters"></textarea>
       </div>
     </div>
     <div class="form-group">
