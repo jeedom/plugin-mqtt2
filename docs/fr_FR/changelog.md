@@ -1,3 +1,5 @@
+# Changelog MQTT Manager
+
 # Changelog plugin MQTT
 
 >**IMPORTANT**

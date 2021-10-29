@@ -1,0 +1,74 @@
+{
+    "plugins\/mqtt2\/plugin_info\/configuration.php": {
+        "Port socket interne": "Porta de soquete interno",
+        "Cycle (s)": "Ciclo (s)",
+        "Mode": "Moda",
+        "Brocker distant": "Brocker distante",
+        "Brocker local": "Brocker local",
+        "IP": "IP",
+        "Installer": "Para instalar",
+        "Installer mosquitto": "Instale mosquito",
+        "CA (automatiquement remplis en mode local)": "CA (preenchido automaticamente no modo local)",
+        "Authentification": "Autenticação",
+        "Topic racine Jeedom": "Jeedom root topic",
+        "Transmettre tous les evènements des commandes": "Transmitir todos os eventos do pedido",
+        "Installation lancée": "Instalação iniciada"
+    },
+    "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Gestion": "Gestão",
+        "Ajouter": "Adicionar",
+        "Configuration": "Configuração",
+        "Mes MQTT": "Meu MQTT",
+        "Aucun équipement MQTT n\\'est paramétré, cliquer sur \"Ajouter\" pour commencer": "Nenhum equipamento MQTT está configurado, clique em \"Adicionar\" para iniciar",
+        "Rechercher": "Pesquisar",
+        "Configuration avancée": "Configuração avançada",
+        "Dupliquer": "Duplicado",
+        "Sauvegarder": "Para salvaguardar",
+        "Supprimer": "Deletar",
+        "Equipement": "Equipamento",
+        "Commandes": "Pedidos",
+        "Paramètres généraux": "Configurações Gerais",
+        "Nom de l'équipement": "Nome do equipamento",
+        "Objet parent": "Objeto pai",
+        "Aucun": "Não",
+        "Catégorie": "Categoria",
+        "Options": "Opções",
+        "Activer": "Ativar",
+        "Visible": "Visível",
+        "Root topic": "Tópico raiz",
+        "Ajouter une commande": "Adicionar um pedido",
+        "Id": "Identificação",
+        "Nom": "Nome",
+        "Type": "Modelo",
+        "Paramètres": "Definições",
+        "Action": "Açao"
+    },
+    "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Nom de la commande": "Nome do pedido",
+        "Commande information liée": "Informações relacionadas ao comando",
+        "Aucune": "Nenhum",
+        "Icône": "Ícone",
+        "Topic": "Tema",
+        "Message": "Mensagem",
+        "Min.": "Min.",
+        "Max.": "Máx.",
+        "Unité": "Unidade",
+        "Afficher": "Exibição",
+        "Historiser": "Historize",
+        "Inverser": "Reverter"
+    },
+    "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
+        "Vous n\\'etes pas autorisé à effectuer cette action": "Você não está autorizado a realizar esta ação"
+    },
+    "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Aucune méthode correspondante à : ": "Nenhum método correspondente a:"
+    },
+    "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
+        "Veuillez vérifier la configuration": "Por favor, verifique a configuração"
+    },
+    "info.json": {
+        "Plugin servant de base pour les plugins utilisant MQTT": "Plug-in servindo como base para plug-ins usando MQTT"
+    }
+}
