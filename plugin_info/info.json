@@ -1,6 +1,6 @@
 {
 	"id" : "mqtt2",
-	"name" : "MQTT",
+	"name" : "MQTT Manager",
 	"description" : {
 		"fr_FR": "Plugin servant de base pour les plugins utilisant MQTT"
 	},
