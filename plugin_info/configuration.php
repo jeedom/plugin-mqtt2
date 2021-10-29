@@ -72,9 +72,19 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group mqtt2Mode local">
-      <label class="col-md-4 control-label">{{Parametres Mosquitto}}</label>
+      <label class="col-md-4 control-label">{{Parametres Mosquitto}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte}}"></i></sup>
+      </label>
       <div class="col-md-5">
         <textarea class="configKey form-control" rows="10" data-l1key="mosquitto::parameters"></textarea>
+      </div>
+    </div>
+    <div class="form-group mqtt2Mode local">
+      <label class="col-md-4 control-label">{{Port(s)}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte}}"></i></sup>
+      </label>
+      <div class="col-md-5">
+        <textarea class="configKey form-control" rows="3" data-l1key="mosquitto::ports"></textarea>
       </div>
     </div>
     <div class="form-group">

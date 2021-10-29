@@ -70,9 +70,14 @@ class mqtt2 extends eqLogic {
 
    public static function installMosquitto() {
       self::setPassword();
-      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', config::byKey('mosquitto::parameters', 'mqtt2'));
+
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
+      $ports = '';
+      foreach (explode("\n", config::byKey('mosquitto::ports', 'mqtt2')) as $line) {
+         $ports .= '      - ' . $line . "\n";
+      }
+      $compose = str_replace('#ports#', $ports, $compose);
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
       if (!is_object($docker)) {
          $docker = new docker2();
@@ -92,6 +97,8 @@ class mqtt2 extends eqLogic {
          sleep(5);
       } catch (\Throwable $th) {
       }
+      unlink(__DIR__ . '/../../data/mosquitto.conf');
+      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', 'mqtt2')));
       $docker->create();
    }
 
