@@ -40,8 +40,8 @@ if (!isConnect()) {
       <label class="col-md-4 control-label">{{Mode}}</label>
       <div class="col-md-2">
         <select class="configKey form-control" data-l1key="mode">
-          <option value="remote">{{Brocker distant}}</option>
-          <option value="local">{{Brocker local}}</option>
+          <option value="remote">{{Broker distant}}</option>
+          <option value="local">{{Broker local}}</option>
         </select>
       </div>
     </div>
@@ -69,6 +69,12 @@ if (!isConnect()) {
       <label class="col-md-4 control-label">{{Authentification}}</label>
       <div class="col-md-5">
         <textarea class="configKey form-control" data-l1key="mqtt::password"></textarea>
+      </div>
+    </div>
+    <div class="form-group mqtt2Mode local">
+      <label class="col-md-4 control-label">{{Parametres additionnel Mosquitto}}</label>
+      <div class="col-md-5">
+        <textarea class="configKey form-control" data-l1key="mqtt::additionalParameters"></textarea>
       </div>
     </div>
     <div class="form-group">
