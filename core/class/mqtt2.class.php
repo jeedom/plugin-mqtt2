@@ -187,7 +187,7 @@ class mqtt2 extends eqLogic {
    public static function handleMqttMessage($_message) {
       log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
       foreach ($_message as $topic => $message) {
-         if ($topic == 'jeedom') {
+         if ($topic == config::byKey('root_topic', 'mqtt2')) {
             if (isset($message['cmd'])) {
                if (isset($message['cmd']['get'])) {
                   foreach ($message['cmd']['get'] as $cmd_id => $options) {
@@ -195,7 +195,7 @@ class mqtt2 extends eqLogic {
                      if (!is_object($cmd) && $cmd->getType() == 'info') {
                         continue;
                      }
-                     self::publish('jeedom/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
+                     self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
                   }
                }
                if (isset($message['cmd']['set'])) {
@@ -240,7 +240,7 @@ class mqtt2 extends eqLogic {
 
 
    public static function handleEvent($_option) {
-      self::publish('jeedom/cmd/event/' . $_option['event_id'], (string) $_option['value']);
+      self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/event/' . $_option['event_id'], (string) $_option['value']);
    }
 
    public static function postConfig_sendEvent($_value) {
