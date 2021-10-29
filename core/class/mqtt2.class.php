@@ -187,6 +187,29 @@ class mqtt2 extends eqLogic {
    public static function handleMqttMessage($_message) {
       log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
       foreach ($_message as $topic => $message) {
+         if ($topic == 'jeedom') {
+            if (isset($message['cmd'])) {
+               if (isset($message['cmd']['get'])) {
+                  foreach ($message['cmd']['get'] as $cmd_id => $options) {
+                     $cmd = cmd::byId($cmd_id);
+                     if (!is_object($cmd) && $cmd->getType() == 'info') {
+                        continue;
+                     }
+                     self::publish('jeedom/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
+                  }
+               }
+               if (isset($message['cmd']['set'])) {
+                  foreach ($message['cmd']['set'] as $cmd_id => $options) {
+                     $cmd = cmd::byId($cmd_id);
+                     if (!is_object($cmd) && $cmd->getType() == 'action') {
+                        continue;
+                     }
+                     $cmd->execCmd(json_decode($options, true));
+                  }
+               }
+            }
+            continue;
+         }
          $eqlogics = self::byLogicalId($topic, 'mqtt2', true);
          if (count($eqlogics) == 0) {
             continue;
