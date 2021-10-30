@@ -8,7 +8,8 @@
         "IP": "IP",
         "Installer": "Installieren",
         "Installer mosquitto": "Mücke installieren",
-        "CA (automatiquement remplis en mode local)": "CA (automatisch ausgefüllt im lokalen Modus)",
+        "Certificat client": "Client-Zertifikat",
+        "Télécharger": "Herunterladen",
         "Authentification": "Authentifizierung",
         "Parametres Mosquitto": "Moskito-Einstellungen",
         "Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte": "Nach jeder Änderung müssen Sie die Installation von Mosquitto speichern und neu starten, damit sie berücksichtigt wird",
@@ -64,11 +65,17 @@
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "Sie sind nicht berechtigt, diese Aktion auszuführen"
     },
+    "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
+        "Erreur lors de la génération des certificat client": "Fehler beim Generieren von Clientzertifikaten",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff"
+    },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
         "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Aucune méthode correspondante à : ": "Keine Methode entsprechend:"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
+        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "Kein SSL-Ordner gefunden, haben Sie Mosquitto zuerst installiert?",
+        "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto ist lokal auf dem Computer installiert, bitte entfernen Sie es, bevor Sie den Mosquitto-Container installieren: sudo apt remove mosquitto",
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration"
     },
     "info.json": {
