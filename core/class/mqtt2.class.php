@@ -64,6 +64,7 @@ class mqtt2 extends eqLogic {
       if (config::byKey('mqtt::password', 'mqtt2') == '') {
          config::save('mqtt::password', "jeedom:" . config::genKey(), 'mqtt2');
       }
+      unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', 'mqtt2'));
       shell_exec('sudo docker run -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
    }
