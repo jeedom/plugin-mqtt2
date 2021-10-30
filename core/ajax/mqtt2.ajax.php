@@ -31,6 +31,12 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'downloadClientCert') {
+    mqtt2::generateClientCert();
+    shell_exec('tar czvf ' . __DIR__ . '/../../data/mqtt-client-ssl.tar.gz ' . jeedom::getTmpFolder('mqtt2') . '/ssl;sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
+    ajax::success();
+  }
+
   throw new Exception(__('Aucune méthode correspondante à : ', __FILE__) . init('action'));
   /*     * *********Catch exeption*************** */
 } catch (Exception $e) {

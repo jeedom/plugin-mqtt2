@@ -57,14 +57,12 @@ if (!isConnect()) {
         <a class="btn btn-warning" id="bt_mqtt2InstallMosquitto">{{Installer mosquitto}}</a>
       </div>
     </div>
-    <!--
-    <div class="form-group">
-      <label class="col-md-4 control-label">{{CA (automatiquement remplis en mode local)}}</label>
-      <div class="col-md-5">
-        <textarea class="configKey form-control" rows="22" data-l1key="ssl::ca"></textarea>
+    <div class="form-group mqtt2Mode local">
+      <label class="col-md-4 control-label">{{Certificat client}}</label>
+      <div class="col-md-4">
+        <a class="btn btn-warning" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php">{{Télécharger}}</a>
       </div>
     </div>
--->
     <div class="form-group">
       <label class="col-md-4 control-label">{{Authentification}}</label>
       <div class="col-md-5">

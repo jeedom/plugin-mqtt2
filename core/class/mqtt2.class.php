@@ -51,11 +51,27 @@ class mqtt2 extends eqLogic {
          shell_exec('openssl genrsa -out ' . $path . '/mosquitto.key 2048');
       }
       if (!file_exists($path . '/mosquitto.csr')) {
-         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
+         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
       }
       if (!file_exists($path . '/mosquitto.crt')) {
          shell_exec('openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
       }
+   }
+
+   public static function generateClientCert() {
+      $path = __DIR__ . '/../../data/ssl';
+      if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
+         throw new Exception(__('Aucun dossier SSL trouvé, avez vous installé Mosquitto d\'abord ?', __FILE__));
+      }
+      $tmp_folder = jeedom::getTmpFolder('mqtt2') . '/ssl';
+      if (file_exists($tmp_folder)) {
+         shell_exec('sudo rm -rf ' . $tmp_folder);
+      }
+      mkdir($tmp_folder);
+      shell_exec('sudo openssl genrsa -out ' . $tmp_folder . '/client.key 2048');
+      shell_exec('sudo openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-client-' . rand(1111, 9999) . '" -key ' . $tmp_folder . '/client.key -out ' . $tmp_folder . '/client.csr');
+      shell_exec('sudo openssl x509 -req -in ' . $tmp_folder . '/client.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $tmp_folder . '/client.crt -days 9999 -sha256');
+      shell_exec('sudo chown -R www-data ' . $tmp_folder);
    }
 
    public static function setPassword() {
