@@ -1,15 +1,8 @@
 {
-  "apt" : {
-    "nodejs" : {},
-    "mosquitto" : {}
-  },
   "npm" : {
     "plugins/mqtt2/resources/mqtt2d"  : {}
   },
   "plugin" : {
     "docker2" : {}
-  },
-  "post-install" : {
-    "script" : "plugins/mqtt2/resources/post-install.sh"
   }
 }
