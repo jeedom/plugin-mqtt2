@@ -37,7 +37,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function generateCertificates() {
-      $path = __DIR__ . '/../../data/ssl';
+      $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path)) {
          mkdir($path);
       }
@@ -59,7 +59,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function generateClientCert() {
-      $path = __DIR__ . '/../../data/ssl';
+      $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
          throw new Exception(__('Aucun dossier SSL trouvé, avez vous installé Mosquitto d\'abord ?', __FILE__));
       }
@@ -71,6 +71,8 @@ class mqtt2 extends eqLogic {
       shell_exec('sudo openssl genrsa -out ' . $tmp_folder . '/client.key 2048');
       shell_exec('sudo openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-client-' . rand(1111, 9999) . '" -key ' . $tmp_folder . '/client.key -out ' . $tmp_folder . '/client.csr');
       shell_exec('sudo openssl x509 -req -in ' . $tmp_folder . '/client.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $tmp_folder . '/client.crt -days 9999 -sha256');
+      shell_exec('sudo rm ' . $tmp_folder . '/client.csr');
+      shell_exec('sudo cp ' . $path . '/ca.crt ' . $tmp_folder . '/ca.crt');
       shell_exec('sudo chown -R www-data ' . $tmp_folder);
    }
 

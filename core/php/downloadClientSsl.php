@@ -23,8 +23,10 @@ if (!isConnect('admin')) {
 }
 
 mqtt2::generateClientCert();
-shell_exec('cd ' . jeedom::getTmpFolder('mqtt2') . '/ssl;tar czvf ' . __DIR__ . '/../../data/mqtt-client-ssl.tar.gz client.*;sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
-
+if (!file_exists(jeedom::getTmpFolder('mqtt2') . '/ssl')) {
+    throw new Exception(__('Erreur lors de la génération des certificat client', __FILE__));
+}
+shell_exec('cd ' . jeedom::getTmpFolder('mqtt2') . '/ssl;tar czvf ' . __DIR__ . '/../../data/mqtt-client-ssl.tar.gz *;sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
 $pathfile = __DIR__ . '/../../data/mqtt-client-ssl.tar.gz';
 $size = filesize($pathfile);
 header("Content-Length: \".$size.\"");
