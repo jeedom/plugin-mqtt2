@@ -41,22 +41,21 @@ class mqtt2 extends eqLogic {
       if (!file_exists($path)) {
          mkdir($path);
       }
-      if (!file_exists($path . '/mosq-ca.key')) {
-         shell_exec('openssl genrsa -out ' . $path . '/mosq-ca.key 2048');
+      if (!file_exists($path . '/ca.key')) {
+         shell_exec('openssl genrsa -out ' . $path . '/ca.key 2048');
       }
-      if (!file_exists($path . '/mosq-ca.crt')) {
-         shell_exec('openssl req -new -x509 -days 3650 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=127.0.0.1" -key ' . $path . '/mosq-ca.key -out ' . $path . '/mosq-ca.crt');
+      if (!file_exists($path . '/ca.crt')) {
+         shell_exec('openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
       }
-      if (!file_exists($path . '/mosq-serv.key')) {
-         shell_exec('openssl genrsa -out ' . $path . '/mosq-serv.key 2048');
+      if (!file_exists($path . '/mosquitto.key')) {
+         shell_exec('openssl genrsa -out ' . $path . '/mosquitto.key 2048');
       }
-      if (!file_exists($path . '/mosq-serv.csr')) {
-         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=127.0.0.1" -key ' . $path . '/mosq-serv.key -out ' . $path . '/mosq-serv.csr');
+      if (!file_exists($path . '/mosquitto.csr')) {
+         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
       }
-      if (!file_exists($path . '/mosq-serv.crt')) {
-         shell_exec('openssl x509 -req -in ' . $path . '/mosq-serv.csr -CA ' . $path . '/mosq-ca.crt -CAkey ' . $path . '/mosq-ca.key -CAcreateserial -out ' . $path . '/mosq-serv.crt -days 3650 -sha256');
+      if (!file_exists($path . '/mosquitto.crt')) {
+         shell_exec('openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
       }
-      config::save('ssl::ca', trim(file_get_contents($path . '/mosq-ca.crt')), 'mqtt2');
    }
 
    public static function setPassword() {
@@ -66,7 +65,7 @@ class mqtt2 extends eqLogic {
       }
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', 'mqtt2'));
-      shell_exec('sudo docker run -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
+      shell_exec('sudo docker run --rm -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
    }
 
    public static function installMosquitto() {
@@ -74,6 +73,7 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
       }
       self::setPassword();
+      self::generateCertificates();
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
       $ports = '';

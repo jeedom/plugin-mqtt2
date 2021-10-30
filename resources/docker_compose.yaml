@@ -6,6 +6,7 @@ services:
     ports:
 #ports#
     volumes:
+      - #jeedom_path#/plugins/mqtt2/data/ssl:/mosquitto/config/ssl
       - #jeedom_path#/plugins/mqtt2/data/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro

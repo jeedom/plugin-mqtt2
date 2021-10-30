@@ -76,7 +76,7 @@ if (!isConnect()) {
         <sup><i class="fas fa-question-circle tooltips" title="{{Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte}}"></i></sup>
       </label>
       <div class="col-md-5">
-        <textarea class="configKey form-control" rows="10" data-l1key="mosquitto::parameters"></textarea>
+        <textarea class="configKey form-control" rows="15" data-l1key="mosquitto::parameters"></textarea>
       </div>
     </div>
     <div class="form-group mqtt2Mode local">
