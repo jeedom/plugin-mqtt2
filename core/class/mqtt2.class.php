@@ -206,12 +206,24 @@ class mqtt2 extends eqLogic {
                   }
                }
                if (isset($message['cmd']['set'])) {
-                  foreach ($message['cmd']['set'] as $cmd_id => $options) {
+                  foreach ($message['cmd']['set'] as $cmd_id => &$options) {
                      $cmd = cmd::byId($cmd_id);
-                     if (!is_object($cmd) && $cmd->getType() == 'action') {
+                     if (!is_object($cmd)) {
                         continue;
                      }
-                     $cmd->execCmd(json_decode($options, true));
+                     $options = is_json($options, $options);
+                     if ($cmd->getType() == 'action') {
+                        $cmd->execCmd(json_decode($options, true));
+                     } else {
+                        if (!is_array($options)) {
+                           $cmd->event($options);
+                        } else {
+                           if (!isset($options['datetime'])) {
+                              $options['datetime'] = null;
+                           }
+                           $cmd->event($options['value'], $options['datetime']);
+                        }
+                     }
                   }
                }
             }
