@@ -93,7 +93,9 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
       }
       self::setPassword();
+      sleep(2);
       self::generateCertificates();
+      sleep(5);
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
       $ports = '';
