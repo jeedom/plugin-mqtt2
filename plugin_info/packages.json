@@ -4,8 +4,5 @@
   },
   "npm" : {
     "plugins/mqtt2/resources/mqtt2d"  : {}
-  },
-  "plugin" : {
-    "docker2" : {}
   }
 }

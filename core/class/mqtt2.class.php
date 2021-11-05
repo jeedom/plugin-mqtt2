@@ -92,10 +92,52 @@ class mqtt2 extends eqLogic {
       if (shell_exec('sudo which mosquitto | wc -l') != 0) {
          throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
       }
+      try {
+         plugin::byId('docker2');
+      } catch (Exception $e) {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Installation du plugin Docker Management', __FILE__),
+         ));
+         $update = update::byLogicalId('docker2');
+         if (!is_object($update)) {
+            $update = new update();
+         }
+         $update->setLogicalId('openvpn');
+         $update->setSource('market');
+         $update->setConfiguration('version', 'stable');
+         $update->save();
+         $update->doUpdate();
+         $plugin = plugin::byId('docker2');
+         sleep(3);
+         $plugin->dependancy_install();
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Pause de 60s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
+         ));
+         sleep(60);
+      }
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'message' => __('Mise en place des identifiants MQTT', __FILE__),
+      ));
       self::setPassword();
       sleep(2);
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'message' => __('Génération des certificats', __FILE__),
+      ));
       self::generateCertificates();
       sleep(5);
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'message' => __('Création du container Mosquitto', __FILE__),
+      ));
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
       $ports = '';
