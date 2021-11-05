@@ -115,27 +115,32 @@ class mqtt2 extends eqLogic {
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
+            'ttl' => 60000,
             'message' => __('Pause de 60s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
          ));
          sleep(60);
       }
+      self::setPassword();
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
+         'ttl' => 2000,
          'message' => __('Mise en place des identifiants MQTT', __FILE__),
       ));
-      self::setPassword();
       sleep(2);
+      self::generateCertificates();
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
+         'ttl' => 5000,
          'message' => __('Génération des certificats', __FILE__),
       ));
-      self::generateCertificates();
+
       sleep(5);
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
+         'ttl' => 30000,
          'message' => __('Création du container Mosquitto', __FILE__),
       ));
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
