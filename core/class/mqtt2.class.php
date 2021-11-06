@@ -41,6 +41,8 @@ class mqtt2 extends eqLogic {
       if (!file_exists($path)) {
          mkdir($path);
       }
+      shell_exec('sudo chmod -R 777  ' . $path);
+      shell_exec('sudo chown -R www-data ' . $path);
       if (!file_exists($path . '/ca.key')) {
          shell_exec('sudo openssl genrsa -out ' . $path . '/ca.key 2048');
       }
