@@ -174,6 +174,7 @@ class mqtt2 extends eqLogic {
       unlink(__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', 'mqtt2')));
       $docker->create();
+      event::add('jeedom::alert', array('page' => 'plugin'));
    }
 
    public static function deamon_info() {

@@ -125,7 +125,7 @@ if (!isConnect()) {
           return;
         } else {
           $('#div_alert').showAlert({
-            message: '{{Installation lancée}}',
+            message: '{{Installation réussie}}',
             level: 'success'
           });
         }
