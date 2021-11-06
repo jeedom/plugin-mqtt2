@@ -42,20 +42,22 @@ class mqtt2 extends eqLogic {
          mkdir($path);
       }
       if (!file_exists($path . '/ca.key')) {
-         shell_exec('openssl genrsa -out ' . $path . '/ca.key 2048');
+         shell_exec('sudo openssl genrsa -out ' . $path . '/ca.key 2048');
       }
       if (!file_exists($path . '/ca.crt')) {
-         shell_exec('openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
+         shell_exec('sudo openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
       }
       if (!file_exists($path . '/mosquitto.key')) {
-         shell_exec('openssl genrsa -out ' . $path . '/mosquitto.key 2048');
+         shell_exec('sudo openssl genrsa -out ' . $path . '/mosquitto.key 2048');
       }
       if (!file_exists($path . '/mosquitto.csr')) {
-         shell_exec('openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
+         shell_exec('sudo openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
       }
       if (!file_exists($path . '/mosquitto.crt')) {
-         shell_exec('openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
+         shell_exec('sudo openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
       }
+      shell_exec('sudo chmod -R 777  ' . $path);
+      shell_exec('sudo chown -R www-data ' . $path);
    }
 
    public static function generateClientCert() {
@@ -90,8 +92,57 @@ class mqtt2 extends eqLogic {
       if (shell_exec('sudo which mosquitto | wc -l') != 0) {
          throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
       }
+      try {
+         plugin::byId('docker2');
+      } catch (Exception $e) {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Installation du plugin Docker Management', __FILE__),
+         ));
+         $update = update::byLogicalId('docker2');
+         if (!is_object($update)) {
+            $update = new update();
+         }
+         $update->setLogicalId('openvpn');
+         $update->setSource('market');
+         $update->setConfiguration('version', 'stable');
+         $update->save();
+         $update->doUpdate();
+         $plugin = plugin::byId('docker2');
+         sleep(3);
+         $plugin->dependancy_install();
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'ttl' => 60000,
+            'message' => __('Pause de 60s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
+         ));
+         sleep(60);
+      }
       self::setPassword();
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'ttl' => 2000,
+         'message' => __('Mise en place des identifiants MQTT', __FILE__),
+      ));
+      sleep(2);
       self::generateCertificates();
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'ttl' => 5000,
+         'message' => __('Génération des certificats', __FILE__),
+      ));
+
+      sleep(5);
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'ttl' => 30000,
+         'message' => __('Création du container Mosquitto', __FILE__),
+      ));
       $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
       $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
       $ports = '';

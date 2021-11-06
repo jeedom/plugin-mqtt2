@@ -8,7 +8,8 @@
         "IP": "IP",
         "Installer": "Installer",
         "Installer mosquitto": "Installer mosquitto",
-        "CA (automatiquement remplis en mode local)": "CA (automatiquement remplis en mode local)",
+        "Certificat client": "Certificat client",
+        "Télécharger": "Télécharger",
         "Authentification": "Authentification",
         "Parametres Mosquitto": "Parametres Mosquitto",
         "Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte": "Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte",
@@ -64,11 +65,22 @@
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "Vous n\\'etes pas autorisé à effectuer cette action"
     },
+    "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
+        "Erreur lors de la génération des certificat client": "Erreur lors de la génération des certificat client",
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
+        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?",
+        "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto",
+        "Installation du plugin Docker Management": "Installation du plugin Docker Management",
+        "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management": "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management",
+        "Mise en place des identifiants MQTT": "Mise en place des identifiants MQTT",
+        "Génération des certificats": "Génération des certificats",
+        "Création du container Mosquitto": "Création du container Mosquitto",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration"
     },
     "info.json": {

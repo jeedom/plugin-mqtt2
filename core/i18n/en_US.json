@@ -8,7 +8,8 @@
         "IP": "IP",
         "Installer": "To install",
         "Installer mosquitto": "Install mosquitto",
-        "CA (automatiquement remplis en mode local)": "CA (automatically filled in local mode)",
+        "Certificat client": "Client certificate",
+        "Télécharger": "To download",
         "Authentification": "Authentication",
         "Parametres Mosquitto": "Mosquitto settings",
         "Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte": "After any change, you must save and restart the installation of mosquitto for it to be taken into account",
@@ -64,11 +65,22 @@
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "You are not authorized to perform this action"
     },
+    "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
+        "Erreur lors de la génération des certificat client": "Error while generating client certificates",
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
         "Aucune méthode correspondante à : ": "No method corresponding to:"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
+        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No SSL folder found, did you install Mosquitto first?",
+        "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto installed locally on the machine, please remove it before installing the Mosquitto container: sudo apt remove mosquitto",
+        "Installation du plugin Docker Management": "Installing the Docker Management plugin",
+        "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management": "60s pause while installing Docker Management plugin dependencies",
+        "Mise en place des identifiants MQTT": "Setting up MQTT identifiers",
+        "Génération des certificats": "Generating certificates",
+        "Création du container Mosquitto": "Creation of the Mosquitto container",
         "Veuillez vérifier la configuration": "Please check the configuration"
     },
     "info.json": {

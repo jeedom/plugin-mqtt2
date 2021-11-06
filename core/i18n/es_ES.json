@@ -8,7 +8,8 @@
         "IP": "IP",
         "Installer": "Instalar",
         "Installer mosquitto": "Instalar mosquitto",
-        "CA (automatiquement remplis en mode local)": "CA (llenado automáticamente en modo local)",
+        "Certificat client": "Certificado de cliente",
+        "Télécharger": "Descargar",
         "Authentification": "Autenticación",
         "Parametres Mosquitto": "Configuración de Mosquitto",
         "Après tout changement il faut sauvegarder et relancer l'installation de mosquitto pour que ca soit pris en compte": "Luego de cualquier cambio, debes guardar y reiniciar la instalación de mosquitto para que se tenga en cuenta",
@@ -64,11 +65,22 @@
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "No estás autorizado para realizar esta acción"
     },
+    "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
+        "Erreur lors de la génération des certificat client": "Error al generar certificados de cliente",
+        "401 - Accès non autorisé": "401 - Acceso no autorizado"
+    },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Aucune méthode correspondante à : ": "Ningún método correspondiente a:"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
+        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No se encontró ninguna carpeta SSL, ¿instaló Mosquitto primero?",
+        "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto instalado localmente en la máquina, elimínelo antes de instalar el contenedor Mosquitto: sudo apt remove mosquitto",
+        "Installation du plugin Docker Management": "Instalación del complemento de administración de Docker",
+        "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management": "Pausa de los 60 mientras se instalan las dependencias del complemento de administración de Docker",
+        "Mise en place des identifiants MQTT": "Configurar identificadores MQTT",
+        "Génération des certificats": "Generando certificados",
+        "Création du container Mosquitto": "Creación del contenedor Mosquitto",
         "Veuillez vérifier la configuration": "Por favor revise la configuración"
     },
     "info.json": {
