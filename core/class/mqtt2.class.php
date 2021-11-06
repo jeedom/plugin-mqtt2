@@ -112,8 +112,17 @@ class mqtt2 extends eqLogic {
          $update->save();
          $update->doUpdate();
          $plugin = plugin::byId('docker2');
-         sleep(3);
-         $plugin->dependancy_install();
+
+          if (!is_object($plugin)) {
+			throw new Exception(__('Le plugin Docker management doit être installé', __FILE__));
+		}
+		if (!$plugin->isActive()) {
+			$plugin->setIsEnable(1);
+			$plugin->dependancy_install();
+		}
+		if (!$plugin->isActive()) {
+			throw new Exception(__('Le plugin Docker management doit être actif', __FILE__));
+		}
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
