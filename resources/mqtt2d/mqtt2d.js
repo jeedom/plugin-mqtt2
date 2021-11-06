@@ -34,17 +34,33 @@ Jeedom.log.info('Apikey : '+args.apikey)
 Jeedom.log.info('Callback : '+args.callback)
 Jeedom.log.info('Cycle : '+args.cycle)
 
+Jeedom.log.info('Client key : '+args.client_key)
+Jeedom.log.info('Client crt : '+args.client_crt)
+Jeedom.log.info('CA : '+args.ca)
+
 Jeedom.write_pid(args.pid)
 Jeedom.com.config(args.apikey,args.callback,args.cycle)
 Jeedom.com.test();
 
 var mqtt = require('mqtt')
-var client  = mqtt.connect(args.mqtt_server,{
-  clientId:"mqtt-jeedom",
-  rejectUnauthorized: false,
-  username: args.username,
-  password: args.password
-})
+if(args.ca){
+  var client  = mqtt.connect(args.mqtt_server,{
+    clientId:"mqtt-jeedom",
+    rejectUnauthorized: false,
+    key:  fs.readFileSync(args.client_key),
+    cert: fs.readFileSync(args.client_crt),
+    username: args.username,
+    password: args.password
+  })
+}else{
+  var client  = mqtt.connect(args.mqtt_server,{
+    clientId:"mqtt-jeedom",
+    rejectUnauthorized: false,
+    username: args.username,
+    password: args.password
+  })
+}
+
 
 Jeedom.log.info('Connect to mqtt server')
 
