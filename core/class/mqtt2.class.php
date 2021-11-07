@@ -138,7 +138,7 @@ class mqtt2 extends eqLogic {
          'ttl' => 5000,
          'message' => __('Génération des certificats', __FILE__),
       ));
-      sleep(2);
+      sleep(5);
       self::setPassword();
       event::add('jeedom::alert', array(
          'level' => 'warning',
