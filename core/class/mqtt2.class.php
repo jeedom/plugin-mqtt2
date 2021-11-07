@@ -106,23 +106,23 @@ class mqtt2 extends eqLogic {
          if (!is_object($update)) {
             $update = new update();
          }
-         $update->setLogicalId('openvpn');
+         $update->setLogicalId('docker2');
          $update->setSource('market');
-         $update->setConfiguration('version', 'stable');
+         $update->setConfiguration('version', 'beta');
          $update->save();
          $update->doUpdate();
          $plugin = plugin::byId('docker2');
 
-          if (!is_object($plugin)) {
-			throw new Exception(__('Le plugin Docker management doit être installé', __FILE__));
-		}
-		if (!$plugin->isActive()) {
-			$plugin->setIsEnable(1);
-			$plugin->dependancy_install();
-		}
-		if (!$plugin->isActive()) {
-			throw new Exception(__('Le plugin Docker management doit être actif', __FILE__));
-		}
+         if (!is_object($plugin)) {
+            throw new Exception(__('Le plugin Docker management doit être installé', __FILE__));
+         }
+         if (!$plugin->isActive()) {
+            $plugin->setIsEnable(1);
+            $plugin->dependancy_install();
+         }
+         if (!$plugin->isActive()) {
+            throw new Exception(__('Le plugin Docker management doit être actif', __FILE__));
+         }
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
