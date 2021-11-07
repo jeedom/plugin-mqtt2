@@ -79,9 +79,9 @@
         "Installation du plugin Docker Management": "Installation du plugin Docker Management",
         "Le plugin Docker management doit être installé": "Le plugin Docker management doit être installé",
         "Le plugin Docker management doit être actif": "Le plugin Docker management doit être actif",
-        "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management": "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management",
-        "Mise en place des identifiants MQTT": "Mise en place des identifiants MQTT",
+        "Pause de 120s le temps de l\\'installation des dépendances du plugin Docker Management": "Pause de 120s le temps de l\\'installation des dépendances du plugin Docker Management",
         "Génération des certificats": "Génération des certificats",
+        "Mise en place des identifiants MQTT": "Mise en place des identifiants MQTT",
         "Création du container Mosquitto": "Création du container Mosquitto",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration"
     },
