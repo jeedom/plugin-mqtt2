@@ -37,7 +37,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function generateCertificates() {
-      $path = realpath(__DIR__ . '/../../data/ssl');
+      $path = __DIR__ . '/../../data/ssl';
       if (!file_exists($path)) {
          mkdir($path);
       }
