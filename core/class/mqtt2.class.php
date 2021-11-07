@@ -135,18 +135,18 @@ class mqtt2 extends eqLogic {
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
-         'ttl' => 5000,
+         'ttl' => 1000,
          'message' => __('Génération des certificats', __FILE__),
       ));
-      sleep(5);
+      sleep(1);
       self::setPassword();
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
-         'ttl' => 2000,
+         'ttl' => 1000,
          'message' => __('Mise en place des identifiants MQTT', __FILE__),
       ));
-      sleep(5);
+      sleep(1);
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
@@ -182,7 +182,6 @@ class mqtt2 extends eqLogic {
       unlink(__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', 'mqtt2')));
       $docker->create();
-      event::add('jeedom::alert', array('page' => 'plugin'));
    }
 
    public static function deamon_info() {
@@ -208,6 +207,15 @@ class mqtt2 extends eqLogic {
       if ($deamon_info['launchable'] != 'ok') {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
+      if (config::byKey('mode', 'mqtt2') == 'local') {
+         $path_ssl = realpath(__DIR__ . '/../../data/ssl');
+         if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key')) {
+            self::generateClientCert();
+            shell_exec('sudo cp ' . jeedom::getTmpFolder('mqtt2') . '/ssl/client.* ' . $path_ssl . '/');
+            shell_exec('sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
+         }
+         shell_exec('sudo chown -R www-data ' . $path_ssl);
+      }
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', 'mqtt2'))[0]);
@@ -215,7 +223,10 @@ class mqtt2 extends eqLogic {
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
       $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
       if (config::byKey('mode', 'mqtt2') == 'local') {
-         $cmd .= ' --mqtt_server mqtt://127.0.0.1:1883';
+         $cmd .= ' --mqtt_server mqtts://127.0.0.1:8883';
+         $cmd .= ' --client_key ' . $path_ssl . '/client.key';
+         $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
+         $cmd .= ' --ca ' . $path_ssl . '/ca.crt';
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::ip', 'mqtt2');
       }
@@ -226,9 +237,9 @@ class mqtt2 extends eqLogic {
       $cmd .= ' --cycle ' . config::byKey('cycle', 'mqtt2');
       $cmd .= ' --pid ' . jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
       log::add('mqtt2', 'info', 'Lancement démon mqtt2 : ' . $cmd);
-      $result = exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
+      exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
-      while ($i < 30) {
+      while ($i < 10) {
          $deamon_info = self::deamon_info();
          if ($deamon_info['state'] == 'ok') {
             break;

@@ -124,6 +124,7 @@ if (!isConnect()) {
           });
           return;
         } else {
+          $.hideAlert();
           $('#div_alert').showAlert({
             message: '{{Installation réussie}}',
             level: 'success'
