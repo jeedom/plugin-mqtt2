@@ -82,7 +82,7 @@ class mqtt2 extends eqLogic {
 
    public static function setPassword() {
       $path = __DIR__ . '/../../data/passwords';
-      if (config::byKey('mqtt::password', 'mqtt2') == '') {
+      if (trim(config::byKey('mqtt::password', 'mqtt2')) == '') {
          config::save('mqtt::password', "jeedom:" . config::genKey(), 'mqtt2');
       }
       unlink($path);
