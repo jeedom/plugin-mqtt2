@@ -16,7 +16,7 @@
         "Port(s)": "Port (s)",
         "Topic racine Jeedom": "Jeedom root topic",
         "Transmettre tous les evènements des commandes": "Transmit all order events",
-        "Installation lancée": "Installation started"
+        "Installation réussie": "Successful installation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
@@ -77,6 +77,8 @@
         "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No SSL folder found, did you install Mosquitto first?",
         "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto installed locally on the machine, please remove it before installing the Mosquitto container: sudo apt remove mosquitto",
         "Installation du plugin Docker Management": "Installing the Docker Management plugin",
+        "Le plugin Docker management doit être installé": "The Docker management plugin must be installed",
+        "Le plugin Docker management doit être actif": "The Docker management plugin must be active",
         "Pause de 60s le temps de l\\'installation des dépendances du plugin Docker Management": "60s pause while installing Docker Management plugin dependencies",
         "Mise en place des identifiants MQTT": "Setting up MQTT identifiers",
         "Génération des certificats": "Generating certificates",
