@@ -126,19 +126,11 @@ class mqtt2 extends eqLogic {
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
-            'ttl' => 60000,
-            'message' => __('Pause de 60s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
+            'ttl' => 120000,
+            'message' => __('Pause de 120s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
          ));
-         sleep(60);
+         sleep(120);
       }
-      self::setPassword();
-      event::add('jeedom::alert', array(
-         'level' => 'warning',
-         'page' => 'plugin',
-         'ttl' => 2000,
-         'message' => __('Mise en place des identifiants MQTT', __FILE__),
-      ));
-      sleep(2);
       self::generateCertificates();
       event::add('jeedom::alert', array(
          'level' => 'warning',
@@ -146,7 +138,14 @@ class mqtt2 extends eqLogic {
          'ttl' => 5000,
          'message' => __('Génération des certificats', __FILE__),
       ));
-
+      sleep(2);
+      self::setPassword();
+      event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'ttl' => 2000,
+         'message' => __('Mise en place des identifiants MQTT', __FILE__),
+      ));
       sleep(5);
       event::add('jeedom::alert', array(
          'level' => 'warning',
