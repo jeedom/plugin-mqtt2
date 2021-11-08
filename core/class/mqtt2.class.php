@@ -160,6 +160,9 @@ class mqtt2 extends eqLogic {
          $ports .= '      - ' . $line . "\n";
       }
       $compose = str_replace('#ports#', $ports, $compose);
+      if (!class_exists('docker2')) {
+         include_file('core', 'docker2', 'class', 'docker2');
+      }
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
       if (!is_object($docker)) {
          $docker = new docker2();

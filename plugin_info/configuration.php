@@ -125,10 +125,12 @@ if (!isConnect()) {
           return;
         } else {
           window.toastr.clear()
+          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
           $('#div_alert').showAlert({
             message: '{{Installation réussie}}',
             level: 'success'
           });
+
         }
       }
     });
