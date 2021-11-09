@@ -126,10 +126,16 @@ class mqtt2 extends eqLogic {
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
-            'ttl' => 120000,
+            'ttl' => 250000,
             'message' => __('Pause de 120s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
          ));
-         sleep(120);
+         $i = 0;
+         while (system::installPackageInProgress('docker2')) {
+            sleep(5);
+            $i++;
+            if ($i > 50) {
+            }
+         }
       }
       self::generateCertificates();
       event::add('jeedom::alert', array(
