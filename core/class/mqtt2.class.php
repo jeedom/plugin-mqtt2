@@ -134,6 +134,7 @@ class mqtt2 extends eqLogic {
             sleep(5);
             $i++;
             if ($i > 50) {
+throw new Exception(__('Delai maximum autorisé pour l\'installation des dépendances dépassé', __FILE__));
             }
          }
       }
