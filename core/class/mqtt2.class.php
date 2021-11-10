@@ -181,7 +181,6 @@ class mqtt2 extends eqLogic {
       $docker->setConfiguration('docker_number', 1);
       $docker->setConfiguration('create::mode', 'jeedom_compose');
       $docker->setConfiguration('create::compose', $compose);
-      $docker->setIsEnable(1);
       $docker->save();
       try {
          $docker->rm();
