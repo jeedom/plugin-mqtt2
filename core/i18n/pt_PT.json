@@ -80,6 +80,7 @@
         "Le plugin Docker management doit être installé": "O plugin de gerenciamento do Docker deve ser instalado",
         "Le plugin Docker management doit être actif": "O plug-in de gerenciamento do Docker deve estar ativo",
         "Pause de 120s le temps de l\\'installation des dépendances du plugin Docker Management": "Pausa de 120 segundos durante a instalação das dependências do plug-in de gerenciamento do Docker",
+        "Delai maximum autorisé pour l\\'installation des dépendances dépassé": "Tempo máximo permitido para a instalação de dependências excedido",
         "Génération des certificats": "Gerando certificados",
         "Mise en place des identifiants MQTT": "Configurando identificadores MQTT",
         "Création du container Mosquitto": "Criação do container Mosquitto",
