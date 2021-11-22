@@ -1,4 +1,7 @@
 {
+  "plugin" : {
+    "docker2" : {}
+  },
   "apt":{
     "nodejs" : {}
   },
