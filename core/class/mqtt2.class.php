@@ -90,10 +90,58 @@ class mqtt2 extends eqLogic {
       shell_exec('sudo docker run --rm -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
    }
 
+   public static function installDocker2() {
+      try {
+         plugin::byId('docker2');
+      } catch (Exception $e) {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Installation du plugin Docker Management', __FILE__),
+         ));
+         $update = update::byLogicalId('docker2');
+         if (!is_object($update)) {
+            $update = new update();
+         }
+         $update->setLogicalId('docker2');
+         $update->setSource('market');
+         $update->setConfiguration('version', 'beta');
+         $update->save();
+         $update->doUpdate();
+         $plugin = plugin::byId('docker2');
+
+         if (!is_object($plugin)) {
+            throw new Exception(__('Le plugin Docker management doit être installé', __FILE__));
+         }
+         if (!$plugin->isActive()) {
+            $plugin->setIsEnable(1);
+            $plugin->dependancy_install();
+         }
+         if (!$plugin->isActive()) {
+            throw new Exception(__('Le plugin Docker management doit être actif', __FILE__));
+         }
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'ttl' => 250000,
+            'message' => __('Pause de 120s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
+         ));
+         $i = 0;
+         while (system::installPackageInProgress('docker2')) {
+            sleep(5);
+            $i++;
+            if ($i > 50) {
+               throw new Exception(__('Delai maximum autorisé pour l\'installation des dépendances dépassé', __FILE__));
+            }
+         }
+      }
+   }
+
    public static function installMosquitto() {
       if (shell_exec('sudo which mosquitto | wc -l') != 0) {
          throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
       }
+      self::installDocker2();
       self::generateCertificates();
       event::add('jeedom::alert', array(
          'level' => 'warning',
