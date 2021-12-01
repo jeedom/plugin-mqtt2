@@ -75,6 +75,11 @@
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "Nenhuma pasta SSL encontrada. Você instalou o Mosquitto primeiro?",
+        "Installation du plugin Docker Management": "Instalando o plug-in de gerenciamento do Docker",
+        "Le plugin Docker management doit être installé": "O plugin de gerenciamento do Docker deve ser instalado",
+        "Le plugin Docker management doit être actif": "O plug-in de gerenciamento do Docker deve estar ativo",
+        "Pause de 120s le temps de l\\'installation des dépendances du plugin Docker Management": "Pausa de 120 segundos ao instalar as dependências do plug-in de gerenciamento do Docker",
+        "Delai maximum autorisé pour l\\'installation des dépendances dépassé": "Tempo máximo permitido para a instalação de dependências excedido",
         "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto instalado localmente na máquina, remova-o antes de instalar o contêiner Mosquitto: sudo apt remove mosquitto",
         "Génération des certificats": "Gerando certificados",
         "Mise en place des identifiants MQTT": "Configurando identificadores MQTT",
