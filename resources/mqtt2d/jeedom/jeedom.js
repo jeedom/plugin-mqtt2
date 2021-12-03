@@ -142,7 +142,7 @@ Jeedom.com.add_changes = function(_key,_value){
 Jeedom.com.send_change_immediate = function(_changes){
   Jeedom.log.debug('Send data to jeedom : '+JSON.stringify(_changes));
   request.post({url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey, json: _changes}, function(error, response, body){
-    if(response.statusCode != 200){
+    if(!response || response.statusCode != 200){
       Jeedom.log.error('Error on send to jeedom : '+JSON.stringify(error));
     }
   })
@@ -150,7 +150,7 @@ Jeedom.com.send_change_immediate = function(_changes){
 
 Jeedom.com.test = function(){
   request.post({url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey, json: {}}, function(error, response, body){
-    if(response.statusCode != 200){
+    if(!response || response.statusCode != 200){
       Jeedom.log.error('Callback error.Please check your network configuration page : '+JSON.stringify(error));
       process.exit();
     }
