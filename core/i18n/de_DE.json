@@ -55,6 +55,8 @@
         "Icône": "Symbol",
         "Topic": "Thema",
         "Message": "Nachricht",
+        "Liste : valeur|texte (séparées par un point-virgule)": "Liste: Wert | Text (durch Semikolon getrennt)",
+        "Liste : valeur|texte": "Liste: Wert | Text",
         "Min.": "Mindest.",
         "Max.": "Max.",
         "Unité": "Einheit",
