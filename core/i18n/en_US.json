@@ -55,6 +55,8 @@
         "Icône": "Icon",
         "Topic": "Topic",
         "Message": "Message",
+        "Liste : valeur|texte (séparées par un point-virgule)": "List: value | text (separated by a semicolon)",
+        "Liste : valeur|texte": "List: value | text",
         "Min.": "Min.",
         "Max.": "Max.",
         "Unité": "Unity",
