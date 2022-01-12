@@ -367,7 +367,16 @@ class mqtt2 extends eqLogic {
 
 
    public static function handleEvent($_option) {
-      self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/event/' . $_option['event_id'], (string) $_option['value']);
+      $message = array('value' => $_option['value']);
+      $cmd = cmd::byId($_option['event_id']);
+      if (is_object($cmd)) {
+         $message['humanName'] = $cmd->getHumanName();
+         $message['unite'] = $cmd->getUnite();
+         $message['name'] = $cmd->getName();
+         $message['type'] = $cmd->getType();
+         $message['subtype'] = $cmd->getSubType();
+      }
+      self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/event/' . $_option['event_id'], $message);
    }
 
    public static function postConfig_sendEvent($_value) {
