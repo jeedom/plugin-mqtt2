@@ -69,7 +69,7 @@
         "` avec en message la valeur de la commande": "`con el valor de comando en el mensaje",
         "`jeedom\/cmd\/event\/": "`jeedom \/ cmd \/ event \/",
         "évenement sur la commande `": "evento en el comando",
-        "` avec en message la valeur": "`con el valor",
+        "` avec en message un json contenant differente information dont la valeur de la commande": "`con un mensaje json que contiene información diferente, incluido el valor del comando",
         " Description.": " Descripción.",
         " Description?": " Descripción?",
         "Description ": "Descripción ",

@@ -80,6 +80,6 @@
         "` avec en message la valeur de la commande": "` avec en message la valeur de la commande",
         "`jeedom\/cmd\/event\/": "`jeedom\/cmd\/event\/",
         "évenement sur la commande `": "évenement sur la commande `",
-        "` avec en message la valeur": "` avec en message la valeur"
+        "` avec en message un json contenant differente information dont la valeur de la commande": "` avec en message un json contenant differente information dont la valeur de la commande"
     }
 }
