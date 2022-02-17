@@ -90,7 +90,7 @@ client.on('message', function (topic, message) {
     }
   }
   Jeedom.log.debug('Received message on topis : '+topic+' => '+message.toString())
-  Jeedom.com.add_changes(topic.replace(/\//g, '::'),message.toString());
+  Jeedom.com.add_changes(topic.replace(/\//g, '::'),JSON.parse(message.toString()));
 })
 
 
