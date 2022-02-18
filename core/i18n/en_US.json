@@ -1,11 +1,11 @@
 {
     "plugins\/mqtt2\/plugin_info\/configuration.php": {
         "Port socket interne": "Internal socket port",
-        "Cycle (s)": "Cycle (s)",
+        "Cycle (s)": "Round(s)",
         "Mode": "Fashion",
         "Broker distant": "Remote broker",
         "Broker local": "Local broker",
-        "IP": "IP",
+        "IP": "IPs",
         "Installer": "To install",
         "Installer mosquitto": "Install mosquitto",
         "Certificat client": "Client certificate",
@@ -42,7 +42,7 @@
         "Visible": "Visible",
         "Root topic": "Root topic",
         "Ajouter une commande": "Add an order",
-        "Id": "Id",
+        "Id": "ID",
         "Nom": "Name",
         "Type": "Type",
         "Paramètres": "Settings",

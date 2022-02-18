@@ -5,7 +5,7 @@
         "Mode": "Mode",
         "Broker distant": "Remote-Broker",
         "Broker local": "Lokaler Makler",
-        "IP": "IP",
+        "IP": "IPs",
         "Installer": "Installieren",
         "Installer mosquitto": "Mücke installieren",
         "Certificat client": "Client-Zertifikat",
