@@ -288,13 +288,13 @@ class mqtt2 extends eqLogic {
    }
 
    public static function addPluginTopic($_plugin, $_topic) {
-      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping = config::byKey('mapping', 'mqtt2',array());
       $mapping[$_topic] = $_plugin;
       config::save('mapping', $mapping, 'mqtt2');
    }
 
    public static function removePluginTopic($_topic) {
-      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping = config::byKey('mapping', 'mqtt2',array());
       unset($mapping[$_topic]);
       config::save('mapping', $mapping, 'mqtt2');
    }
