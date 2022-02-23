@@ -96,7 +96,7 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom utilisant mqtt}}"></i></sup>
         </label>
-        <div class="test col-md-7">
+        <div class="subscribed col-md-7">
           
         </div>
       </div>
@@ -179,7 +179,7 @@ $.ajax({
           for (plugin in data.result) {
             results += '<span class="label label-success">'+plugin + ' (' + data.result[plugin] + ') '+'</span> ' 
           }
-          $('.test').empty().append(results);
+          $('.subscribed').empty().append(results);
         }
         
       }
