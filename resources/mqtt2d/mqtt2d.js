@@ -23,7 +23,7 @@ if(typeof args.loglevel == 'undefined'){
 }
 Jeedom.log.setLevel(args.loglevel)
 
-Jeedom.log.info('Start dysond')
+Jeedom.log.info('Start mqtt2d')
 Jeedom.log.info('Log level on  : '+args.loglevel)
 Jeedom.log.info('Socket port : '+args.socketport)
 Jeedom.log.info('MQTT : '+args.mqtt_server)
@@ -89,9 +89,22 @@ client.on('message', function (topic, message) {
       return;
     }
   }
-  Jeedom.log.debug('Received message on topis : '+topic+' => '+message.toString())
-  Jeedom.com.add_changes(topic.replace(/\//g, '::'),JSON.parse(message.toString()));
+  Jeedom.log.debug('Received message on topic : '+topic+' => '+message.toString())
+  if(isValidJSONString(message.toString())){ 
+    Jeedom.com.add_changes(topic.replace(/\//g, '::'),JSON.parse(message.toString()));
+  } else {
+    Jeedom.com.add_changes(topic.replace(/\//g, '::'),message.toString());
+  }
 })
+
+function isValidJSONString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 
 Jeedom.http.config(args.socketport,args.apikey)
