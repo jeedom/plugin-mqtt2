@@ -294,6 +294,26 @@ class mqtt2 extends eqLogic {
       unset($mapping[$_topic]);
       config::save('mapping', $mapping, __CLASS__);
    }
+   
+   public static function getSubscribed() {
+      $mapping = config::byKey('mapping', __CLASS__, array());
+      return $mapping;
+   }
+   
+   public static function getFormatedInfos() {
+      $infos = array();
+      $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      if (config::byKey('mode', __CLASS__) == 'local') {
+        $infos['ip'] = '127.0.0.1';
+        $infos['port'] = '1883';
+      } else {
+        $infos['ip'] = config::byKey('remote::ip', __CLASS__);
+        $infos['port'] = config::byKey('remote::port', __CLASS__);
+      }
+      $infos['user'] = $authentifications[0];
+      $infos['password'] = $authentifications[1];
+      return $infos;
+   }
 
    public static function handleMqttMessage($_message) {
       log::add(__CLASS__, 'debug', 'Received message without plugin handler : ' . json_encode($_message));

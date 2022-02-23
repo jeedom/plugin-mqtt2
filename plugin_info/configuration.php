@@ -92,6 +92,14 @@ if (!isConnect()) {
           <input type="checkbox" class="configKey" data-l1key="sendEvent">
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">{{Plugins abonnés}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom utilisant mqtt}}"></i></sup>
+        </label>
+        <div class="test col-md-7">
+          
+        </div>
+      </div>
     </div>
     <div class="col-lg-6">
       <div class="form-group mqtt2Mode local">
@@ -149,4 +157,31 @@ if (!isConnect()) {
       }
     });
   });
+$.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "getSubscribed"
+      },
+      dataType: 'json',
+      error: function(request, status, error) {
+        handleAjaxError(request, status, error);
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $('#div_alert').showAlert({
+            message: data.result,
+            level: 'danger'
+          });
+          return;
+        } else {
+          var results = '';
+          for (plugin in data.result) {
+            results += '<span class="label label-success">'+plugin + ' (' + data.result[plugin] + ') '+'</span> ' 
+          }
+          $('.test').empty().append(results);
+        }
+        
+      }
+    });
 </script>

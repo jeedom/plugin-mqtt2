@@ -30,6 +30,10 @@ try {
     mqtt2::installMosquitto();
     ajax::success();
   }
+  
+  if (init('action') == 'getSubscribed') {
+    ajax::success(mqtt2::getSubscribed());
+  }
 
   if (init('action') == 'downloadClientCert') {
     mqtt2::generateClientCert();
