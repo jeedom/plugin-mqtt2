@@ -4,6 +4,7 @@
         "Cycle (s)": "Round(s)",
         "Mode": "Fashion",
         "Broker distant": "Remote broker",
+        "Broker local docker": "Broker local docker",
         "Broker local": "Local broker",
         "Installer mosquitto": "Install mosquitto",
         "Télécharger le certificat client": "Download client certificate",
@@ -86,6 +87,7 @@
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No SSL folder found, did you install Mosquitto first?",
+        "Installation de Mosquitto en local en cours": "Installing Mosquitto locally in progress",
         "Installation du plugin Docker Management": "Installing the Docker Management plugin",
         "Le plugin Docker management doit être installé": "The Docker management plugin must be installed",
         "Le plugin Docker management doit être actif": "The Docker management plugin must be active",

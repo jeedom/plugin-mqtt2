@@ -4,6 +4,7 @@
         "Cycle (s)": "Ciclo (s)",
         "Mode": "Moda",
         "Broker distant": "Broker remoto",
+        "Broker local docker": "Ventana acoplable local del intermediario",
         "Broker local": "Corredor local",
         "Installer mosquitto": "Instalar mosquitto",
         "Télécharger le certificat client": "Descargar certificado de cliente",
@@ -86,6 +87,7 @@
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No se encontró ninguna carpeta SSL, ¿instaló Mosquitto primero?",
+        "Installation de Mosquitto en local en cours": "Instalación de Mosquitto localmente en curso",
         "Installation du plugin Docker Management": "Instalación del complemento de administración de Docker",
         "Le plugin Docker management doit être installé": "El complemento de administración de Docker debe estar instalado",
         "Le plugin Docker management doit être actif": "El complemento de administración de Docker debe estar activo",
