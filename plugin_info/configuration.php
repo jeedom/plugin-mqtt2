@@ -42,6 +42,7 @@ if (!isConnect()) {
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
             <option value="remote">{{Broker distant}}</option>
+            <option value="docker">{{Broker local docker}}</option>
             <option value="local">{{Broker local}}</option>
           </select>
         </div>
@@ -97,7 +98,7 @@ if (!isConnect()) {
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom utilisant mqtt}}"></i></sup>
         </label>
         <div class="subscribed col-md-7">
-          
+
         </div>
       </div>
     </div>
@@ -157,31 +158,31 @@ if (!isConnect()) {
       }
     });
   });
-$.ajax({
-      type: "POST",
-      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
-      data: {
-        action: "getSubscribed"
-      },
-      dataType: 'json',
-      error: function(request, status, error) {
-        handleAjaxError(request, status, error);
-      },
-      success: function(data) {
-        if (data.state != 'ok') {
-          $('#div_alert').showAlert({
-            message: data.result,
-            level: 'danger'
-          });
-          return;
-        } else {
-          var results = '';
-          for (plugin in data.result) {
-            results += '<span class="label label-success">'+plugin + ' (' + data.result[plugin] + ') '+'</span> ' 
-          }
-          $('.subscribed').empty().append(results);
+  $.ajax({
+    type: "POST",
+    url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+    data: {
+      action: "getSubscribed"
+    },
+    dataType: 'json',
+    error: function(request, status, error) {
+      handleAjaxError(request, status, error);
+    },
+    success: function(data) {
+      if (data.state != 'ok') {
+        $('#div_alert').showAlert({
+          message: data.result,
+          level: 'danger'
+        });
+        return;
+      } else {
+        var results = '';
+        for (plugin in data.result) {
+          results += '<span class="label label-success">' + plugin + ' (' + data.result[plugin] + ') ' + '</span> '
         }
-        
+        $('.subscribed').empty().append(results);
       }
-    });
+
+    }
+  });
 </script>
