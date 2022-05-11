@@ -264,7 +264,7 @@ class mqtt2 extends eqLogic {
       if ($deamon_info['launchable'] != 'ok') {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
-      if (config::byKey('mode', __CLASS__) == 'local') {
+      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key')) {
             self::generateClientCert();
