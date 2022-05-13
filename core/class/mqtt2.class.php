@@ -480,6 +480,9 @@ class mqtt2Cmd extends cmd {
          case 'select':
             $value = str_replace('#select#', $_options['select'], $value);
             break;
+         case 'message':
+            $value = str_replace('#message#', $_options['message'], $value);
+            break;
       }
       mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value);
    }
