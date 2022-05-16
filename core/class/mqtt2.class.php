@@ -350,7 +350,7 @@ class mqtt2 extends eqLogic {
    public static function getFormatedInfos() {
       $infos = array();
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      if (config::byKey('mode', __CLASS__) == 'local') {
+      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $infos['ip'] = '127.0.0.1';
          $infos['port'] = '1883';
       } else {
