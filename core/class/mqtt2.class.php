@@ -86,7 +86,6 @@ class mqtt2 extends eqLogic {
       if ($_mode == 'docker') {
          shell_exec(system::getCmdSudo() . ' docker run --rm -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
       } else {
-         echo system::getCmdSudo() . ' mosquitto_passwd -U ' . $path . '/passwords';
          shell_exec(system::getCmdSudo() . ' mosquitto_passwd -U ' . $path);
       }
    }
