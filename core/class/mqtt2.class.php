@@ -234,9 +234,10 @@ class mqtt2 extends eqLogic {
          $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.service');
          file_put_contents('/tmp/mosquitto.service', str_replace("#config_path#", __DIR__ . '/../../data/mosquitto.conf', $service));
          shell_exec(system::getCmdSudo() . ' mv /tmp/mosquitto.service /lib/systemd/system/mosquitto.service');
-         shell_exec(system::getCmdSudo() . ' systemctl start mosquitto');
-         shell_exec(system::getCmdSudo() . ' systemctl restart mosquitto');
+         shell_exec(system::getCmdSudo() . ' systemctl daemon-reload');
          shell_exec(system::getCmdSudo() . ' systemctl enable mosquitto');
+         shell_exec(system::getCmdSudo() . ' systemctl stop mosquitto');
+         shell_exec(system::getCmdSudo() . ' systemctl start mosquitto');
       }
    }
 
