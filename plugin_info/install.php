@@ -18,17 +18,15 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-// Fonction exécutée automatiquement après l'installation du plugin
-  function mqtt2_install() {
-
+function mqtt2_update() {
+  if (config::byKey('mode', 'mqtt2', '') == 'remote') {
+    if (strpos(config::byKey('remote::ip', 'mqtt2', ''), ':') !== false) {
+      $remoteAddr = explode(":", config::byKey('remote::ip', 'mqtt2'));
+      if (count($remoteAddr) == 3) {
+        config::save('remote::protocol', $remoteAddr[0], 'mqtt2');
+        config::save('remote::ip', str_replace('//', '', $remoteAddr[1]), 'mqtt2');
+        config::save('remote::port', $remoteAddr[2], 'mqtt2');
+      }
+    }
   }
-
-// Fonction exécutée automatiquement après la mise à jour du plugin
-  function mqtt2_update() {
-
-  }
-
-// Fonction exécutée automatiquement après la suppression du plugin
-  function mqtt2_remove() {
-
-  }
+}

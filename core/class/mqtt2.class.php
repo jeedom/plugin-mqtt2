@@ -20,13 +20,9 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
-   /*     * *************************Attributs****************************** */
-
-
-   /*     * ***********************Methode static*************************** */
 
    public static function dependancy_end() {
-      if (config::byKey('mode', 'mqtt2') != 'local') {
+      if (config::byKey('mode', __CLASS__) != 'local') {
          return;
       }
       $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
@@ -41,25 +37,25 @@ class mqtt2 extends eqLogic {
       if (!file_exists($path)) {
          mkdir($path);
       }
-      shell_exec('sudo chmod -R 777  ' . $path);
-      shell_exec('sudo chown -R www-data ' . $path);
+      shell_exec(system::getCmdSudo() . ' chmod -R 777  ' . $path);
+      shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $path);
       if (!file_exists($path . '/ca.key')) {
-         shell_exec('sudo openssl genrsa -out ' . $path . '/ca.key 2048');
+         shell_exec(system::getCmdSudo() . ' openssl genrsa -out ' . $path . '/ca.key 2048');
       }
       if (!file_exists($path . '/ca.crt')) {
-         shell_exec('sudo openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
+         shell_exec(system::getCmdSudo() . ' openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
       }
       if (!file_exists($path . '/mosquitto.key')) {
-         shell_exec('sudo openssl genrsa -out ' . $path . '/mosquitto.key 2048');
+         shell_exec(system::getCmdSudo() . ' openssl genrsa -out ' . $path . '/mosquitto.key 2048');
       }
       if (!file_exists($path . '/mosquitto.csr')) {
-         shell_exec('sudo openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
+         shell_exec(system::getCmdSudo() . ' openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
       }
       if (!file_exists($path . '/mosquitto.crt')) {
-         shell_exec('sudo openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
+         shell_exec(system::getCmdSudo() . ' openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
       }
-      shell_exec('sudo chmod -R 777  ' . $path);
-      shell_exec('sudo chown -R www-data ' . $path);
+      shell_exec(system::getCmdSudo() . ' chmod -R 777  ' . $path);
+      shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $path);
    }
 
    public static function generateClientCert() {
@@ -67,27 +63,42 @@ class mqtt2 extends eqLogic {
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
          throw new Exception(__('Aucun dossier SSL trouvé, avez vous installé Mosquitto d\'abord ?', __FILE__));
       }
-      $tmp_folder = jeedom::getTmpFolder('mqtt2') . '/ssl';
+      $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
       if (file_exists($tmp_folder)) {
-         shell_exec('sudo rm -rf ' . $tmp_folder);
+         shell_exec(system::getCmdSudo() . ' rm -rf ' . $tmp_folder);
       }
       mkdir($tmp_folder);
-      shell_exec('sudo openssl genrsa -out ' . $tmp_folder . '/client.key 2048');
-      shell_exec('sudo openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-client-' . rand(1111, 9999) . '" -key ' . $tmp_folder . '/client.key -out ' . $tmp_folder . '/client.csr');
-      shell_exec('sudo openssl x509 -req -in ' . $tmp_folder . '/client.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $tmp_folder . '/client.crt -days 9999 -sha256');
-      shell_exec('sudo rm ' . $tmp_folder . '/client.csr');
-      shell_exec('sudo cp ' . $path . '/ca.crt ' . $tmp_folder . '/ca.crt');
-      shell_exec('sudo chown -R www-data ' . $tmp_folder);
+      shell_exec(system::getCmdSudo() . ' openssl genrsa -out ' . $tmp_folder . '/client.key 2048');
+      shell_exec(system::getCmdSudo() . ' openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-client-' . rand(1111, 9999) . '" -key ' . $tmp_folder . '/client.key -out ' . $tmp_folder . '/client.csr');
+      shell_exec(system::getCmdSudo() . ' openssl x509 -req -in ' . $tmp_folder . '/client.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $tmp_folder . '/client.crt -days 9999 -sha256');
+      shell_exec(system::getCmdSudo() . ' rm ' . $tmp_folder . '/client.csr');
+      shell_exec(system::getCmdSudo() . ' cp ' . $path . '/ca.crt ' . $tmp_folder . '/ca.crt');
+      shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $tmp_folder);
    }
 
-   public static function setPassword() {
+   public static function setPassword($_mode = 'local') {
       $path = __DIR__ . '/../../data/passwords';
-      if (trim(config::byKey('mqtt::password', 'mqtt2')) == '') {
-         config::save('mqtt::password', "jeedom:" . config::genKey(), 'mqtt2');
+      if (trim(config::byKey('mqtt::password', __CLASS__)) == '') {
+         config::save('mqtt::password', "jeedom:" . config::genKey(), __CLASS__);
       }
       unlink($path);
-      file_put_contents($path, config::byKey('mqtt::password', 'mqtt2'));
-      shell_exec('sudo docker run --rm -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
+      file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
+      if ($_mode == 'docker') {
+         shell_exec(system::getCmdSudo() . ' docker run --rm -v ' . $path . ':/passwords eclipse-mosquitto:latest mosquitto_passwd -U /passwords');
+      } else {
+         shell_exec(system::getCmdSudo() . ' mosquitto_passwd -U ' . $path);
+      }
+   }
+
+   public static function installLocalMosquitto() {
+      if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Installation de Mosquitto en local en cours', __FILE__),
+         ));
+         shell_exec(system::getCmdSudo() . ' apt update;' . system::getCmdSudo() . ' apt install -y mosquitto');
+      }
    }
 
    public static function installDocker2() {
@@ -137,11 +148,18 @@ class mqtt2 extends eqLogic {
       }
    }
 
-   public static function installMosquitto() {
-      if (shell_exec('sudo which mosquitto | wc -l') != 0) {
-         throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
+   public static function installMosquitto($_mode = 'local') {
+      if ($_mode == 'remote') {
+         return;
       }
-      self::installDocker2();
+      if ($_mode == 'docker') {
+         if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+            throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
+         }
+         self::installDocker2();
+      } else {
+         self::installLocalMosquitto();
+      }
       self::generateCertificates();
       event::add('jeedom::alert', array(
          'level' => 'warning',
@@ -150,7 +168,7 @@ class mqtt2 extends eqLogic {
          'message' => __('Génération des certificats', __FILE__),
       ));
       sleep(1);
-      self::setPassword();
+      self::setPassword($_mode);
       event::add('jeedom::alert', array(
          'level' => 'warning',
          'page' => 'plugin',
@@ -164,45 +182,70 @@ class mqtt2 extends eqLogic {
          'ttl' => 30000,
          'message' => __('Création du container Mosquitto', __FILE__),
       ));
-      $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
-      $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
-      $ports = '';
-      foreach (explode("\n", config::byKey('mosquitto::ports', 'mqtt2')) as $line) {
-         $ports .= '      - ' . $line . "\n";
+      if ($_mode == 'docker') {
+         $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
+         $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
+         $ports = '';
+         foreach (explode("\n", config::byKey('mosquitto::ports', __CLASS__)) as $line) {
+            $ports .= '      - ' . $line . "\n";
+         }
+         $compose = str_replace('#ports#', $ports, $compose);
+         if (!class_exists('docker2')) {
+            include_file('core', 'docker2', 'class', 'docker2');
+         }
+         $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
+         if (!is_object($docker)) {
+            $docker = new docker2();
+         }
+         $docker->setLogicalId('1::mqtt2_mosquitto');
+         $docker->setName('mqtt2_mosquitto');
+         $docker->setIsEnable(1);
+         $docker->setEqType_name('docker2');
+         $docker->setConfiguration('name', 'mqtt2_mosquitto');
+         $docker->setConfiguration('docker_number', 1);
+         $docker->setConfiguration('create::mode', 'jeedom_compose');
+         $docker->setConfiguration('create::compose', $compose);
+         $docker->save();
+         try {
+            $docker->rm();
+            sleep(5);
+         } catch (\Throwable $th) {
+         }
+         unlink(__DIR__ . '/../../data/mosquitto.conf');
       }
-      $compose = str_replace('#ports#', $ports, $compose);
-      if (!class_exists('docker2')) {
-         include_file('core', 'docker2', 'class', 'docker2');
+
+      if ($_mode == 'local') {
+         $replace = array(
+            ' /mosquitto/' => ' ' . __DIR__ . '/../../data/',
+            '/data/config/ssl/' => '/data/ssl/',
+         );
+      } else {
+         $replace = array(
+            ' ' . __DIR__ . '/../../data/'  => ' /mosquitto/',
+            '/data/ssl/' => '/data/config/ssl/',
+         );
       }
-      $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
-      if (!is_object($docker)) {
-         $docker = new docker2();
+      config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
+      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
+      if ($_mode == 'docker') {
+         $docker->create();
+      } else {
+         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
+         $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.service');
+         file_put_contents('/tmp/mosquitto.service', str_replace("#config_path#", __DIR__ . '/../../data/mosquitto.conf', $service));
+         shell_exec(system::getCmdSudo() . ' mv /tmp/mosquitto.service /lib/systemd/system/mosquitto.service');
+         shell_exec(system::getCmdSudo() . ' systemctl daemon-reload');
+         shell_exec(system::getCmdSudo() . ' systemctl enable mosquitto');
+         shell_exec(system::getCmdSudo() . ' systemctl stop mosquitto');
+         shell_exec(system::getCmdSudo() . ' systemctl start mosquitto');
       }
-      $docker->setLogicalId('1::mqtt2_mosquitto');
-      $docker->setName('mqtt2_mosquitto');
-      $docker->setIsEnable(1);
-      $docker->setEqType_name('docker2');
-      $docker->setConfiguration('name', 'mqtt2_mosquitto');
-      $docker->setConfiguration('docker_number', 1);
-      $docker->setConfiguration('create::mode', 'jeedom_compose');
-      $docker->setConfiguration('create::compose', $compose);
-      $docker->save();
-      try {
-         $docker->rm();
-         sleep(5);
-      } catch (\Throwable $th) {
-      }
-      unlink(__DIR__ . '/../../data/mosquitto.conf');
-      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', 'mqtt2')));
-      $docker->create();
-      config::save('mode', 'local', 'mqtt2');
    }
 
    public static function deamon_info() {
       $return = array();
-      $return['log'] = 'mqtt2';
+      $return['log'] = __CLASS__;
       $return['state'] = 'nok';
-      $pid_file = jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
+      $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
       if (file_exists($pid_file)) {
          if (@posix_getsid(trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
@@ -221,36 +264,36 @@ class mqtt2 extends eqLogic {
       if ($deamon_info['launchable'] != 'ok') {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
-      if (config::byKey('mode', 'mqtt2') == 'local') {
+      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key')) {
             self::generateClientCert();
-            shell_exec('sudo cp ' . jeedom::getTmpFolder('mqtt2') . '/ssl/client.* ' . $path_ssl . '/');
-            shell_exec('sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
+            shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
+            shell_exec(system::getCmdSudo() . ' rm -rf ' . jeedom::getTmpFolder(__CLASS__) . '/ssl');
          }
-         shell_exec('sudo chown -R www-data ' . $path_ssl);
+         shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $path_ssl);
       }
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
-      $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', 'mqtt2'))[0]);
-      $cmd = 'sudo /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
-      $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('mqtt2'));
-      $cmd .= ' --socketport ' . config::byKey('socketport', 'mqtt2');
-      if (config::byKey('mode', 'mqtt2') == 'local') {
+      $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
+      $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
+      $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__);
+      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $cmd .= ' --mqtt_server mqtts://127.0.0.1:8883';
          $cmd .= ' --client_key ' . $path_ssl . '/client.key';
          $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
          $cmd .= ' --ca ' . $path_ssl . '/ca.crt';
       } else {
-         $cmd .= ' --mqtt_server ' . config::byKey('remote::ip', 'mqtt2');
+         $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
       }
       $cmd .= ' --username ' . $authentifications[0];
       $cmd .= ' --password ' . $authentifications[1];
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
-      $cmd .= ' --apikey ' . jeedom::getApiKey('mqtt2');
-      $cmd .= ' --cycle ' . config::byKey('cycle', 'mqtt2');
-      $cmd .= ' --pid ' . jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
-      log::add('mqtt2', 'info', 'Lancement démon mqtt2 : ' . $cmd);
+      $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
+      $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
+      $cmd .= ' --pid ' . jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
+      log::add(__CLASS__, 'info', 'Lancement démon mqtt2 : ' . $cmd);
       exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
       while ($i < 10) {
@@ -262,47 +305,67 @@ class mqtt2 extends eqLogic {
          $i++;
       }
       if ($i >= 30) {
-         log::add('mqtt2', 'error', 'Impossible de lancer le démon mqtt2d, vérifiez le log', 'unableStartDeamon');
+         log::add(__CLASS__, 'error', 'Impossible de lancer le démon mqtt2d, vérifiez le log', 'unableStartDeamon');
          return false;
       }
-      message::removeAll('mqtt2', 'unableStartDeamon');
+      message::removeAll(__CLASS__, 'unableStartDeamon');
       return true;
    }
 
    public static function deamon_stop() {
-      $pid_file = jeedom::getTmpFolder('mqtt2') . '/deamon.pid';
+      $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
       if (file_exists($pid_file)) {
          $pid = intval(trim(file_get_contents($pid_file)));
          system::kill($pid);
       }
       system::kill('mqtt2d.js');
-      system::fuserk(config::byKey('socketport', 'mqtt2'));
+      system::fuserk(config::byKey('socketport', __CLASS__));
    }
 
    public static function getPluginForTopic($_topic) {
-      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping = config::byKey('mapping', __CLASS__);
       if (isset($mapping[$_topic])) {
          return $mapping[$_topic];
       }
-      return 'mqtt2';
+      return __CLASS__;
    }
 
    public static function addPluginTopic($_plugin, $_topic) {
-      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping = config::byKey('mapping', __CLASS__, array());
       $mapping[$_topic] = $_plugin;
-      config::save('mapping', $mapping, 'mqtt2');
+      config::save('mapping', $mapping, __CLASS__);
    }
 
    public static function removePluginTopic($_topic) {
-      $mapping = config::byKey('mapping', 'mqtt2');
+      $mapping = config::byKey('mapping', __CLASS__, array());
       unset($mapping[$_topic]);
-      config::save('mapping', $mapping, 'mqtt2');
+      config::save('mapping', $mapping, __CLASS__);
+   }
+
+   public static function getSubscribed() {
+      $mapping = config::byKey('mapping', __CLASS__, array());
+      return $mapping;
+   }
+
+   public static function getFormatedInfos() {
+      $infos = array();
+      $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+         $infos['ip'] = '127.0.0.1';
+         $infos['port'] = '1883';
+      } else {
+         $infos['ip'] = config::byKey('remote::ip', __CLASS__);
+         $infos['port'] = config::byKey('remote::port', __CLASS__);
+      }
+      $infos['user'] = $authentifications[0];
+      $infos['password'] = $authentifications[1];
+      return $infos;
    }
 
    public static function handleMqttMessage($_message) {
-      log::add('mqtt2', 'debug', 'Received message without plugin handler : ' . json_encode($_message));
+      log::add(__CLASS__, 'debug', 'Received message without plugin handler : ' . json_encode($_message));
       foreach ($_message as $topic => $message) {
-         if ($topic == config::byKey('root_topic', 'mqtt2')) {
+         if ($topic == config::byKey('root_topic', __CLASS__)) {
             if (isset($message['cmd'])) {
                if (isset($message['cmd']['get'])) {
                   foreach ($message['cmd']['get'] as $cmd_id => $options) {
@@ -310,7 +373,7 @@ class mqtt2 extends eqLogic {
                      if (!is_object($cmd) && $cmd->getType() == 'info') {
                         continue;
                      }
-                     self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
+                     self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
                   }
                }
                if (isset($message['cmd']['set'])) {
@@ -337,7 +400,7 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
-         $eqlogics = self::byLogicalId($topic, 'mqtt2', true);
+         $eqlogics = self::byLogicalId($topic, __CLASS__, true);
          if (count($eqlogics) == 0) {
             continue;
          }
@@ -351,7 +414,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function publish($_topic, $_message) {
-      $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', 'mqtt2') . '/publish?apikey=' . jeedom::getApiKey('mqtt2'));
+      $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
          'Content-Type: application/json'
       ));
@@ -367,43 +430,39 @@ class mqtt2 extends eqLogic {
 
 
    public static function handleEvent($_option) {
-      self::publish(config::byKey('root_topic', 'mqtt2') . '/cmd/event/' . $_option['event_id'], (string) $_option['value']);
+      $message = array('value' => $_option['value']);
+      $cmd = cmd::byId($_option['event_id']);
+      if (is_object($cmd)) {
+         $message['humanName'] = $cmd->getHumanName();
+         $message['unite'] = $cmd->getUnite();
+         $message['name'] = $cmd->getName();
+         $message['type'] = $cmd->getType();
+         $message['subtype'] = $cmd->getSubType();
+      }
+      self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
 
    public static function postConfig_sendEvent($_value) {
       if ($_value == 0) {
-         $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
          if (is_object($listener)) {
             $listener->remove();
          }
       } else {
-         $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
          if (!is_object($listener)) {
             $listener = new listener();
          }
-         $listener->setClass('mqtt2');
+         $listener->setClass(__CLASS__);
          $listener->setFunction('handleEvent');
          $listener->emptyEvent();
          $listener->addEvent('*');
          $listener->save();
       }
    }
-
-
-   /*     * *********************Méthodes d'instance************************* */
-
-   /*     * **********************Getteur Setteur*************************** */
 }
 
 class mqtt2Cmd extends cmd {
-   /*     * *************************Attributs****************************** */
-
-
-   /*     * ***********************Methode static*************************** */
-
-
-   /*     * *********************Methode d'instance************************* */
-
 
    public function execute($_options = array()) {
       if ($this->getType() != 'action') {
@@ -421,9 +480,10 @@ class mqtt2Cmd extends cmd {
          case 'select':
             $value = str_replace('#select#', $_options['select'], $value);
             break;
+         case 'message':
+            $value = str_replace('#message#', $_options['message'], $value);
+            break;
       }
       mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value);
    }
-
-   /*     * **********************Getteur Setteur*************************** */
 }

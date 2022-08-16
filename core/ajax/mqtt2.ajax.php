@@ -27,8 +27,12 @@ try {
   ajax::init();
 
   if (init('action') == 'installMosquitto') {
-    mqtt2::installMosquitto();
+    mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
     ajax::success();
+  }
+
+  if (init('action') == 'getSubscribed') {
+    ajax::success(mqtt2::getSubscribed());
   }
 
   if (init('action') == 'downloadClientCert') {

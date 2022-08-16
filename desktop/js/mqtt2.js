@@ -24,7 +24,7 @@ $("#table_cmd").sortable({
   placeholder: "ui-state-highlight",
   tolerance: "intersect",
   forcePlaceholderSize: true
-});
+})
 
 /* Fonction permettant l'affichage des commandes dans l'équipement */
 function addCmdToTable(_cmd) {
