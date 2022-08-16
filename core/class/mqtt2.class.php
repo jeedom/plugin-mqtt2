@@ -296,7 +296,7 @@ class mqtt2 extends eqLogic {
       log::add(__CLASS__, 'info', 'Lancement démon mqtt2 : ' . $cmd);
       exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
-      while ($i < 10) {
+      while ($i < 30) {
          $deamon_info = self::deamon_info();
          if ($deamon_info['state'] == 'ok') {
             break;
