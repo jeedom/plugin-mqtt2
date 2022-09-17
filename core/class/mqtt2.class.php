@@ -176,13 +176,14 @@ class mqtt2 extends eqLogic {
          'message' => __('Mise en place des identifiants MQTT', __FILE__),
       ));
       sleep(1);
-      event::add('jeedom::alert', array(
-         'level' => 'warning',
-         'page' => 'plugin',
-         'ttl' => 30000,
-         'message' => __('Création du container Mosquitto', __FILE__),
-      ));
+      
       if ($_mode == 'docker') {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'ttl' => 30000,
+            'message' => __('Création du container Mosquitto', __FILE__),
+         ));
          $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
          $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
          $ports = '';
