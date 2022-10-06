@@ -176,7 +176,7 @@ class mqtt2 extends eqLogic {
          'message' => __('Mise en place des identifiants MQTT', __FILE__),
       ));
       sleep(1);
-      
+
       if ($_mode == 'docker') {
          event::add('jeedom::alert', array(
             'level' => 'warning',
@@ -410,7 +410,15 @@ class mqtt2 extends eqLogic {
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
             foreach ($values as $key => $value) {
+               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . ' => ' . $value);
                $eqlogic->checkAndUpdateCmd($key, $value);
+               if (is_json($value)) {
+                  $datas = implode_recursive(json_decode($value, true), '::');
+                  foreach ($datas as $k2 => $v2) {
+                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . '#' . $k2 . ' => ' . $v2);
+                     $eqlogic->checkAndUpdateCmd($key . '#' . $k2, $v2);
+                  }
+               }
             }
          }
       }
