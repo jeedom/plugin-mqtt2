@@ -67,6 +67,9 @@ function addCmdToTable(_cmd) {
    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/>{{Afficher}}</label>';
    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label>';
+
+   tr += '<label class="checkbox-inline cmdType action" ><input type="checkbox" class="cmdAttr" data-l1key="configuration" data-l2key="retain"/>{{Retain}}</label>';
+
    tr += '</td>';
    tr += '<td>';
    tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
@@ -93,3 +96,10 @@ function addCmdToTable(_cmd) {
      }
    });
  }
+
+ $('#table_cmd').off('click','.cmdAttr[data-l1key=type]').on('click','.cmdAttr[data-l1key=type]',function(){
+  $('.cmdType').hide();
+  if($(this).value() != ''){
+    $('.cmdType.'+$(this).value()).show();
+  }
+ })

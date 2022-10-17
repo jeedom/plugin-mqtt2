@@ -424,7 +424,7 @@ class mqtt2 extends eqLogic {
       }
    }
 
-   public static function publish($_topic, $_message) {
+   public static function publish($_topic, $_message, $_options = array()) {
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
          'Content-Type: application/json'
@@ -432,7 +432,7 @@ class mqtt2 extends eqLogic {
       if (is_array($_message) || is_object($_message)) {
          $_message = json_encode($_message);
       }
-      $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message)));
+      $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message, 'options' => $_options)));
       $result = json_decode($request_http->exec(30), true);
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
@@ -495,6 +495,10 @@ class mqtt2Cmd extends cmd {
             $value = str_replace('#message#', $_options['message'], $value);
             break;
       }
-      mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value);
+      $options = array();
+      if ($this->getConfiguration('retain') == 1) {
+         $options['retain'] = 1;
+      }
+      mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value, $options);
    }
 }
