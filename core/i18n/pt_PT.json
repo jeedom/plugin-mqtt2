@@ -71,7 +71,8 @@
         "Unité": "Unidade",
         "Afficher": "Exibição",
         "Historiser": "Historize",
-        "Inverser": "Reverter"
+        "Inverser": "Reverter",
+        "Retain": "Reter"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "Você não está autorizado a realizar esta ação"
