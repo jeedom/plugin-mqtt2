@@ -57,11 +57,11 @@
         "Type": "Type",
         "Paramètres": "Settings",
         "Etat": "State",
-        "Action": "Stock"
+        "Action": "Action"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Command name",
-        "Commande information liée": "Order related information",
+        "Commande information liée": "Linked information command",
         "Aucune": "None",
         "Icône": "Icon",
         "Topic": "Topic",
@@ -69,7 +69,7 @@
         "Min.": "Min.",
         "Max.": "Max.",
         "Unité": "Unit",
-        "Afficher": "Display",
+        "Afficher": "Show",
         "Historiser": "Historize",
         "Inverser": "Invert",
         "Retain": "Retain"
