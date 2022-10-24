@@ -493,6 +493,7 @@ class mqtt2Cmd extends cmd {
             break;
          case 'message':
             $value = str_replace('#message#', $_options['message'], $value);
+            $value = str_replace('#title#', $_options['title'], $value);
             break;
       }
       $options = array();
