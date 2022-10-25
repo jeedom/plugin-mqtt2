@@ -115,8 +115,20 @@ Jeedom.http.app.post('/publish', function(req, res) {
       res.send({ state: "nok", result: 'Invalid apikey' })
       return
     }
-    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + req.body.message)
-    client.publish(req.body.topic, req.body.message, function(err) {
+    let options = {};
+    if(req.body.options){
+      if(req.body.options.retain){
+        options.retain = req.body.options.retain
+      }
+      if(req.body.options.qos){
+        options.retain = req.body.options.qos
+      }
+      if(req.body.options.dup){
+        options.retain = req.body.options.dup
+      }
+    }
+    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + req.body.message+' with options : '+JSON.stringify(options))
+    client.publish(req.body.topic, req.body.message,options, function(err) {
       if (err) {
         Jeedom.log.debug('Error on message publish : ' + error)
         res.setHeader('Content-Type', 'application/json')

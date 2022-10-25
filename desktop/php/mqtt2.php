@@ -163,7 +163,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<th>{{Type}}</th>
 								<th>{{Paramètres}}</th>
 								<th>{{Options}}</th>
-								<th>{{Actions}}</th>
+								<th>{{Etat}}</th>
+								<th>{{Action}}</th>
 							</tr>
 						</thead>
 						<tbody>

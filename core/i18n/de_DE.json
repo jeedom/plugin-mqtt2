@@ -56,23 +56,23 @@
         "Nom": "Name",
         "Type": "Typ",
         "Paramètres": "Einstellungen",
-        "Actions": "Anteile"
+        "Etat": "Bundesland",
+        "Action": "Aktie"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Bestellname",
-        "Choisir une icône": "Wählen Sie ein Symbol aus",
-        "Commande info liée": "Verknüpfter Info-Befehl",
+        "Commande information liée": "Bestellbezogene Informationen",
         "Aucune": "Keiner",
+        "Icône": "Symbol",
         "Topic": "Thema",
         "Message": "Nachricht",
+        "Min.": "Mindest.",
+        "Max.": "Max.",
+        "Unité": "Einheit",
         "Afficher": "Anzeige",
         "Historiser": "Historisieren",
         "Inverser": "Umkehren",
-        "Min": "Minimum",
-        "Max": "Max",
-        "Unité": "Einheit",
-        "Liste : valeur|texte (séparées par un point-virgule)": "Liste: Wert | Text (durch Semikolon getrennt)",
-        "Liste : valeur|texte": "Liste: Wert | Text"
+        "Retain": "Zuückbehalten"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "Sie sind nicht berechtigt, diese Aktion auszuführen"

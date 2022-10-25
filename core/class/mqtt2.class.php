@@ -176,13 +176,14 @@ class mqtt2 extends eqLogic {
          'message' => __('Mise en place des identifiants MQTT', __FILE__),
       ));
       sleep(1);
-      event::add('jeedom::alert', array(
-         'level' => 'warning',
-         'page' => 'plugin',
-         'ttl' => 30000,
-         'message' => __('Création du container Mosquitto', __FILE__),
-      ));
+
       if ($_mode == 'docker') {
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'ttl' => 30000,
+            'message' => __('Création du container Mosquitto', __FILE__),
+         ));
          $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
          $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
          $ports = '';
@@ -250,7 +251,9 @@ class mqtt2 extends eqLogic {
          if (@posix_getsid(trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
-            shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+            if (trim(file_get_contents($pid_file)) != '') {
+               shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+            }
          }
       }
       $return['launchable'] = 'ok';
@@ -296,7 +299,7 @@ class mqtt2 extends eqLogic {
       log::add(__CLASS__, 'info', 'Lancement démon mqtt2 : ' . $cmd);
       exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
-      while ($i < 10) {
+      while ($i < 30) {
          $deamon_info = self::deamon_info();
          if ($deamon_info['state'] == 'ok') {
             break;
@@ -407,13 +410,21 @@ class mqtt2 extends eqLogic {
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
             foreach ($values as $key => $value) {
+               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . ' => ' . $value);
                $eqlogic->checkAndUpdateCmd($key, $value);
+               if (is_json($value)) {
+                  $datas = implode_recursive(json_decode($value, true), '::');
+                  foreach ($datas as $k2 => $v2) {
+                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . '#' . $k2 . ' => ' . $v2);
+                     $eqlogic->checkAndUpdateCmd($key . '#' . $k2, $v2);
+                  }
+               }
             }
          }
       }
    }
 
-   public static function publish($_topic, $_message) {
+   public static function publish($_topic, $_message = '', $_options = array()) {
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
          'Content-Type: application/json'
@@ -421,7 +432,7 @@ class mqtt2 extends eqLogic {
       if (is_array($_message) || is_object($_message)) {
          $_message = json_encode($_message);
       }
-      $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message)));
+      $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message, 'options' => $_options)));
       $result = json_decode($request_http->exec(30), true);
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
@@ -482,8 +493,13 @@ class mqtt2Cmd extends cmd {
             break;
          case 'message':
             $value = str_replace('#message#', $_options['message'], $value);
+            $value = str_replace('#title#', $_options['title'], $value);
             break;
       }
-      mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value);
+      $options = array();
+      if ($this->getConfiguration('retain') == 1) {
+         $options['retain'] = 1;
+      }
+      mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value, $options);
    }
 }
