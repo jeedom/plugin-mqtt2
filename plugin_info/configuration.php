@@ -94,6 +94,14 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-4 control-label">{{Template publish}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Template pour l'envoi des event jeedom, tags possibles : #value#, #humanName#, #unit#, #name#, #type#, #subtype#}}"></i></sup>
+        </label>
+        <div class="col-md-7">
+          <input class="configKey form-control" data-l1key="publish_template">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom utilisant mqtt}}"></i></sup>
         </label>

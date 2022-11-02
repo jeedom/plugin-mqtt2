@@ -441,14 +441,26 @@ class mqtt2 extends eqLogic {
 
 
    public static function handleEvent($_option) {
-      $message = array('value' => $_option['value']);
       $cmd = cmd::byId($_option['event_id']);
-      if (is_object($cmd)) {
-         $message['humanName'] = $cmd->getHumanName();
-         $message['unite'] = $cmd->getUnite();
-         $message['name'] = $cmd->getName();
-         $message['type'] = $cmd->getType();
-         $message['subtype'] = $cmd->getSubType();
+      if (trim(config::byKey('publish_template', 'mqtt2', '')) != '') {
+         $replace = array('#value#' => $_option['value']);
+         if (is_object($cmd)) {
+            $replace['#id#'] = $cmd->getId();
+            $replace['#humanName#'] = $cmd->getHumanName();
+            $replace['#unit#'] = $cmd->getUnite();
+            $replace['#name#'] = $cmd->getName();
+            $replace['#type#'] = $cmd->getType();
+            $replace['#subtype#'] = $cmd->getSubType();
+         }
+      } else {
+         $message = array('value' => $_option['value']);
+         if (is_object($cmd)) {
+            $message['humanName'] = $cmd->getHumanName();
+            $message['unite'] = $cmd->getUnite();
+            $message['name'] = $cmd->getName();
+            $message['type'] = $cmd->getType();
+            $message['subtype'] = $cmd->getSubType();
+         }
       }
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
