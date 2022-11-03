@@ -17,6 +17,8 @@
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Tópico raiz para conduzir Jeedom e no qual ele envia seus eventos",
         "Transmettre tous les évènements": "Transmitir todos os eventos",
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Marque a caixa para que todos os eventos do pedido sejam transmitidos ao broker MQTT",
+        "Template publish": "Publicação de modelo",
+        "Template pour l'envoi des event jeedom, tags possibles : #value#, #humanName#, #unit#, #name#, #type#, #subtype#": "Modelo para envio de eventos jeedom, tags possíveis: #value#, #humanName#, #unit#, #name#, #type#, #subtype#",
         "Plugins abonnés": "Plug-ins de assinante",
         "Liste des plugins Jeedom utilisant mqtt": "Lista de plugins Jeedom usando mqtt",
         "Paramètres Mosquitto": "Configurações do Mosquitto",

@@ -17,6 +17,8 @@
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Stammthema, das Jeedom antreibt und an das es seine Ereignisse sendet",
         "Transmettre tous les évènements": "Übertragen Sie alle Ereignisse",
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Aktivieren Sie das Kontrollkästchen, damit alle Orderereignisse an den MQTT-Broker übermittelt werden",
+        "Template publish": "Vorlage veröffentlichen",
+        "Template pour l'envoi des event jeedom, tags possibles : #value#, #humanName#, #unit#, #name#, #type#, #subtype#": "Vorlage zum Senden von Jeedom-Events, mögliche Tags: #value#, #humanName#, #unit#, #name#, #type#, #subtype#",
         "Plugins abonnés": "Abonnenten-Plugins",
         "Liste des plugins Jeedom utilisant mqtt": "Liste der Jeedom-Plugins, die mqtt verwenden",
         "Paramètres Mosquitto": "Moskito-Einstellungen",
