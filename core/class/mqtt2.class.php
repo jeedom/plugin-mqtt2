@@ -508,6 +508,10 @@ class mqtt2Cmd extends cmd {
             $value = str_replace('#title#', $_options['title'], $value);
             break;
       }
+      $prefix = 'json::';
+      if (substr($value, 0, strlen($prefix)) == $prefix) {
+          $value = substr($value, strlen($prefix));
+      }
       $options = array();
       if ($this->getConfiguration('retain') == 1) {
          $options['retain'] = 1;
