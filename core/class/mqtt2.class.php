@@ -510,7 +510,7 @@ class mqtt2Cmd extends cmd {
       }
       $prefix = 'json::';
       if (substr($value, 0, strlen($prefix)) == $prefix) {
-          $value = substr($value, strlen($prefix));
+         $value = substr($value, strlen($prefix));
       }
       $options = array();
       if ($this->getConfiguration('retain') == 1) {
