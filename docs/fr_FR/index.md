@@ -2,15 +2,15 @@
 
 ## Description
 
-Le plugin **MQTT Manager** permet de connecter Jeedom à un Brocker MQTT existant ou d'en installer un en local ou sous Docker à l'aide du plugin **Docker Management**.
+Le plugin **MQTT Manager** permet de connecter Jeedom à un broker MQTT existant ou d'en installer un en local ou sous Docker à l'aide du plugin **Docker Management**.
 
 Ce plugin est en mesure de cumuler plusieurs fonctionnalités :
 
 - Servir de socle aux autres plugins pour tout ce qui concerne MQTT.
 
-- Servir en mode "standalone" par la création de commandes action/info pour l'envoi/réception de message sur MQTT.
+- Servir en mode "standalone" par la création de commandes action/info pour l'envoi/réception de messages sur MQTT.
 
-- Piloter Jeedom depuis un autre équipement MQTT *(Nodered par exemple)*. Le plugin peut aussi bien piloter des commandes que retransmettre tous les évènements de Jeedom sur MQTT.
+- Piloter Jeedom depuis un autre équipement MQTT *(Nodered par exemple)*. Le plugin peut aussi bien piloter des commandes que retransmettre tous les évènements Jeedom sur MQTT.
 
 # Configuration
 
@@ -32,7 +32,7 @@ Pour commencer la configuration du plugin, il est nécessaire de sélectionner l
 
 - **Authentification**: Vous pouvez spécifier des utilisateurs/mot de passe pour la connexion :
 
-  - en mode local vous pouvez renseigner un `nom d'utilisateur:mot de passe` par ligne, chaque couple d'identifiant aura un accès valide au broker. S'il n'existe aucun identifiant, Jeedom en créée un automatiquement.
+  - en mode local vous pouvez renseigner un `nom d'utilisateur:mot de passe` par ligne, chaque couple d'identifiant aura un accès valide au broker. S'il n'existe aucun identifiant, Jeedom en crée un automatiquement.
 
   - en mode standalone il suffit de mettre sur la première ligne le couple `identifiant:mot de passe` pour Jeedom (exemple : si le nom d'utilisateur est `jeedom`et le mot de passe `mqtt`, il faut renseigner `jeedom:mqtt`).
 
@@ -70,7 +70,7 @@ Il faut indiquer le topic racine de l'équipement *(`test` par exemple)*, ensuit
 
 # Jeedom via MQTT
 
-Il est possible de piloter Jeedom à travers MQTT. Ci-après les différents topics possibles partants du principe que le topic racine est `jeedom` *(à adapter donc si vous avez modifié la configuration par défaut)* :
+Il est possible de piloter Jeedom à travers MQTT. Ci-après les différents topics possibles en partant du principe que le topic racine est `jeedom` *(à adapter si vous avez modifié la configuration par défaut)* :
 
 - `jeedom/cmd/set/#cmd_id#` : permet d'exécuter la commande portant l'id `#cmd_id#`. Vous pouvez passer les paramètres dans le message sous forme de champs `json` en fonction du sous-type de la commande, par exemple:
   - **défaut** : aucun paramètre.
