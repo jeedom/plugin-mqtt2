@@ -115,7 +115,7 @@ class mqtt2 extends eqLogic {
          }
          $update->setLogicalId('docker2');
          $update->setSource('market');
-         $update->setConfiguration('version', 'beta');
+         $update->setConfiguration('version', update::byLogicalId(__CLASS__)->getConfiguration('version'));
          $update->save();
          $update->doUpdate();
          $plugin = plugin::byId('docker2');
