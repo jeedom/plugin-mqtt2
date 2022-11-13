@@ -254,7 +254,10 @@ class mqtt2 extends eqLogic {
             }
             break;
          case 'docker':
-            if (!is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez désinstaller Mosquitto local', __FILE__);
+            } else if (!is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
                $return['launchable'] = 'nok';
                $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
             }
