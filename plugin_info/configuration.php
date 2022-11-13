@@ -26,36 +26,33 @@ if (!isConnect()) {
   <fieldset>
     <div class="col-lg-6">
       <div class="form-group">
-        <label class="col-md-4 control-label">{{Port socket interne}}</label>
-        <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="socketport">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 control-label">{{Cycle (s)}}</label>
-        <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="cycle">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 control-label">{{Mode}}</label>
+        <label class="col-md-4 control-label">{{Mode}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le mode de connexion au broker}}"></i></sup>
+        </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
-            <option value="remote">{{Broker distant}}</option>
-            <option value="docker">{{Broker local docker}}</option>
             <option value="local">{{Broker local}}</option>
+            <option value="docker">{{Broker local docker}}</option>
+            <option value="remote">{{Broker distant}}</option>
           </select>
         </div>
       </div>
+
       <div class="form-group mqtt2Mode local docker">
-        <label class="col-md-4 control-label"></label>
+        <label class="col-md-4 control-label">{{Broker Mosquitto}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Installer, désinstaller ou télécharger le certificat client du broker Mosquitto}}"></i></sup>
+        </label>
         <div class="col-md-7">
-          <a class="btn btn-warning" id="bt_mqtt2InstallMosquitto">{{Installer mosquitto}}</a>
-          <a class="btn btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php">{{Télécharger le certificat client}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{Installer Mosquitto}}</a>
+          <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller Mosquitto}}</a>
+          <a class="btn btn-sm btn-primary pull-right" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
       </div>
+
       <div class="form-group mqtt2Mode remote">
-        <label class="col-md-4 control-label">{{Adresse du broker}}</label>
+        <label class="col-md-4 control-label">{{Adresse du broker}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse du broker}}"></i></sup>
+        </label>
         <div class="col-md-7 input-group">
           <span class="input-group-btn">
             <select class="form-control configKey roundedLeft" data-l1key="remote::protocol" style="width:80px;">
@@ -69,33 +66,47 @@ if (!isConnect()) {
           <input class="configKey form-control roundedRight" data-l1key="remote::port" placeholder="{{Port}}">
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-md-4 control-label">{{Authentification}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Identifiant et mot de passe de connexion au broker MQTT (séparés par :)}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points}} (:)"></i></sup>
         </label>
         <div class="col-md-7">
           <textarea class="configKey form-control autogrow" data-l1key="mqtt::password"></textarea>
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-4 control-label">{{Port socket interne}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangeureuse}}"></i></sup>
+        </label>
+        <div class="col-md-7">
+          <input class="configKey form-control" data-l1key="socketport">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">{{Cycle}} <sub>({{secondes}})</sub>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Fréquence de rafraichissement en secondes}}"></i></sup>
+        </label>
+        <div class="col-md-7">
+          <input class="configKey form-control" data-l1key="cycle">
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Topic racine Jeedom}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements}}"></i></sup>
         </label>
         <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="root_topic">
+          <input class="configKey" data-l1key="root_topic">
+          <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
+            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT}}"></i></sup>
+          </label>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">{{Transmettre tous les évènements}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT}}"></i></sup>
-        </label>
-        <div class="col-md-7">
-          <input type="checkbox" class="configKey" data-l1key="sendEvent">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 control-label">{{Template publish}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Template pour l'envoi des event jeedom, tags possibles : #value#, #humanName#, #unit#, #name#, #type#, #subtype#}}"></i></sup>
+        <label class="col-md-4 control-label">{{Template de publication}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Template de publication des évènements Jeedom}} (tags : #value#, #humanName#, #unit#, #name#, #type#, #subtype#)"></i></sup>
         </label>
         <div class="col-md-7">
           <input class="configKey form-control" data-l1key="publish_template">
@@ -103,17 +114,22 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom utilisant mqtt}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin MQTT Manager}}"></i></sup>
         </label>
         <div class="subscribed col-md-7">
-
+          <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) {
+          ?>
+            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>)</span>
+          <?php }
+          ?>
         </div>
       </div>
     </div>
+
     <div class="col-lg-6">
       <div class="form-group mqtt2Mode docker">
         <label class="col-md-4 control-label">{{Paramètres Mosquitto}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
         </label>
         <div class="col-md-7">
           <textarea class="configKey form-control autogrow" data-l1key="mosquitto::parameters"></textarea>
@@ -121,7 +137,7 @@ if (!isConnect()) {
       </div>
       <div class="form-group mqtt2Mode docker">
         <label class="col-md-4 control-label">{{Port(s)}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
         </label>
         <div class="col-md-7">
           <textarea class="configKey form-control autogrow" data-l1key="mosquitto::ports"></textarea>
@@ -132,9 +148,9 @@ if (!isConnect()) {
 </form>
 <script>
   $('.configKey[data-l1key=mode]').off('change').on('change', function() {
-    $('.mqtt2Mode').hide();
-    $('.mqtt2Mode.' + $(this).value()).show();
-  });
+    $('.mqtt2Mode').hide()
+    $('.mqtt2Mode.' + $(this).value()).show()
+  })
 
   $('#bt_mqtt2InstallMosquitto').off('click').on('click', function() {
     $.ajax({
@@ -144,53 +160,67 @@ if (!isConnect()) {
         action: "installMosquitto"
       },
       dataType: 'json',
-      error: function(request, status, error) {
-        handleAjaxError(request, status, error);
+      error: function(error) {
+        $.fn.showAlert({
+          message: error.message,
+          level: 'danger'
+        })
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $('#div_alert').showAlert({
+          $.fn.showAlert({
             message: data.result,
             level: 'danger'
-          });
-          return;
+          })
+          return
         } else {
-          window.toastr.clear()
           $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $('#div_alert').showAlert({
+          $.fn.showAlert({
             message: '{{Installation réussie}}',
-            level: 'success'
-          });
+            level: 'success',
+            emptyBefore: true
+          })
 
         }
       }
-    });
-  });
-  $.ajax({
-    type: "POST",
-    url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
-    data: {
-      action: "getSubscribed"
-    },
-    dataType: 'json',
-    error: function(request, status, error) {
-      handleAjaxError(request, status, error);
-    },
-    success: function(data) {
-      if (data.state != 'ok') {
-        $('#div_alert').showAlert({
-          message: data.result,
-          level: 'danger'
-        });
-        return;
-      } else {
-        var results = '';
-        for (plugin in data.result) {
-          results += '<span class="label label-success">' + plugin + ' (' + data.result[plugin] + ') ' + '</span> '
-        }
-        $('.subscribed').empty().append(results);
-      }
+    })
+  })
 
-    }
-  });
+  $('#bt_mqtt2UninstallMosquitto').off('click').on('click', function() {
+    bootbox.confirm('{{Confirmez-vous la désinstallation du broker Mosquitto local?}}', function(result) {
+      if (result) {
+        $.ajax({
+          type: "POST",
+          url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+          data: {
+            action: "uninstallMosquitto"
+          },
+          dataType: 'json',
+          error: function(error) {
+            $.fn.showAlert({
+              message: error.message,
+              level: 'danger'
+            })
+          },
+          success: function(data) {
+            if (data.state != 'ok') {
+              $.fn.showAlert({
+                message: data.result,
+                level: 'danger'
+              })
+              return
+            } else {
+              $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+              $.fn.showAlert({
+                message: '{{Désinstallation réussie}}',
+                level: 'success',
+                emptyBefore: true
+              })
+
+            }
+          }
+        })
+      }
+    })
+  })
 </script>
