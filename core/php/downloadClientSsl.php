@@ -19,12 +19,12 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 
 if (!isConnect('admin')) {
-    throw new Exception('{{401 - Accès non autorisé}}');
+    throw new Exception('401 - {{Accès non autorisé}}');
 }
 
 mqtt2::generateClientCert();
 if (!file_exists(jeedom::getTmpFolder('mqtt2') . '/ssl')) {
-    throw new Exception(__('Erreur lors de la génération des certificat client', __FILE__));
+    throw new Exception(__('Erreur lors de la génération des certificats client', __FILE__));
 }
 shell_exec('cd ' . jeedom::getTmpFolder('mqtt2') . '/ssl;tar czvf ' . __DIR__ . '/../../data/mqtt-client-ssl.tar.gz ca.crt client.crt client.key;sudo rm -rf ' . jeedom::getTmpFolder('mqtt2') . '/ssl');
 $pathfile = __DIR__ . '/../../data/mqtt-client-ssl.tar.gz';
