@@ -210,7 +210,6 @@ if (!isConnect()) {
               })
               return
             } else {
-              $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
               $.fn.showAlert({
                 message: '{{Désinstallation réussie}}',
                 level: 'success',
