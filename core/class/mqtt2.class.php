@@ -245,8 +245,30 @@ class mqtt2 extends eqLogic {
       $return = array();
       $return['log'] = __CLASS__;
       $return['state'] = 'nok';
+      $return['launchable'] = 'ok';
+      switch (config::byKey('mode', __CLASS__)) {
+         case 'remote':
+            if (empty(config::byKey('remote::protocol', __CLASS__)) || empty(config::byKey('remote::ip', __CLASS__)) || empty(config::byKey('remote::port', __CLASS__))) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __("Veuillez renseigner l'adresse complète du broker", __FILE__);
+            }
+            break;
+         case 'docker':
+            if (!is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
+            }
+            break;
+         default:
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
+            }
+            break;
+      }
+
       $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
-      if (file_exists($pid_file)) {
+      if ($return['launchable'] == 'ok' && file_exists($pid_file)) {
          if (@posix_getsid(trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
@@ -255,7 +277,6 @@ class mqtt2 extends eqLogic {
             }
          }
       }
-      $return['launchable'] = 'ok';
       return $return;
    }
 
