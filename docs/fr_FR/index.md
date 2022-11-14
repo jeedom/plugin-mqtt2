@@ -86,7 +86,7 @@ Il est possible de piloter Jeedom à travers MQTT. Ci-après les différents top
 
 - `jeedom/cmd/event/#cmd_id#` : évènement sur la commande portant l'id `#cmd_id#` avec en message un `json` contenant différentes informations dont la valeur de la commande.
 
-# Désinstallation du broker Mosquitto
+# Désinstaller le broker Mosquitto
 
 2 options possibles pour désinstaller le broker Mosquitto présent localement sur la machine :
 
