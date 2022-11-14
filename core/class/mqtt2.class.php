@@ -22,13 +22,14 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class mqtt2 extends eqLogic {
 
    public static function dependancy_end() {
-      if (config::byKey('mode', __CLASS__) != 'local') {
+      $mode = config::byKey('mode', __CLASS__, 'local');
+      if ($mode != 'local' || $mode != 'docker') {
          return;
       }
-      if (is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
+      if ($mode == 'docker' && is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
          return;
       }
-      self::installMosquitto();
+      self::installMosquitto($mode);
    }
 
    public static function generateCertificates() {
