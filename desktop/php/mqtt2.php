@@ -146,13 +146,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th class="hidden-xs">ID</th>
-								<th>{{Nom}}</th>
-								<th>{{Type}}</th>
+								<th class="hidden-xs" style="min-width:50px;width:70px;"> ID</th>
+								<th style="min-width:150px;width:300px;">{{Nom}}</th>
+								<th style="width:130px;">{{Type}}</th>
 								<th>{{Paramètres}}</th>
-								<th>{{Options}}</th>
 								<th>{{Etat}}</th>
-								<th>{{Action}}</th>
+								<th style="min-width:260px;width:400px;">{{Options}}</th>
+								<th style="min-width:80px;width:180px;">{{Actions}}</th>
 							</tr>
 						</thead>
 						<tbody>
