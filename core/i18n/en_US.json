@@ -69,7 +69,7 @@
         "Type": "Type",
         "Paramètres": "Settings",
         "Etat": "State",
-        "Actions": "Shares"
+        "Actions": "Actions"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Command name",
@@ -82,7 +82,7 @@
         "Historiser": "Historize",
         "Inverser": "Invert",
         "Retain": "Retain",
-        "Min": "Minimum",
+        "Min": "Min",
         "Max": "Max",
         "Unité": "Unit",
         "Tester": "Test"
