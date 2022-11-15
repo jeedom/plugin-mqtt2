@@ -30,3 +30,10 @@ function mqtt2_update() {
     }
   }
 }
+
+function mqtt2_remove() {
+  $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+  if (is_object($listener)) {
+    $listener->remove();
+  }
+}
