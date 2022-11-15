@@ -69,22 +69,22 @@
         "Type": "Typ",
         "Paramètres": "Einstellungen",
         "Etat": "Bundesland",
-        "Action": "Aktie"
+        "Actions": "Anteile"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Bestellname",
+        "Choisir une icône": "Wählen Sie ein Symbol aus",
         "Commande information liée": "Bestellbezogene Informationen",
         "Aucune": "Keiner",
-        "Icône": "Symbol",
         "Topic": "Thema",
         "Message": "Nachricht",
-        "Min.": "Mindest.",
-        "Max.": "Max.",
-        "Unité": "Einheit",
         "Afficher": "Anzeige",
         "Historiser": "Historisieren",
         "Inverser": "Umkehren",
         "Retain": "Zuückbehalten",
+        "Min": "Minimum",
+        "Max": "Max",
+        "Unité": "Einheit",
         "Tester": "Prüfen"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {

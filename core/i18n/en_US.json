@@ -69,22 +69,22 @@
         "Type": "Type",
         "Paramètres": "Settings",
         "Etat": "State",
-        "Action": "Action"
+        "Actions": "Shares"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Command name",
+        "Choisir une icône": "Choose an icon",
         "Commande information liée": "Linked information command",
         "Aucune": "None",
-        "Icône": "Icon",
         "Topic": "Topic",
         "Message": "Message",
-        "Min.": "Min.",
-        "Max.": "Max.",
-        "Unité": "Unit",
         "Afficher": "Show",
         "Historiser": "Historize",
         "Inverser": "Invert",
         "Retain": "Retain",
+        "Min": "Minimum",
+        "Max": "Max",
+        "Unité": "Unit",
         "Tester": "Test"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {

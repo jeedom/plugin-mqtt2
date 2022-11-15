@@ -69,22 +69,22 @@
         "Type": "Escribe",
         "Paramètres": "Configuraciones",
         "Etat": "Estado",
-        "Action": "Valores"
+        "Actions": "Comparte"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Nombre de la orden",
+        "Choisir une icône": "Elige un icono",
         "Commande information liée": "Información relacionada con el pedido",
         "Aucune": "Ninguno",
-        "Icône": "Icono",
         "Topic": "Tema",
         "Message": "Mensaje",
-        "Min.": "Mín.",
-        "Max.": "Máx.",
-        "Unité": "Unidad",
         "Afficher": "Monitor",
         "Historiser": "Historizar",
         "Inverser": "Marcha atrás",
         "Retain": "Retener",
+        "Min": "Mínimo",
+        "Max": "Máx.",
+        "Unité": "Unidad",
         "Tester": "Prueba"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
