@@ -22,14 +22,14 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class mqtt2 extends eqLogic {
 
    public static function dependancy_end() {
-      if (config::byKey('mode', __CLASS__) != 'local') {
+      $mode = config::byKey('mode', __CLASS__, 'local');
+      if ($mode != 'local' || $mode != 'docker') {
          return;
       }
-      $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
-      if (is_object($docker)) {
+      if ($mode == 'docker' && is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
          return;
       }
-      self::installMosquitto();
+      self::installMosquitto($mode);
    }
 
    public static function generateCertificates() {
@@ -95,7 +95,7 @@ class mqtt2 extends eqLogic {
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
-            'message' => __('Installation de Mosquitto en local en cours', __FILE__),
+            'message' => __('Installation locale du broker Mosquitto en cours', __FILE__),
          ));
          shell_exec(system::getCmdSudo() . ' apt update;' . system::getCmdSudo() . ' apt install -y mosquitto');
       }
@@ -116,7 +116,7 @@ class mqtt2 extends eqLogic {
          }
          $update->setLogicalId('docker2');
          $update->setSource('market');
-         $update->setConfiguration('version', 'beta');
+         $update->setConfiguration('version', update::byLogicalId(__CLASS__)->getConfiguration('version'));
          $update->save();
          $update->doUpdate();
          $plugin = plugin::byId('docker2');
@@ -129,20 +129,20 @@ class mqtt2 extends eqLogic {
             $plugin->dependancy_install();
          }
          if (!$plugin->isActive()) {
-            throw new Exception(__('Le plugin Docker management doit être actif', __FILE__));
+            throw new Exception(__('Le plugin Docker management doit être activé', __FILE__));
          }
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
             'ttl' => 250000,
-            'message' => __('Pause de 120s le temps de l\'installation des dépendances du plugin Docker Management', __FILE__),
+            'message' => __("Pause de 120s le temps de l'installation des dépendances du plugin Docker Management", __FILE__),
          ));
          $i = 0;
          while (system::installPackageInProgress('docker2')) {
             sleep(5);
             $i++;
             if ($i > 50) {
-               throw new Exception(__('Delai maximum autorisé pour l\'installation des dépendances dépassé', __FILE__));
+               throw new Exception(__("Delai maximum autorisé pour l'installation des dépendances dépassé", __FILE__));
             }
          }
       }
@@ -154,7 +154,7 @@ class mqtt2 extends eqLogic {
       }
       if ($_mode == 'docker') {
          if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
-            throw new Exception(__('Mosquitto installé en local sur la machine, merci de le supprimer avant l\'installation du container Mosquitto : sudo apt remove mosquitto', __FILE__));
+            throw new Exception(__("Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller", __FILE__));
          }
          self::installDocker2();
       } else {
@@ -182,7 +182,7 @@ class mqtt2 extends eqLogic {
             'level' => 'warning',
             'page' => 'plugin',
             'ttl' => 30000,
-            'message' => __('Création du container Mosquitto', __FILE__),
+            'message' => __('Création du conteneur Mosquitto', __FILE__),
          ));
          $compose = file_get_contents(__DIR__ . '/../../resources/docker_compose.yaml');
          $compose = str_replace('#jeedom_path#', realpath(__DIR__ . '/../../../../'), $compose);
@@ -246,8 +246,33 @@ class mqtt2 extends eqLogic {
       $return = array();
       $return['log'] = __CLASS__;
       $return['state'] = 'nok';
+      $return['launchable'] = 'ok';
+      switch (config::byKey('mode', __CLASS__)) {
+         case 'remote':
+            if (empty(config::byKey('remote::protocol', __CLASS__)) || empty(config::byKey('remote::ip', __CLASS__)) || empty(config::byKey('remote::port', __CLASS__))) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __("Veuillez renseigner l'adresse complète du broker", __FILE__);
+            }
+            break;
+         case 'docker':
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez désinstaller Mosquitto local', __FILE__);
+            } else if (!is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
+            }
+            break;
+         default:
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
+            }
+            break;
+      }
+
       $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
-      if (file_exists($pid_file)) {
+      if ($return['launchable'] == 'ok' && file_exists($pid_file)) {
          if (@posix_getsid(trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
@@ -256,7 +281,6 @@ class mqtt2 extends eqLogic {
             }
          }
       }
-      $return['launchable'] = 'ok';
       return $return;
    }
 
@@ -296,7 +320,7 @@ class mqtt2 extends eqLogic {
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
       $cmd .= ' --pid ' . jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
-      log::add(__CLASS__, 'info', 'Lancement démon mqtt2 : ' . $cmd);
+      log::add(__CLASS__, 'info', __('Démarrage du démon MQTT Manager', __FILE__) . ' : ' . $cmd);
       exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
       $i = 0;
       while ($i < 30) {
@@ -308,7 +332,7 @@ class mqtt2 extends eqLogic {
          $i++;
       }
       if ($i >= 30) {
-         log::add(__CLASS__, 'error', 'Impossible de lancer le démon mqtt2d, vérifiez le log', 'unableStartDeamon');
+         log::add(__CLASS__, 'error', __('Impossible de démarrer le démon MQTT Manager, vérifiez les logs', __FILE__), 'unableStartDeamon');
          return false;
       }
       message::removeAll(__CLASS__, 'unableStartDeamon');
@@ -345,6 +369,9 @@ class mqtt2 extends eqLogic {
       config::save('mapping', $mapping, __CLASS__);
    }
 
+   /**
+    * @return array
+    */
    public static function getSubscribed() {
       $mapping = config::byKey('mapping', __CLASS__, array());
       return $mapping;
@@ -366,7 +393,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function handleMqttMessage($_message) {
-      log::add(__CLASS__, 'debug', 'Received message without plugin handler : ' . json_encode($_message));
+      log::add(__CLASS__, 'debug', __('Message reçu sans prise en charge par un plugin', __FILE__) . ' : ' . json_encode($_message));
       foreach ($_message as $topic => $message) {
          if ($topic == config::byKey('root_topic', __CLASS__)) {
             if (isset($message['cmd'])) {
@@ -410,12 +437,12 @@ class mqtt2 extends eqLogic {
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
             foreach ($values as $key => $value) {
-               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . ' => ' . $value);
+               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . ' => ' . $value);
                $eqlogic->checkAndUpdateCmd($key, $value);
                if (is_json($value)) {
                   $datas = implode_recursive(json_decode($value, true), '::');
                   foreach ($datas as $k2 => $v2) {
-                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' Search to update : ' . $key . '#' . $k2 . ' => ' . $v2);
+                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . '#' . $k2 . ' => ' . $v2);
                      $eqlogic->checkAndUpdateCmd($key . '#' . $k2, $v2);
                   }
                }
@@ -441,14 +468,26 @@ class mqtt2 extends eqLogic {
 
 
    public static function handleEvent($_option) {
-      $message = array('value' => $_option['value']);
       $cmd = cmd::byId($_option['event_id']);
-      if (is_object($cmd)) {
-         $message['humanName'] = $cmd->getHumanName();
-         $message['unite'] = $cmd->getUnite();
-         $message['name'] = $cmd->getName();
-         $message['type'] = $cmd->getType();
-         $message['subtype'] = $cmd->getSubType();
+      if (trim(config::byKey('publish_template', 'mqtt2', '')) != '') {
+         $replace = array('#value#' => $_option['value']);
+         if (is_object($cmd)) {
+            $replace['#id#'] = $cmd->getId();
+            $replace['#humanName#'] = $cmd->getHumanName();
+            $replace['#unit#'] = $cmd->getUnite();
+            $replace['#name#'] = $cmd->getName();
+            $replace['#type#'] = $cmd->getType();
+            $replace['#subtype#'] = $cmd->getSubType();
+         }
+      } else {
+         $message = array('value' => $_option['value']);
+         if (is_object($cmd)) {
+            $message['humanName'] = $cmd->getHumanName();
+            $message['unite'] = $cmd->getUnite();
+            $message['name'] = $cmd->getName();
+            $message['type'] = $cmd->getType();
+            $message['subtype'] = $cmd->getSubType();
+         }
       }
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
@@ -495,6 +534,10 @@ class mqtt2Cmd extends cmd {
             $value = str_replace('#message#', $_options['message'], $value);
             $value = str_replace('#title#', $_options['title'], $value);
             break;
+      }
+      $prefix = 'json::';
+      if (substr($value, 0, strlen($prefix)) == $prefix) {
+         $value = substr($value, strlen($prefix));
       }
       $options = array();
       if ($this->getConfiguration('retain') == 1) {

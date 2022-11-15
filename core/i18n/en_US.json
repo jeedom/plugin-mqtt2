@@ -1,28 +1,40 @@
 {
     "plugins\/mqtt2\/plugin_info\/configuration.php": {
-        "Port socket interne": "Internal socket port",
-        "Cycle (s)": "Cycle (s)",
         "Mode": "Mode",
-        "Broker distant": "Remote broker",
-        "Broker local docker": "Broker local docker",
+        "Sélectionner le mode de connexion au broker": "Select broker connection mode",
         "Broker local": "Local broker",
-        "Installer mosquitto": "Install mosquitto",
+        "Broker local docker": "Broker local docker",
+        "Broker distant": "Remote broker",
+        "Broker Mosquitto": "BrokerMosquitto",
+        "Installer, désinstaller ou télécharger le certificat client du broker Mosquitto": "Install, uninstall, or download the Mosquitto broker client certificate",
+        "Installer Mosquitto": "Install mosquitto",
+        "Désinstaller Mosquitto": "Uninstall Mosquitto",
         "Télécharger le certificat client": "Download client certificate",
         "Adresse du broker": "Broker's address",
+        "Renseigner l'adresse du broker": "Enter the broker's address",
         "IP": "IP",
         "Port": "Port",
         "Authentification": "Authentication",
-        "Identifiant et mot de passe de connexion au broker MQTT (séparés par :)": "MQTT broker login and password (separated by :)",
+        "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "MQTT broker login and password separated by colons",
+        "Port socket interne": "Internal socket port",
+        "Modification dangeureuse": "Dangerous modification",
+        "Cycle": "Cycle",
+        "secondes": "seconds",
+        "Fréquence de rafraichissement en secondes": "Refresh rate in seconds",
         "Topic racine Jeedom": "Jeedom root topic",
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Root topic to drive Jeedom and on which it sends its events",
         "Transmettre tous les évènements": "Transmit all events",
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Check the box so that all order events are transmitted to the MQTT broker",
+        "Template de publication": "Post template",
+        "Template de publication des évènements Jeedom": "Jeedom event publication template",
         "Plugins abonnés": "Subscriber plugins",
-        "Liste des plugins Jeedom utilisant mqtt": "List of Jeedom plugins using mqtt",
+        "Liste des plugins Jeedom abonnés au plugin MQTT Manager": "List of Jeedom plugins subscribed to the MQTT Manager plugin",
         "Paramètres Mosquitto": "Mosquitto settings",
-        "Sauvegarder et relancer l'installation de mosquitto pour prendre en compte les modifications de ce champ de configuration": "Save and restart the installation of mosquitto to take into account the modifications of this configuration field",
+        "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Save and restart the installation of mosquitto to take into account the modifications of this configuration field",
         "Port(s)": "Port(s)",
-        "Installation réussie": "Successful installation"
+        "Installation réussie": "Successful installation",
+        "Confirmez-vous la désinstallation du broker Mosquitto local?": "Do you confirm the uninstallation of the local Mosquitto broker?",
+        "Désinstallation réussie": "Uninstallation successful"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
@@ -57,47 +69,58 @@
         "Type": "Type",
         "Paramètres": "Settings",
         "Etat": "State",
-        "Action": "Action"
+        "Actions": "Shares"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Nom de la commande": "Command name",
+        "Choisir une icône": "Choose an icon",
         "Commande information liée": "Linked information command",
         "Aucune": "None",
-        "Icône": "Icon",
         "Topic": "Topic",
         "Message": "Message",
-        "Min.": "Min.",
-        "Max.": "Max.",
-        "Unité": "Unit",
         "Afficher": "Show",
         "Historiser": "Historize",
         "Inverser": "Invert",
-        "Retain": "Retain"
+        "Retain": "Retain",
+        "Min": "Minimum",
+        "Max": "Max",
+        "Unité": "Unit",
+        "Tester": "Test"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "You are not authorized to perform this action"
     },
     "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
-        "Erreur lors de la génération des certificat client": "Error while generating client certificates",
-        "401 - Accès non autorisé": "401 - Unauthorized Access"
+        "Erreur lors de la génération des certificats client": "Error while generating client certificates",
+        "Accès non autorisé": "Unauthorized access"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
-        "Aucune méthode correspondante à : ": "No method corresponding to:"
+        "Désinstallation du broker Mosquitto en cours": "Uninstalling the Mosquitto broker in progress",
+        "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Please refer to the documentation to remove the Mosquitto broker managed by the Docker Management plugin",
+        "Aucun broker Mosquitto trouvé": "No Mosquitto brokers found",
+        "Aucune méthode correspondante à": "No matching method"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "No SSL folder found, did you install Mosquitto first?",
-        "Installation de Mosquitto en local en cours": "Installing Mosquitto locally in progress",
+        "Installation locale du broker Mosquitto en cours": "Local installation of the Mosquitto broker in progress",
         "Installation du plugin Docker Management": "Installing the Docker Management plugin",
         "Le plugin Docker management doit être installé": "The Docker management plugin must be installed",
-        "Le plugin Docker management doit être actif": "The Docker management plugin must be active",
-        "Pause de 120s le temps de l\\'installation des dépendances du plugin Docker Management": "Pause of 120s while installing Docker Management plugin dependencies",
-        "Delai maximum autorisé pour l\\'installation des dépendances dépassé": "Maximum time allowed for the installation of dependencies exceeded",
-        "Mosquitto installé en local sur la machine, merci de le supprimer avant l\\'installation du container Mosquitto : sudo apt remove mosquitto": "Mosquitto installed locally on the machine, please remove it before installing the Mosquitto container: sudo apt remove mosquitto",
+        "Le plugin Docker management doit être activé": "The Docker management plugin must be activated",
+        "Pause de 120s le temps de l'installation des dépendances du plugin Docker Management": "120s pause while installing Docker Management plugin dependencies",
+        "Delai maximum autorisé pour l'installation des dépendances dépassé": "Maximum time allowed for the installation of dependencies exceeded",
+        "Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller": "A Mosquitto broker is already installed locally on the machine. Please uninstall it",
         "Génération des certificats": "Generating certificates",
         "Mise en place des identifiants MQTT": "Setting up MQTT identifiers",
-        "Création du container Mosquitto": "Creation of the Mosquitto container",
-        "Veuillez vérifier la configuration": "Please check the configuration"
+        "Création du conteneur Mosquitto": "Creating the Mosquitto Container",
+        "Veuillez renseigner l'adresse complète du broker": "Please fill in the full address of the broker",
+        "Veuillez désinstaller Mosquitto local": "Please uninstall local Mosquitto",
+        "Veuillez installer Mosquitto": "Please install Mosquitto",
+        "Veuillez vérifier la configuration": "Please check the configuration",
+        "Démarrage du démon MQTT Manager": "Starting the MQTT Manager Daemon",
+        "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "Failed to start MQTT Manager daemon, check logs",
+        "Message reçu sans prise en charge par un plugin": "Message received without plugin support",
+        "Tentative de mise à jour": "Attempt to update"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin serving as a basis for plugins using MQTT"
