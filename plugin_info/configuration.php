@@ -97,8 +97,8 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{Topic racine Jeedom}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements}}"></i></sup>
         </label>
-        <div class="col-md-7">
-          <input class="configKey" data-l1key="root_topic">
+        <div class="col-md-7 form-inline">
+          <input class="configKey form-control" data-l1key="root_topic">
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
             <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT}}"></i></sup>
           </label>
