@@ -61,7 +61,7 @@ class mqtt2 extends eqLogic {
    public static function generateClientCert() {
       $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
-         throw new Exception(__('Aucun dossier SSL trouvé, avez vous installé Mosquitto d\'abord ?', __FILE__));
+         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquer sur le bouton Installer Mosquitto', __FILE__));
       }
       $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
       if (file_exists($tmp_folder)) {

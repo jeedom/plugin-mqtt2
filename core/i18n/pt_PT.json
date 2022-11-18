@@ -12,7 +12,7 @@
         "Télécharger le certificat client": "Baixar certificado de cliente",
         "Adresse du broker": "Endereço do corretor",
         "Renseigner l'adresse du broker": "Digite o endereço do corretor",
-        "IP": "IP",
+        "IP": "IPs",
         "Port": "Porto",
         "Authentification": "Autenticação",
         "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "Login e senha do broker MQTT separados por dois pontos",
@@ -102,7 +102,7 @@
         "Aucune méthode correspondante à": "Nenhum método de correspondência"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
-        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "Nenhuma pasta SSL encontrada. Você instalou o Mosquitto primeiro?",
+        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Nenhuma pasta SSL encontrada, restaure os direitos nas pastas e arquivos da configuração do Jeedom (guia OS\/DB) e clique no botão Instalar Mosquitto",
         "Installation locale du broker Mosquitto en cours": "Instalação local do corretor Mosquitto em andamento",
         "Installation du plugin Docker Management": "Instalando o plug-in de gerenciamento do Docker",
         "Le plugin Docker management doit être installé": "O plugin de gerenciamento do Docker deve ser instalado",

@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Änderungsprotokoll MQTT-Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen über die Aktualisierung vorliegen, liegt dies daran, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "17\/11\/2022": "17.11.2022",
+        "Aucun dossier SSL trouvé": "Kein SSL-Ordner gefunden",
+        "Ajout d'un message invitant à rétablir les droits sur les dossiers avant d'installer Mosquitto en cas d'erreur": "Es wurde eine Meldung hinzugefügt, die dazu auffordert, die Berechtigungen für Ordner wiederherzustellen, bevor Mosquitto im Fehlerfall installiert wird",
         "13\/11\/2022": "13.11.2022",
         "Ajout d'un bouton permettant de désinstaller un broker Mosquitto local sur la page de configuration générale du plugin": "Auf der allgemeinen Plugin-Konfigurationsseite wurde eine Schaltfläche zum Deinstallieren eines lokalen Mosquitto-Brokers hinzugefügt",
         " IMPORTANT.": " WICHTIG.",
