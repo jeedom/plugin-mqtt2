@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "17\/11\/2022": "17\/11\/2022",
+        "Aucun dossier SSL trouvé": "Nenhuma pasta SSL encontrada",
+        "Ajout d'un message invitant à rétablir les droits sur les dossiers avant d'installer Mosquitto en cas d'erreur": "Adicionada uma mensagem solicitando a restauração das permissões nas pastas antes de instalar o Mosquitto em caso de erro",
         "13\/11\/2022": "13\/11\/2022",
         "Ajout d'un bouton permettant de désinstaller un broker Mosquitto local sur la page de configuration générale du plugin": "Adicionado um botão para desinstalar um corretor Mosquitto local na página de configuração geral do plugin",
         " IMPORTANT.": " IMPORTANTE.",
