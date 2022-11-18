@@ -102,7 +102,7 @@
         "Aucune méthode correspondante à": "Keine Matching-Methode"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
-        "Aucun dossier SSL trouvé, avez vous installé Mosquitto d\\'abord ?": "Kein SSL-Ordner gefunden, haben Sie Mosquitto zuerst installiert?",
+        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Kein SSL-Ordner gefunden, bitte stellen Sie die Rechte für die Ordner und Dateien aus der Jeedom-Konfiguration (Registerkarte OS\/DB) wieder her und klicken Sie dann auf die Schaltfläche Mosquitto installieren",
         "Installation locale du broker Mosquitto en cours": "Lokale Installation des Mosquitto-Brokers läuft",
         "Installation du plugin Docker Management": "Installation des Docker Management-Plugins",
         "Le plugin Docker management doit être installé": "Das Docker Management Plugin muss installiert sein",
