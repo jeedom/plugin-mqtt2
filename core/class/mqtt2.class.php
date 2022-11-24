@@ -23,7 +23,7 @@ class mqtt2 extends eqLogic {
 
    public static function dependancy_end() {
       $mode = config::byKey('mode', __CLASS__, 'local');
-      if ($mode != 'local' || $mode != 'docker') {
+      if ($mode != 'local' && $mode != 'docker') {
          return;
       }
       if ($mode == 'docker' && is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
