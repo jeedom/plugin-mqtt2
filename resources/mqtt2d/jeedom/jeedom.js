@@ -162,7 +162,8 @@ Jeedom.com.test = function(){
 Jeedom.http.config = function(_port,_apikey){
   Jeedom.http.apikey = _apikey;
   Jeedom.http.app = express();
-  Jeedom.http.app.use(express.json());
+  Jeedom.http.app.use(express.urlencoded({limit: '5mb'}));
+  Jeedom.http.app.use(express.json({limit: '5mb'}));
   Jeedom.http.app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Not found');
