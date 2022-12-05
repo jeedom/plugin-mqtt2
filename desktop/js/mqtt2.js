@@ -53,7 +53,7 @@ function addCmdToTable(_cmd) {
   tr += '</td>'
   tr += '<td >'
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="logicalId" placeholder="{{Topic}}" title="{{Topic}}"/> '
-  tr += '<input class="cmdAttr form-control input-sm" style="margin-top:3px" data-l1key="configuration" data-l2key="message" placeholder="{{Message}}" title="{{Message}}"/> '
+  tr += '<input class="cmdAttr form-control input-sm cmdType action" style="margin-top:3px" data-l1key="configuration" data-l2key="message" placeholder="{{Message}}" title="{{Message}}"/> '
   tr += '</td>'
   tr += '<td>'
   tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'
@@ -92,7 +92,7 @@ function addCmdToTable(_cmd) {
   })
 }
 
-$('#table_cmd').off('click', '.cmdAttr[data-l1key=type]').on('click', '.cmdAttr[data-l1key=type]', function() {
+$('#table_cmd').on('change', '.cmdAttr[data-l1key=type]', function() {
   $('.cmdType').hide()
   if ($(this).value() != '') {
     $('.cmdType.' + $(this).value()).show()
