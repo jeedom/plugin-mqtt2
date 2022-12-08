@@ -1,0 +1,133 @@
+{
+    "name" : "Mfi multiprise",
+    "parameters" : [
+        {
+            "name" : "Nom prise 1",
+            "key" : "switch1",
+            "type" : "input"
+        },
+        {
+            "name" : "Nom prise 2",
+            "key" : "switch2",
+            "type" : "input"
+        },
+        {
+            "name" : "Nom prise 3",
+            "key" : "switch3",
+            "type" : "input"
+        },
+        {
+            "name" : "Nom prise 4",
+            "key" : "switch4",
+            "type" : "input"
+        },
+        {
+            "name" : "Nom prise 5",
+            "key" : "switch5",
+            "type" : "input"
+        },
+        {
+            "name" : "Nom prise 6",
+            "key" : "switch6",
+            "type" : "input"
+        }
+    ],
+    "commands" : [
+        {
+            "name": "Etat #switch1#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port1/relay"
+        },
+        {
+            "name": "Puissance #switch1#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port1/power"
+        },
+        {
+            "name": "Etat #switch2#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port2/relay"
+        },
+        {
+            "name": "Puissance #switch2#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port2/power"
+        },
+        {
+            "name": "Etat #switch3#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port3/relay"
+        },
+        {
+            "name": "Puissance #switch3#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port3/power"
+        },
+        {
+            "name": "Etat #switch4#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port4/relay"
+        },
+        {
+            "name": "Puissance #switch4#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port4/power"
+        },
+        {
+            "name": "Etat #switch5#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port5/relay"
+        },
+        {
+            "name": "Puissance #switch5#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port5/power"
+        },
+        {
+            "name": "Etat #switch6#",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port6/relay"
+        },
+        {
+            "name": "Puissance #switch6#",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "port6/power"
+        }
+    ]
+}
