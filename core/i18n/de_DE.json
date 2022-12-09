@@ -36,8 +36,18 @@
         "Confirmez-vous la désinstallation du broker Mosquitto local?": "Bestätigen Sie die Deinstallation des lokalen Mosquitto-Brokers?",
         "Désinstallation réussie": "Deinstallation erfolgreich"
     },
+    "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Equipement introuvable": "Gerät nicht gefunden",
+        "Equipement pas de type mqtt2": "Geräte nicht vom Typ mqtt2",
+        "Template": "Schablone",
+        "Choisir": "Aussuchen",
+        "Créér": "Schaffen",
+        "Vous devez choisir un template": "Sie müssen eine Vorlage auswählen",
+        "Création réussie": "Erfolgreiche Kreation"
+    },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -64,7 +74,7 @@
         "Topic racine": "Root-Thema",
         "Informations": "Information",
         "Description": "Beschreibung",
-        "Ajouter une commande": "Bestellung hinzufügen",
+        "Templates": "Vorlagen",
         "Nom": "Name",
         "Type": "Typ",
         "Paramètres": "Einstellungen",
@@ -72,6 +82,7 @@
         "Actions": "Anteile"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Template commande MQTT": "Vorlagen-MQTT-Befehl",
         "Nom de la commande": "Bestellname",
         "Choisir une icône": "Wählen Sie ein Symbol aus",
         "Commande information liée": "Bestellbezogene Informationen",
@@ -95,11 +106,13 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Désinstallation du broker Mosquitto en cours": "Deinstallation des Mosquitto-Brokers läuft",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Bitte lesen Sie die Dokumentation, um den vom Docker Management-Plug-in verwalteten Mosquitto-Broker zu entfernen",
         "Aucun broker Mosquitto trouvé": "Keine Mosquitto-Broker gefunden",
-        "Aucune méthode correspondante à": "Keine Matching-Methode"
+        "Aucune méthode correspondante à": "Keine Matching-Methode",
+        "Equipement introuvable": "Gerät nicht gefunden",
+        "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Kein SSL-Ordner gefunden, bitte stellen Sie die Rechte für die Ordner und Dateien aus der Jeedom-Konfiguration (Registerkarte OS\/DB) wieder her und klicken Sie dann auf die Schaltfläche Mosquitto installieren",
@@ -120,7 +133,11 @@
         "Démarrage du démon MQTT Manager": "Starten des MQTT-Manager-Daemons",
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "MQTT Manager-Daemon konnte nicht gestartet werden, überprüfen Sie die Protokolle",
         "Message reçu sans prise en charge par un plugin": "Nachricht ohne Plugin-Unterstützung erhalten",
-        "Tentative de mise à jour": "Versuchen Sie zu aktualisieren"
+        "Tentative de mise à jour": "Versuchen Sie zu aktualisieren",
+        "La configuration d\\'un template doit etre un tableau": "Die Vorlagenkonfiguration muss ein Array sein",
+        "Aucun nom de template trouvé": "Kein Vorlagenname gefunden",
+        "Template introuvable": "Vorlage nicht gefunden",
+        "Aucune commandes trouvé dans le template": "Keine Befehle in Vorlage gefunden"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin als Basis für Plugins mit MQTT"
