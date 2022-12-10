@@ -47,7 +47,7 @@
         "Création réussie": "Erfolgreiche Kreation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -106,7 +106,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Désinstallation du broker Mosquitto en cours": "Deinstallation des Mosquitto-Brokers läuft",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Bitte lesen Sie die Dokumentation, um den vom Docker Management-Plug-in verwalteten Mosquitto-Broker zu entfernen",
         "Aucun broker Mosquitto trouvé": "Keine Mosquitto-Broker gefunden",
