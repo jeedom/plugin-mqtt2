@@ -510,6 +510,54 @@ class mqtt2 extends eqLogic {
          $listener->save();
       }
    }
+
+   public static function listCmdTemplate($_template = '') {
+      $path = dirname(__FILE__) . '/../config/template';
+      if (isset($_template) && $_template != '') {
+         $files = ls($path, $_template . '.json', false, array('files', 'quiet'));
+         if (count($files) == 1) {
+            try {
+               $content = file_get_contents($path . '/' . $files[0]);
+               return is_json($content, array(), true);
+            } catch (Exception $e) {
+            }
+         }
+         return array();
+      }
+      $files = ls($path, '*.json', false, array('files', 'quiet'));
+      $return = array();
+      foreach ($files as $file) {
+         try {
+            $content = file_get_contents($path . '/' . $file);
+            $return[str_replace('.json', '', $file)] = is_json($content, array());
+         } catch (Exception $e) {
+         }
+      }
+      return $return;
+   }
+
+   public function applyCmdTemplate($_config) {
+      if (!is_array($_config)) {
+         throw new Exception(__('La configuration d\'un template doit etre un tableau', __FILE__));
+      }
+      if (!isset($_config['template'])) {
+         throw new Exception(__('Aucun nom de template trouvé', __FILE__));
+      }
+      $template = self::listCmdTemplate($_config['template']);
+      if (!is_array($template) || count($template) < 1) {
+         throw new Exception(__('Template introuvable', __FILE__));
+      }
+      if (!isset($template['commands']) || count($template['commands']) < 1) {
+         throw new Exception(__('Aucune commandes trouvé dans le template', __FILE__));
+      }
+      $config = array();
+      foreach ($_config as $key => $value) {
+         $config['#' . $key . '#'] = $value;
+      }
+      $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
+      $this->import(array('commands' => $cmds_template), true);
+      return;
+   }
 }
 
 class mqtt2Cmd extends cmd {

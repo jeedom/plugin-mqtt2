@@ -36,6 +36,16 @@
         "Confirmez-vous la désinstallation du broker Mosquitto local?": "Confirmez-vous la désinstallation du broker Mosquitto local?",
         "Désinstallation réussie": "Désinstallation réussie"
     },
+    "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Equipement introuvable": "Equipement introuvable",
+        "Equipement pas de type mqtt2": "Equipement pas de type mqtt2",
+        "Template": "Template",
+        "Choisir": "Choisir",
+        "Créér": "Créér",
+        "Vous devez choisir un template": "Vous devez choisir un template",
+        "Création réussie": "Création réussie"
+    },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Gestion": "Gestion",
@@ -64,7 +74,7 @@
         "Topic racine": "Topic racine",
         "Informations": "Informations",
         "Description": "Description",
-        "Ajouter une commande": "Ajouter une commande",
+        "Templates": "Templates",
         "Nom": "Nom",
         "Type": "Type",
         "Paramètres": "Paramètres",
@@ -72,6 +82,7 @@
         "Actions": "Actions"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Template commande MQTT": "Template commande MQTT",
         "Nom de la commande": "Nom de la commande",
         "Choisir une icône": "Choisir une icône",
         "Commande information liée": "Commande information liée",
@@ -99,7 +110,9 @@
         "Désinstallation du broker Mosquitto en cours": "Désinstallation du broker Mosquitto en cours",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management",
         "Aucun broker Mosquitto trouvé": "Aucun broker Mosquitto trouvé",
-        "Aucune méthode correspondante à": "Aucune méthode correspondante à"
+        "Aucune méthode correspondante à": "Aucune méthode correspondante à",
+        "Equipement introuvable": "Equipement introuvable",
+        "Equipement pas de type MQTT": "Equipement pas de type MQTT"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto",
@@ -120,7 +133,11 @@
         "Démarrage du démon MQTT Manager": "Démarrage du démon MQTT Manager",
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "Impossible de démarrer le démon MQTT Manager, vérifiez les logs",
         "Message reçu sans prise en charge par un plugin": "Message reçu sans prise en charge par un plugin",
-        "Tentative de mise à jour": "Tentative de mise à jour"
+        "Tentative de mise à jour": "Tentative de mise à jour",
+        "La configuration d\\'un template doit etre un tableau": "La configuration d\\'un template doit etre un tableau",
+        "Aucun nom de template trouvé": "Aucun nom de template trouvé",
+        "Template introuvable": "Template introuvable",
+        "Aucune commandes trouvé dans le template": "Aucune commandes trouvé dans le template"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin servant de base pour les plugins utilisant MQTT"

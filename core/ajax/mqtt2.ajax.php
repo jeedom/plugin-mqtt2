@@ -53,6 +53,19 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'createFromTemplate') {
+    $eqLogic = eqLogic::byId(init('eqLogic_id'));
+    if (!is_object($eqLogic)) {
+      throw new Exception('{{Equipement introuvable}} : ' . init('eqLogic_id'));
+    }
+    if ($eqLogic->getEqType_name() != 'mqtt2') {
+      throw new Exception('{{Equipement pas de type MQTT}}');
+    }
+    $eqLogic->applyCmdTemplate(json_decode(init('config'), true));
+    ajax::success();
+  }
+
+
   throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
 } catch (Exception $e) {
   ajax::error(displayException($e), $e->getCode());
