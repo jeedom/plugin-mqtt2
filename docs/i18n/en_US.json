@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "23\/12\/2022": "23\/12\/2022",
+        "Correction d'un bug sur le temps maximum autorisé pour l'installation des dépendances": "Fixed a bug on the maximum time allowed for installing dependencies",
+        "Ajout d'un système de template d'équipement (beta": "Added equipment template system (beta",
         "18\/11\/2022": "11\/18\/2022",
         "Aucun dossier SSL trouvé": "No SSL folder found",
         "Ajout d'un message invitant à rétablir les droits sur les dossiers avant d'installer Mosquitto en cas d'erreur": "Added a message prompting to restore permissions on folders before installing Mosquitto in case of error",
