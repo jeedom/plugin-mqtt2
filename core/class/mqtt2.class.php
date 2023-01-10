@@ -436,16 +436,38 @@ class mqtt2 extends eqLogic {
          }
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
-            foreach ($values as $key => $value) {
-               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . ' => ' . $value);
-               $eqlogic->checkAndUpdateCmd($key, $value);
-               if (is_json($value)) {
-                  $datas = implode_recursive(json_decode($value, true), '::');
-                  foreach ($datas as $k2 => $v2) {
-                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . '#' . $k2 . ' => ' . $v2);
-                     $eqlogic->checkAndUpdateCmd($key . '#' . $k2, $v2);
-                  }
+            if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
+               $discoverCmd = $eqlogic->getCache('discoverCmd');
+               if (!is_array($discoverCmd)) {
+                  $discoverCmd = array();
                }
+               foreach ($values as $logicalId => $value) {
+                  $cmd = $eqlogic->getCmd('info', $logicalId);
+                  if (is_object($cmd)) {
+                     continue;
+                  }
+                  if (!isset($discoverCmd[$logicalId])) {
+                     $discoverCmd[$logicalId] = array();
+                  }
+                  $discoverCmd[$logicalId]['value'] = $value;
+               }
+               $eqlogic->setCache('discoverCmd', json_encode($discoverCmd));
+            }
+
+            foreach ($eqlogic->getCmd('info') as $cmd) {
+               $paths = explode('/', $cmd->getLogicalId());
+               $value = $message;
+               foreach ($paths as $path) {
+                  if (!isset($value[$path])) {
+                     continue 2;
+                  }
+                  $value = $value[$path];
+               }
+               if (is_array($value) || is_object($value)) {
+                  $value = json_encode($cmd);
+               }
+               log::add(__CLASS__, 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $value);
+               $eqlogic->checkAndUpdateCmd($cmd, $value);
             }
          }
       }

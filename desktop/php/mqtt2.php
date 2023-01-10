@@ -124,6 +124,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId">
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)}}</label>
+								<div class="col-sm-6">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="enableDiscoverCmd">
+								</div>
+							</div>
 						</div>
 
 						<div class="col-lg-6">
