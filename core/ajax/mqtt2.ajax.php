@@ -73,7 +73,7 @@ try {
     if ($eqLogic->getEqType_name() != 'mqtt2') {
       throw new Exception('{{Equipement pas de type MQTT}}');
     }
-    $discoverCmd = json_decode($eqLogic->getCache('discoverCmd'), true);
+    $discoverCmd = $eqLogic->getDiscover();
     $discovers = json_decode(init('discover'), true);
     foreach ($discovers as $discover) {
       if ($discover['create'] == 0) {
@@ -90,7 +90,7 @@ try {
         unset($discoverCmd[$discover['logicalId']]);
       }
     }
-    $eqLogic->setCache('discoverCmd', json_encode($discoverCmd));
+    $eqLogic->setDiscover($discoverCmd);
     ajax::success();
   }
 

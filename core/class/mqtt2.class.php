@@ -437,7 +437,7 @@ class mqtt2 extends eqLogic {
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
             if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
-               $discoverCmd = json_decode($eqlogic->getCache('discoverCmd'), true);
+               $discoverCmd = $eqlogic->getDiscover();
                if (!is_array($discoverCmd)) {
                   $discoverCmd = array();
                }
@@ -451,7 +451,7 @@ class mqtt2 extends eqLogic {
                   }
                   $discoverCmd[$logicalId]['value'] = $value;
                }
-               $eqlogic->setCache('discoverCmd', json_encode($discoverCmd));
+               $eqlogic->setDiscover($discoverCmd);
             }
 
             foreach ($eqlogic->getCmd('info') as $cmd) {
@@ -579,6 +579,32 @@ class mqtt2 extends eqLogic {
       $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
       $this->import(array('commands' => $cmds_template), true);
       return;
+   }
+
+   public function setDiscover($_values) {
+      if (is_array($_values)) {
+         $_values = json_encode($_values);
+      }
+      $folder = __DIR__ . '/../../data/discover';
+      if (!file_exists($folder)) {
+         mkdir($folder);
+      }
+      if (file_exists($folder . '/' . $this->getId() . '.json')) {
+         unlink($folder . '/' . $this->getId() . '.json');
+      }
+      file_put_contents($folder . '/' . $this->getId() . '.json', $_values);
+   }
+
+   public function getDiscover() {
+      $folder = __DIR__ . '/../../data/discover/';
+      if (!file_exists($folder)) {
+         mkdir($folder);
+      }
+      if (!file_exists($folder . '/' . $this->getId() . '.json')) {
+         return array();
+      }
+      $content = file_get_contents($folder . '/' . $this->getId() . '.json');
+      return is_json($content, array());
    }
 }
 

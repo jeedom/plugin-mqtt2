@@ -9,7 +9,7 @@ if (!is_object($eqLogic)) {
 if ($eqLogic->getEqType_name() != 'mqtt2') {
     throw new Exception('{{Equipement pas de type mqtt2}}');
 }
-$discoverCmds = json_decode($eqLogic->getCache('discoverCmd'), true);
+$discoverCmds = $eqLogic->getDiscover();
 if (count($discoverCmds) == 0) {
     throw new Exception('{{Aucune commande découverte pour cet équipement}}');
 }
