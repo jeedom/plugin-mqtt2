@@ -148,7 +148,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<div class="input-group pull-right" style="display:inline-flex">
 					<span class="input-group-btn">
-						<a class="btn btn-default btn-sm cmdAction roundedLeft" data-action="importFromTemplate"><i class="fas fa-file"></i> {{Templates}}</a><a class="btn btn-success btn-sm cmdAction roundedRight" data-action="add"><i class="fas fa-plus-circle"></i> {{Commandes}}</a>
+						<a class="btn btn-info btn-sm cmdAction roundedLeft" data-action="discover"><i class="fas fa-search"></i> {{Découverte}}</a><a class="btn btn-default btn-sm cmdAction" data-action="importFromTemplate"><i class="fas fa-file"></i> {{Templates}}</a><a class="btn btn-success btn-sm cmdAction roundedRight" data-action="add"><i class="fas fa-plus-circle"></i> {{Commandes}}</a>
 					</span>
 				</div>
 				<br><br>

@@ -437,7 +437,7 @@ class mqtt2 extends eqLogic {
          $values = implode_recursive($message, '/');
          foreach ($eqlogics as $eqlogic) {
             if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
-               $discoverCmd = $eqlogic->getCache('discoverCmd');
+               $discoverCmd = json_decode($eqlogic->getCache('discoverCmd'), true);
                if (!is_array($discoverCmd)) {
                   $discoverCmd = array();
                }

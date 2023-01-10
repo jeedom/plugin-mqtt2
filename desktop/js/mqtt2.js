@@ -20,6 +20,10 @@ $('.cmdAction[data-action=importFromTemplate]').on('click',function(){
   $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=cmd.template&eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
 });
 
+$('.cmdAction[data-action=discover]').on('click',function(){
+  $('#md_modal').dialog({title: "{{Découverte commande MQTT}}"});
+  $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=cmd.discover&eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
+});
 
 $("#table_cmd").sortable({
   axis: "y",
