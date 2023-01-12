@@ -45,7 +45,7 @@ Jeedom.com.test()
 var mqtt = require('mqtt')
 if (args.ca) {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom",
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
     rejectUnauthorized: false,
     key: fs.readFileSync(args.client_key),
     cert: fs.readFileSync(args.client_crt),
@@ -54,7 +54,7 @@ if (args.ca) {
   })
 } else {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom",
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
     rejectUnauthorized: false,
     username: args.username,
     password: args.password
