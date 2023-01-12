@@ -36,6 +36,18 @@
         "Confirmez-vous la désinstallation du broker Mosquitto local?": "Bestätigen Sie die Deinstallation des lokalen Mosquitto-Brokers?",
         "Désinstallation réussie": "Deinstallation erfolgreich"
     },
+    "plugins\/mqtt2\/desktop\/modal\/cmd.discover.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Equipement introuvable": "Gerät nicht gefunden",
+        "Equipement pas de type mqtt2": "Geräte nicht vom Typ mqtt2",
+        "Aucune commande découverte pour cet équipement": "Kein Befehl für dieses Gerät gefunden",
+        "Sauvegarder": "Zu schützen",
+        "Topic": "Thema",
+        "Valeur": "Wert",
+        "Nom": "Familienname, Nachname",
+        "Sous type": "Untertyp",
+        "Création réussie": "Gelungene Kreation"
+    },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Equipement introuvable": "Gerät nicht gefunden",
@@ -44,10 +56,10 @@
         "Choisir": "Aussuchen",
         "Créér": "Schaffen",
         "Vous devez choisir un template": "Sie müssen eine Vorlage auswählen",
-        "Création réussie": "Erfolgreiche Kreation"
+        "Création réussie": "Gelungene Kreation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -58,7 +70,7 @@
         "Equipement non visible": "Ausrüstung nicht sichtbar",
         "Configuration avancée": "Erweiterte Konfiguration",
         "Dupliquer": "Duplikat",
-        "Sauvegarder": "Um zu schützen",
+        "Sauvegarder": "Zu schützen",
         "Supprimer": "Löschen",
         "Equipement": "Ausrüstung",
         "Commandes": "Aufträge",
@@ -72,10 +84,12 @@
         "Visible": "Sichtbar",
         "Paramètres spécifiques": "Spezifische Parameter",
         "Topic racine": "Root-Thema",
+        "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Aktivieren Sie die Analyse von Werten für die vereinfachte Erstellung von Bestellungen (Achtung, dies verbraucht mehr Ressourcen)",
         "Informations": "Information",
         "Description": "Beschreibung",
+        "Découverte": "Entdeckung",
         "Templates": "Vorlagen",
-        "Nom": "Name",
+        "Nom": "Familienname, Nachname",
         "Type": "Typ",
         "Paramètres": "Einstellungen",
         "Etat": "Bundesland",
@@ -83,6 +97,7 @@
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
         "Template commande MQTT": "Vorlagen-MQTT-Befehl",
+        "Découverte commande MQTT": "Erkennung von MQTT-Befehlen",
         "Nom de la commande": "Bestellname",
         "Choisir une icône": "Wählen Sie ein Symbol aus",
         "Commande information liée": "Bestellbezogene Informationen",
@@ -106,7 +121,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Désinstallation du broker Mosquitto en cours": "Deinstallation des Mosquitto-Brokers läuft",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Bitte lesen Sie die Dokumentation, um den vom Docker Management-Plug-in verwalteten Mosquitto-Broker zu entfernen",
         "Aucun broker Mosquitto trouvé": "Keine Mosquitto-Broker gefunden",
@@ -133,7 +148,7 @@
         "Démarrage du démon MQTT Manager": "Starten des MQTT-Manager-Daemons",
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "MQTT Manager-Daemon konnte nicht gestartet werden, überprüfen Sie die Protokolle",
         "Message reçu sans prise en charge par un plugin": "Nachricht ohne Plugin-Unterstützung erhalten",
-        "Tentative de mise à jour": "Versuchen Sie zu aktualisieren",
+        " mise à jour de  la valeur avec ": "Aktualisieren des Wertes mit",
         "La configuration d\\'un template doit etre un tableau": "Die Vorlagenkonfiguration muss ein Array sein",
         "Aucun nom de template trouvé": "Kein Vorlagenname gefunden",
         "Template introuvable": "Vorlage nicht gefunden",
