@@ -69,6 +69,10 @@ client.on('error', function(error) {
   process.exit()
 })
 
+client.on('reconnect', function() {
+  Jeedom.log.error('Reconnection to mqtt server')
+})
+
 client.on('connect', function() {
   Jeedom.log.info('Connection to mqtt server successfull')
   Jeedom.log.info('Subscription to all topics')
