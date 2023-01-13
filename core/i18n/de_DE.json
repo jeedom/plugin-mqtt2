@@ -56,10 +56,10 @@
         "Choisir": "Aussuchen",
         "Créér": "Schaffen",
         "Vous devez choisir un template": "Sie müssen eine Vorlage auswählen",
-        "Création réussie": "Gelungene Kreation"
+        "Création réussie": "Erfolgreiche Kreation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -70,7 +70,7 @@
         "Equipement non visible": "Ausrüstung nicht sichtbar",
         "Configuration avancée": "Erweiterte Konfiguration",
         "Dupliquer": "Duplikat",
-        "Sauvegarder": "Zu schützen",
+        "Sauvegarder": "Um zu schützen",
         "Supprimer": "Löschen",
         "Equipement": "Ausrüstung",
         "Commandes": "Aufträge",
@@ -89,7 +89,7 @@
         "Description": "Beschreibung",
         "Découverte": "Entdeckung",
         "Templates": "Vorlagen",
-        "Nom": "Familienname, Nachname",
+        "Nom": "Name",
         "Type": "Typ",
         "Paramètres": "Einstellungen",
         "Etat": "Bundesland",
@@ -121,7 +121,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Désinstallation du broker Mosquitto en cours": "Deinstallation des Mosquitto-Brokers läuft",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Bitte lesen Sie die Dokumentation, um den vom Docker Management-Plug-in verwalteten Mosquitto-Broker zu entfernen",
         "Aucun broker Mosquitto trouvé": "Keine Mosquitto-Broker gefunden",

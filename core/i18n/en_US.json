@@ -56,7 +56,7 @@
         "Choisir": "Picking out",
         "Créér": "Create",
         "Vous devez choisir un template": "You must choose a template",
-        "Création réussie": "Successful Creation"
+        "Création réussie": "Successful creation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
@@ -70,7 +70,7 @@
         "Equipement non visible": "Equipment not visible",
         "Configuration avancée": "Advanced configuration",
         "Dupliquer": "Duplicate",
-        "Sauvegarder": "To safeguard",
+        "Sauvegarder": "Save",
         "Supprimer": "Delete",
         "Equipement": "Equipment",
         "Commandes": "Commands",
@@ -89,7 +89,7 @@
         "Description": "Description",
         "Découverte": "Discovery",
         "Templates": "Templates",
-        "Nom": "Last name",
+        "Nom": "Name",
         "Type": "Type",
         "Paramètres": "Settings",
         "Etat": "State",
