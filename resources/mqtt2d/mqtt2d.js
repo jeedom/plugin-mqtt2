@@ -125,14 +125,14 @@ Jeedom.http.app.post('/publish', function(req, res) {
         options.retain = req.body.options.retain
       }
       if(req.body.options.qos){
-        options.retain = req.body.options.qos
+        options.qos = req.body.options.qos
       }
       if(req.body.options.dup){
-        options.retain = req.body.options.dup
+        options.dup = req.body.options.dup
       }
     }
-    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + req.body.message+' with options : '+JSON.stringify(options))
-    client.publish(req.body.topic, req.body.message,options, function(err) {
+    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + String(req.body.message)+' with options : '+JSON.stringify(options))
+    client.publish(req.body.topic, String(req.body.message,options), function(err) {
       if (err) {
         Jeedom.log.debug('Error on message publish : ' + error)
         res.setHeader('Content-Type', 'application/json')
