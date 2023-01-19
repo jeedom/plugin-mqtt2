@@ -25,7 +25,7 @@ if (isset($_GET['test'])) {
     die();
 }
 $results = json_decode(file_get_contents("php://input"), true);
-log::add('mqtt2', 'debug', json_encode($results));
+//log::add('mqtt2', 'debug', json_encode($results));
 
 foreach ($results as $key => $value) {
     $plugin = mqtt2::getPluginForTopic($key);

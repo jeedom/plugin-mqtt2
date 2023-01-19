@@ -1,0 +1,91 @@
+{
+    "name" : "Shelly plug S",
+    "parameters" : [
+        {
+            "name" : "Id de la prise",
+            "key" : "id",
+            "type" : "input"
+        }
+    ],
+    "commands" : [
+        {
+            "name": "Etat",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "#id#/relay/0"
+        },
+        {
+            "name": "On",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "#id#/relay/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"on"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "#id#/relay/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"off"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "#id#/relay/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"toggle"
+            }
+        },
+        {
+            "name": "Puissance",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "W",
+            "logicalId" : "#id#/relay/0/power"
+        },
+        {
+            "name": "Consommation",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "#id#/relay/0/energy"
+        },
+        {
+            "name": "Température",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "°C",
+            "logicalId" : "#id#/temperature"
+        }
+    ]
+}

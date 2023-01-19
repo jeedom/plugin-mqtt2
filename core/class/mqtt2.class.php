@@ -430,6 +430,9 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
+         if (isset($message['announce'])) {
+            self::announce($topic, $message);
+         }
          $eqlogics = self::byLogicalId($topic, __CLASS__, true);
          if (count($eqlogics) == 0) {
             continue;
@@ -471,6 +474,48 @@ class mqtt2 extends eqLogic {
             }
          }
       }
+   }
+
+   public static function announce($_topic, $_message) {
+      log::add(__CLASS__, 'debug', 'Announce on : ' . $_topic);
+      switch ($_topic) {
+         case 'shellies':
+            if (!isset($_message['announce'])) {
+               return;
+            }
+            if (self::searchEqLogicWithCmd($_topic, $_message['announce']['id'])) {
+               return;
+            }
+            log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id']);
+            $eqLogic = new self();
+            $eqLogic->setLogicalId($_topic);
+            $eqLogic->setName($_message['announce']['id']);
+            $eqLogic->setEqType_name('mqtt2');
+            $eqLogic->setIsVisible(1);
+            $eqLogic->setIsEnable(1);
+            $eqLogic->save();
+            try {
+               $eqLogic->applyCmdTemplate(array(
+                  'template' => 'shelly.' . $_message['announce']['model'],
+                  'id' => $_message['announce']['id']
+               ));
+            } catch (\Throwable $th) {
+            }
+            break;
+      }
+   }
+
+   public static function searchEqLogicWithCmd($_topic, $_cmd_preffix) {
+      $eqlogics = self::byLogicalId($_topic, __CLASS__, true);
+      if (count($eqlogics) == 0) {
+         return false;
+      }
+      foreach ($eqlogics->getCmd() as $cmd) {
+         if (strpos($cmd->getLogicalId(), $_cmd_preffix) !== false) {
+            return true;
+         }
+      }
+      return false;
    }
 
    public static function publish($_topic, $_message = '', $_options = array()) {
@@ -577,7 +622,31 @@ class mqtt2 extends eqLogic {
          $config['#' . $key . '#'] = $value;
       }
       $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
-      $this->import(array('commands' => $cmds_template), true);
+      foreach ($cmds_template as $cmd_template) {
+         $cmd = new mqtt2Cmd();
+         $cmd->setEqLogic_id($this->getId());
+         utils::a2o($cmd, $cmd_template);
+         try {
+            $cmd->save();
+            if (isset($cmd_template['value'])) {
+               $link_cmds[$cmd->getId()] = $cmd_template['value'];
+            }
+         } catch (\Throwable $th) {
+         }
+      }
+      if (count($link_cmds) > 0) {
+         foreach (($this->getCmd()) as $eqLogic_cmd) {
+            foreach ($link_cmds as $cmd_id => $link_cmd) {
+               if ($link_cmd == $eqLogic_cmd->getName()) {
+                  $cmd = cmd::byId($cmd_id);
+                  if (is_object($cmd)) {
+                     $cmd->setValue($eqLogic_cmd->getId());
+                     $cmd->save();
+                  }
+               }
+            }
+         }
+      }
       return;
    }
 
