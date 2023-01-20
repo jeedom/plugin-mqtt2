@@ -430,7 +430,7 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
-         if (isset($message['announce'])) {
+         if (isset($message['announce']) || isset($message['discovery'])) {
             self::announce($topic, $message);
          }
          $eqlogics = self::byLogicalId($topic, __CLASS__, true);
@@ -477,7 +477,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function announce($_topic, $_message) {
-      log::add(__CLASS__, 'debug', 'Announce on : ' . $_topic);
+      log::add(__CLASS__, 'debug', 'Découverte on : ' . $_topic);
       switch ($_topic) {
          case 'shellies':
             if (!isset($_message['announce'])) {
@@ -486,7 +486,7 @@ class mqtt2 extends eqLogic {
             if (self::searchEqLogicWithCmd($_topic, $_message['announce']['id'])) {
                return;
             }
-            log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id']);
+            log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id'] . __(' type : ', __FILE__) . $_message['announce']['model']);
             $eqLogic = new self();
             $eqLogic->setLogicalId($_topic);
             $eqLogic->setName($_message['announce']['id']);
@@ -502,6 +502,36 @@ class mqtt2 extends eqLogic {
             } catch (\Throwable $th) {
             }
             break;
+         case 'tasmota':
+            if (!isset($_message['discovery'])) {
+               return;
+            }
+            foreach ($_message['discovery'] as $discovery) {
+               if ($discovery['config']['ft'] != '%topic%/%prefix%/') {
+                  log::add(__CLASS__, 'debug', __('Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic : ', __FILE__) . $discovery['config']['ft'] . __(' au lieu de : %topic%/%prefix%/', __FILE__));
+                  continue;
+               }
+               $eqlogics = self::byLogicalId($discovery['config']['t'], __CLASS__, true);
+               if (count($eqlogics) > 0) {
+                  continue;
+               }
+               log::add(__CLASS__, 'debug', __('Nouvel équipement Tasmota découvert : ', __FILE__) . $discovery['config']['t'] . __(' type : ', __FILE__) . $discovery['config']['md']);
+               $eqLogic = new self();
+               $eqLogic->setLogicalId($discovery['config']['t']);
+               $eqLogic->setName($discovery['config']['hn']);
+               $eqLogic->setEqType_name('mqtt2');
+               $eqLogic->setIsVisible(1);
+               $eqLogic->setIsEnable(1);
+               $eqLogic->save();
+               try {
+                  log::add(__CLASS__, 'debug', 'Template : ' . 'tasmota.' . str_replace(' ', '_', $discovery['config']['md']));
+                  $eqLogic->applyCmdTemplate(array(
+                     'template' => 'tasmota.' . str_replace(' ', '_', $discovery['config']['md'])
+                  ));
+               } catch (\Throwable $th) {
+               }
+            }
+            break;
       }
    }
 
@@ -510,9 +540,11 @@ class mqtt2 extends eqLogic {
       if (count($eqlogics) == 0) {
          return false;
       }
-      foreach ($eqlogics->getCmd() as $cmd) {
-         if (strpos($cmd->getLogicalId(), $_cmd_preffix) !== false) {
-            return true;
+      foreach ($eqlogics as $eqLogic) {
+         foreach ($eqLogic->getCmd() as $cmd) {
+            if (strpos($cmd->getLogicalId(), $_cmd_preffix) !== false) {
+               return true;
+            }
          }
       }
       return false;
