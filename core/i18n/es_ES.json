@@ -149,6 +149,7 @@
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "No se pudo iniciar el demonio MQTT Manager, verifique los registros",
         "Message reçu sans prise en charge par un plugin": "Mensaje recibido sin soporte de complemento",
         " mise à jour de  la valeur avec ": "actualizando el valor con",
+        "Nouvel équipement Shelly découvert : ": "Nuevo equipo de Shelly descubierto:",
         "La configuration d\\'un template doit etre un tableau": "La configuración de la plantilla debe ser una matriz",
         "Aucun nom de template trouvé": "No se encontró el nombre de la plantilla",
         "Template introuvable": "Plantilla no encontrada",

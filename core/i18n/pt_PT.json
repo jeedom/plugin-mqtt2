@@ -149,6 +149,7 @@
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "Falha ao iniciar o daemon do MQTT Manager, verifique os logs",
         "Message reçu sans prise en charge par un plugin": "Mensagem recebida sem suporte a plugins",
         " mise à jour de  la valeur avec ": "atualizando o valor com",
+        "Nouvel équipement Shelly découvert : ": "Novo equipamento Shelly descoberto:",
         "La configuration d\\'un template doit etre un tableau": "A configuração do modelo deve ser uma matriz",
         "Aucun nom de template trouvé": "Nenhum nome de modelo encontrado",
         "Template introuvable": "Modelo não encontrado",

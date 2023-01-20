@@ -149,6 +149,7 @@
         "Impossible de démarrer le démon MQTT Manager, vérifiez les logs": "Failed to start MQTT Manager daemon, check logs",
         "Message reçu sans prise en charge par un plugin": "Message received without plugin support",
         " mise à jour de  la valeur avec ": "updating the value with",
+        "Nouvel équipement Shelly découvert : ": "New Shelly gear discovered:",
         "La configuration d\\'un template doit etre un tableau": "Template configuration must be an array",
         "Aucun nom de template trouvé": "No template name found",
         "Template introuvable": "Template not found",
