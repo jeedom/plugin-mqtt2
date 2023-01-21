@@ -25,6 +25,31 @@ $('.cmdAction[data-action=discover]').on('click',function(){
   $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=cmd.discover&eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
 });
 
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=manufacturer]').off('change').on('change', function () {
+  $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option').hide();
+  $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option[data-manufacturer=all]').show();
+  if($(this).value() != ''){
+    $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option[data-manufacturer="'+$(this).value()+'"]').show();
+  }
+  let manufacturer = $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-manufacturer');
+  if(manufacturer && manufacturer != 'all' && manufacturer != $(this).value()){
+    $('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').value($('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:not([hidden]):eq(0)').attr("value"))
+  }
+});
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').off('change').on('change', function () {
+  let manufacturer = $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-manufacturer');
+  if( manufacturer && manufacturer != 'all' &&$('.eqLogicAttr[data-l1key=configuration][data-l2key=manufacturer]').value() != manufacturer){
+    $('.eqLogicAttr[data-l1key=configuration][data-l2key=manufacturer]').value($('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-manufacturer'))
+  }
+  if($('.li_eqLogic.active').attr('data-eqlogic_id') != '' && $(this).value() != ''){
+    var img = $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-img')
+    $('#img_device').attr("src", 'plugins/mqtt2/core/config/devices/'+img);
+  }else{
+    $('#img_device').attr("src",'plugins/mqtt2/plugin_info/mqtt2_icon.png');
+  }
+});
+
 $("#table_cmd").sortable({
   axis: "y",
   cursor: "move",

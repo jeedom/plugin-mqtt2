@@ -6,6 +6,29 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('mqtt2');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+$manufacturers = array();
+foreach (mqtt2::devicesParameters() as $id => &$info) {
+	if (!isset($info['manufacturer'])) {
+		$info['manufacturer'] = __('Aucun', __FILE__);
+	}
+	if (!isset($manufacturers[$info['manufacturer']])) {
+		$manufacturers[$info['manufacturer']] = array();
+	}
+	$manufacturers[$info['manufacturer']][$id] = $info;
+}
+ksort($manufacturers);
+
+function sortDevice($a, $b) {
+	if ($a['name'] == $b['name']) {
+		return 0;
+	}
+	return ($a['name'] < $b['name']) ? -1 : 1;
+}
+
+foreach ($manufacturers as &$manufacturer) {
+	uasort($manufacturer, "sortDevice");
+}
 ?>
 
 <div class="row row-overflow">
@@ -135,9 +158,64 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						<div class="col-lg-6">
 							<legend><i class="fas fa-info"></i> {{Informations}}</legend>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Description}}</label>
-								<div class="col-sm-6">
+								<label class="col-sm-3 control-label">{{Description}}</label>
+								<div class="col-sm-7">
 									<textarea class="form-control eqLogicAttr autogrow" data-l1key="comment"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Fabricant}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le fabricant du module}}"></i></sup>
+								</label>
+								<div class="col-sm-7">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="manufacturer">
+										<option value="">{{Aucun}}</option>
+										<?php
+										foreach ($manufacturers as $manufacturer => $devices) {
+											echo '<option value="' . $manufacturer . '">' . $manufacturer . '</option>';
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Equipement}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type d'équipement}}"></i></sup>
+								</label>
+								<div class="col-sm-7">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="device">
+										<option value="" data-manufacturer="all">{{Inconnu}}</option>
+										<?php
+										$options = '';
+										foreach ($manufacturers as $manufacturer => $devices) {
+											if (!is_array($devices) || count($devices) == 0) {
+												continue;
+											}
+											foreach ($devices as $id => $info) {
+												if (!isset($info['name'])) {
+													continue;
+												}
+												$name = (isset($info['ref'])) ?  $info['name'] . ' [' . $info['ref'] . '] ' : $info['name'];
+												if (isset($info['instruction'])) {
+													$options .= '<option data-manufacturer="' . $manufacturer . '" value="' . $id . '" data-img="' . mqtt2::getImgFilePath($id, $manufacturer) . '" data-instruction="' . $info['instruction'] . '" style="display:none;">' . $name . '</option>';
+												} else {
+													$options .= '<option data-manufacturer="' . $manufacturer . '" value="' . $id . '" data-img="' . mqtt2::getImgFilePath($id, $manufacturer) . '" style="display:none;">' . $name . '</option>';
+												}
+											}
+										}
+										echo $options;
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"></label>
+								<div class="col-sm-7">
+									<div id="div_instruction"></div>
+									<div style="height:220px;display:flex;justify-content:center;align-items:center;">
+										<img src="plugins/mqtt2/plugin_info/mqtt2_icon.png" data-original=".jpg" id="img_device" class="img-responsive" style="max-height:200px;max-width:200px;" onerror="this.src='plugins/mqtt2/plugin_info/mqtt2_icon.png'" />
+									</div>
 								</div>
 							</div>
 						</div>

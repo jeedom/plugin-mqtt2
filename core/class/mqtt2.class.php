@@ -21,6 +21,39 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function devicesParameters($_device = '') {
+      $return = array();
+      foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
+         $path = __DIR__ . '/../config/devices/' . $dir;
+         if (!is_dir($path)) {
+            continue;
+         }
+         $files = ls($path, '*.json', false, array('files', 'quiet'));
+         foreach ($files as $file) {
+            try {
+               $content = is_json(file_get_contents($path . '/' . $file), false);
+               if ($content != false) {
+                  $content['manufacturer'] = ucfirst(trim($dir, '/'));
+                  $return[str_replace('.json', '', $file)] = $content;
+               }
+            } catch (Exception $e) {
+            }
+         }
+      }
+      if (isset($_device) && $_device != '') {
+         if (isset($return[$_device])) {
+            return $return[$_device];
+         }
+         foreach ($return as $device => $value) {
+            if (strtolower($device) == strtolower($_device)) {
+               return $value;
+            }
+         }
+         return array();
+      }
+      return $return;
+   }
+
    public static function dependancy_end() {
       $mode = config::byKey('mode', __CLASS__, 'local');
       if ($mode != 'local' && $mode != 'docker') {
@@ -640,25 +673,17 @@ class mqtt2 extends eqLogic {
    }
 
    public static function listCmdTemplate($_template = '') {
-      $path = dirname(__FILE__) . '/../config/template';
-      if (isset($_template) && $_template != '') {
-         $files = ls($path, $_template . '.json', false, array('files', 'quiet'));
-         if (count($files) == 1) {
-            try {
-               $content = file_get_contents($path . '/' . $files[0]);
-               return is_json($content, array(), true);
-            } catch (Exception $e) {
-            }
-         }
-         return array();
-      }
-      $files = ls($path, '*.json', false, array('files', 'quiet'));
       $return = array();
-      foreach ($files as $file) {
-         try {
-            $content = file_get_contents($path . '/' . $file);
-            $return[str_replace('.json', '', $file)] = is_json($content, array());
-         } catch (Exception $e) {
+      $path = __DIR__ . '/../config/devices';
+      foreach (ls($path, '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls($path . '/' . $folder, '*.json', false, array('files', 'quiet')) as $file) {
+            if ($_template != '') {
+               if ($file == $_template . '.json') {
+                  return is_json(file_get_contents($path . '/' . $folder . '/' . $file), array(), true);
+               }
+               continue;
+            }
+            $return[str_replace('.json', '', $file)] = is_json(file_get_contents($path . '/' . $folder . '/' . $file), array());
          }
       }
       return $return;
@@ -730,24 +755,24 @@ class mqtt2 extends eqLogic {
 
    public static function getImgFilePath($_device, $_manufacturer = null) {
       if ($_manufacturer != null) {
-         if (file_exists(__DIR__ . '/../config/template/' . $_manufacturer . '/' . $_device . '.png')) {
+         if (file_exists(__DIR__ . '/../config/devices/' . $_manufacturer . '/' . $_device . '.png')) {
             return $_manufacturer . '/' . $_device . '.png';
          }
-         if (file_exists(__DIR__ . '/../config/template/' . mb_strtolower($_manufacturer) . '/' . $_device . '.png')) {
+         if (file_exists(__DIR__ . '/../config/devices/' . mb_strtolower($_manufacturer) . '/' . $_device . '.png')) {
             return mb_strtolower($_manufacturer) . '/' . $_device . '.png';
          }
       }
-      if (file_exists(__DIR__ . '/../config/template/' . $_device . '.png')) {
+      if (file_exists(__DIR__ . '/../config/devices/' . $_device . '.png')) {
          return  $_device . '.png';
       }
       $device = self::ciGlob($_device);
-      foreach (ls(__DIR__ . '/../config/template', '*', false, array('folders', 'quiet')) as $folder) {
-         foreach (ls(__DIR__ . '/../config/template/' . $folder, $device . '.{jpg,png}', false, array('files', 'quiet')) as $file) {
+      foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/devices/' . $folder, $device . '.{jpg,png}', false, array('files', 'quiet')) as $file) {
             return $folder . $file;
          }
       }
-      foreach (ls(__DIR__ . '/../config/template', '*', false, array('folders', 'quiet')) as $folder) {
-         foreach (ls(__DIR__ . '/../config/template/' . $folder, '*.{jpg,png}', false, array('files', 'quiet')) as $file) {
+      foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/devices/' . $folder, '*.{jpg,png}', false, array('files', 'quiet')) as $file) {
             if (strtolower($_device) . '.png' == strtolower($file)) {
                return $file;
             }
@@ -762,7 +787,7 @@ class mqtt2 extends eqLogic {
    /*     * *********************Méthodes d'instance************************* */
 
    public function getImage() {
-      $file = 'plugins/mqtt2/core/config/template/' . self::getImgFilePath($this->getConfiguration('device'));
+      $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
       if (!file_exists(__DIR__ . '/../../../../' . $file)) {
          return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';
       }
