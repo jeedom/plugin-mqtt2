@@ -591,17 +591,22 @@ class mqtt2 extends eqLogic {
       foreach ($_messages as $type => $devices) {
          foreach ($devices as $id => $device) {
             foreach ($device as $name => $configuration) {
-               if (!is_array($configuration) || !isset($configuration['dev']) || !isset($configuration['dev']['mf']) || !isset($configuration['dev']['mdl'])) {
+               //log::add(__CLASS__, 'debug', 'HA : ' . print_r($configuration, true));
+               if (!is_array($configuration) || !isset($configuration['config']['dev']['mf'])) {
                   continue;
                }
-               if ($configuration['dev']['mf'] != 'expressif') {
+               if (trim($configuration['config']['dev']['mf']) != 'espressif') {
                   continue;
                }
-               $eqlogics = self::byLogicalId(explode('/', $configuration['stat_t'])[0], __CLASS__, true);
+               $root = explode('/', $configuration['config']['stat_t'])[0];
+               if (trim($root) == '') {
+                  continue;
+               }
+               $eqlogics = self::byLogicalId($root, __CLASS__, true);
                if (count($eqlogics) == 0) {
                   $eqLogic = new self();
-                  $eqLogic->setLogicalId(explode('/', $configuration['stat_t'])[0]);
-                  $eqLogic->setName($configuration['dev']['name']);
+                  $eqLogic->setLogicalId($root);
+                  $eqLogic->setName($configuration['config']['dev']['name']);
                   $eqLogic->setEqType_name('mqtt2');
                   $eqLogic->setIsVisible(1);
                   $eqLogic->setIsEnable(1);
