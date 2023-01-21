@@ -430,6 +430,10 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
+         if ($topic == 'homeassistant') {
+            self::ha_discovery($topic, $message);
+            continue;
+         }
          if (isset($message['announce']) || isset($message['discovery'])) {
             self::announce($topic, $message);
          }
@@ -477,7 +481,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function announce($_topic, $_message) {
-      log::add(__CLASS__, 'debug', 'Découverte on : ' . $_topic);
+      log::add(__CLASS__, 'debug', 'Découverte sur : ' . $_topic);
       switch ($_topic) {
          case 'shellies':
             if (!isset($_message['announce'])) {
@@ -548,6 +552,31 @@ class mqtt2 extends eqLogic {
          }
       }
       return false;
+   }
+
+   public static function ha_discovery($_topic, $_messages) {
+      foreach ($_messages as $type => $devices) {
+         foreach ($devices as $id => $device) {
+            foreach ($device as $name => $configuration) {
+               if (!is_array($configuration) || !isset($configuration['dev']) || !isset($configuration['dev']['mf']) || !isset($configuration['dev']['mdl'])) {
+                  continue;
+               }
+               if ($configuration['dev']['mf'] != 'expressif') {
+                  continue;
+               }
+               $eqlogics = self::byLogicalId(explode('/', $configuration['stat_t'])[0], __CLASS__, true);
+               if (count($eqlogics) == 0) {
+                  $eqLogic = new self();
+                  $eqLogic->setLogicalId(explode('/', $configuration['stat_t'])[0]);
+                  $eqLogic->setName($configuration['dev']['name']);
+                  $eqLogic->setEqType_name('mqtt2');
+                  $eqLogic->setIsVisible(1);
+                  $eqLogic->setIsEnable(1);
+                  $eqLogic->save();
+               }
+            }
+         }
+      }
    }
 
    public static function publish($_topic, $_message = '', $_options = array()) {
@@ -649,6 +678,7 @@ class mqtt2 extends eqLogic {
       if (!isset($template['commands']) || count($template['commands']) < 1) {
          throw new Exception(__('Aucune commandes trouvé dans le template', __FILE__));
       }
+      $this->setConfiguration('device', $_config['template']);
       $config = array();
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
@@ -659,7 +689,7 @@ class mqtt2 extends eqLogic {
          $cmd->setEqLogic_id($this->getId());
          utils::a2o($cmd, $cmd_template);
          try {
-            $cmd->save();
+            $cmd->save(true);
             if (isset($cmd_template['value'])) {
                $link_cmds[$cmd->getId()] = $cmd_template['value'];
             }
@@ -673,13 +703,70 @@ class mqtt2 extends eqLogic {
                   $cmd = cmd::byId($cmd_id);
                   if (is_object($cmd)) {
                      $cmd->setValue($eqLogic_cmd->getId());
-                     $cmd->save();
+                     $cmd->save(true);
                   }
                }
             }
          }
       }
+      $this->save(true);
       return;
+   }
+
+   public static function ciGlob($pat) {
+      $p = '';
+      for ($x = 0; $x < strlen($pat); $x++) {
+         $c = substr($pat, $x, 1);
+         if (preg_match("/[^A-Za-z]/", $c)) {
+            $p .= $c;
+            continue;
+         }
+         $a = strtolower($c);
+         $b = strtoupper($c);
+         $p .= "[{$a}{$b}]";
+      }
+      return $p;
+   }
+
+   public static function getImgFilePath($_device, $_manufacturer = null) {
+      if ($_manufacturer != null) {
+         if (file_exists(__DIR__ . '/../config/template/' . $_manufacturer . '/' . $_device . '.png')) {
+            return $_manufacturer . '/' . $_device . '.png';
+         }
+         if (file_exists(__DIR__ . '/../config/template/' . mb_strtolower($_manufacturer) . '/' . $_device . '.png')) {
+            return mb_strtolower($_manufacturer) . '/' . $_device . '.png';
+         }
+      }
+      if (file_exists(__DIR__ . '/../config/template/' . $_device . '.png')) {
+         return  $_device . '.png';
+      }
+      $device = self::ciGlob($_device);
+      foreach (ls(__DIR__ . '/../config/template', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/template/' . $folder, $device . '.{jpg,png}', false, array('files', 'quiet')) as $file) {
+            return $folder . $file;
+         }
+      }
+      foreach (ls(__DIR__ . '/../config/template', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/template/' . $folder, '*.{jpg,png}', false, array('files', 'quiet')) as $file) {
+            if (strtolower($_device) . '.png' == strtolower($file)) {
+               return $file;
+            }
+            if (strtolower($_device) . '.jpg' == strtolower($file)) {
+               return $file;
+            }
+         }
+      }
+      return '.png';
+   }
+
+   /*     * *********************Méthodes d'instance************************* */
+
+   public function getImage() {
+      $file = 'plugins/mqtt2/core/config/template/' . self::getImgFilePath($this->getConfiguration('device'));
+      if (!file_exists(__DIR__ . '/../../../../' . $file)) {
+         return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';
+      }
+      return $file;
    }
 
    public function setDiscover($_values) {
