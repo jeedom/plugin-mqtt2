@@ -18,6 +18,12 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
+function mqtt2_install() {
+  if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+    config::save('mode', "none", 'mqtt2');
+  }
+}
+
 function mqtt2_update() {
   if (config::byKey('mode', 'mqtt2', '') == 'remote') {
     if (strpos(config::byKey('remote::ip', 'mqtt2', ''), ':') !== false) {

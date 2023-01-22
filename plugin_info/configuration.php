@@ -31,6 +31,7 @@ if (!isConnect()) {
         </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
+            <option value="none">{{A configurer}}</option>
             <option value="local">{{Broker local}}</option>
             <option value="docker">{{Broker local docker}}</option>
             <option value="remote">{{Broker distant}}</option>
