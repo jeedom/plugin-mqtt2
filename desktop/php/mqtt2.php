@@ -45,6 +45,19 @@ foreach ($manufacturers as &$manufacturer) {
 				<br>
 				<span>{{Configuration}}</span>
 			</div>
+			<?php if (config::byKey('autodiscovery', 'mqtt2') == 1) { ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_disableAutoDiscovery">
+					<i class="fas fa-times"></i>
+					<br>
+					<span>{{Désactiver auto-decouverte}}</span>
+				</div>
+			<?php } else { ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_enableAutoDiscovery">
+					<i class="fas fa-check"></i>
+					<br>
+					<span>{{Activer auto-decouverte}}</span>
+				</div>
+			<?php } ?>
 		</div>
 		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
 		<?php

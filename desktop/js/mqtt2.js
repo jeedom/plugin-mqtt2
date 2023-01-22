@@ -1,4 +1,3 @@
-
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -14,6 +13,42 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
+
+$('#bt_disableAutoDiscovery').off('click').on('click',function(){
+  jeedom.config.save({
+    plugin : 'mqtt2',
+    configuration: {
+      autodiscovery: 0
+    },
+    error: function(error) {
+      jeedomUtils.showAlert({
+        message: error.message,
+        level: 'danger'
+      })
+    },
+    success: function() {
+      location.reload();
+    }
+  });
+})
+
+$('#bt_enableAutoDiscovery').off('click').on('click',function(){
+  jeedom.config.save({
+    plugin : 'mqtt2',
+    configuration: {
+      autodiscovery: 1
+    },
+    error: function(error) {
+      jeedomUtils.showAlert({
+        message: error.message,
+        level: 'danger'
+      })
+    },
+    success: function() {
+      location.reload();
+    }
+  });
+})
 
 $('.cmdAction[data-action=importFromTemplate]').on('click',function(){
   $('#md_modal').dialog({title: "{{Template commande MQTT}}"});

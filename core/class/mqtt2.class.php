@@ -463,12 +463,14 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
-         if ($topic == 'homeassistant') {
-            self::ha_discovery($topic, $message);
-            continue;
-         }
-         if (isset($message['announce']) || isset($message['discovery'])) {
-            self::announce($topic, $message);
+         if (config::byKey('autodiscovery', 'mqtt2') == 1) {
+            if ($topic == 'homeassistant') {
+               self::ha_discovery($topic, $message);
+               continue;
+            }
+            if (isset($message['announce']) || isset($message['discovery'])) {
+               self::announce($topic, $message);
+            }
          }
          $eqlogics = self::byLogicalId($topic, __CLASS__, true);
          if (count($eqlogics) == 0) {
