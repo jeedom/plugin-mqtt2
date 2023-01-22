@@ -59,6 +59,7 @@
         "Création réussie": "Creación exitosa"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
+        "Aucun": "No",
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Gestion": "Gestión",
         "Ajouter": "Agregar",
@@ -77,7 +78,6 @@
         "Paramètres généraux": "Configuración general",
         "Nom de l'équipement": "Nombre del equipo",
         "Objet parent": "Objeto padre",
-        "Aucun": "No",
         "Catégorie": "Categoría",
         "Options": "Opciones",
         "Activer": "Activar",
@@ -87,6 +87,10 @@
         "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Activar el análisis de valores para la creación simplificada de pedidos (ojo, esto consume más recursos)",
         "Informations": "Información",
         "Description": "Descripción",
+        "Fabricant": "Fabricante",
+        "Sélectionner le fabricant du module": "Seleccione el fabricante del módulo",
+        "Sélectionner le type d'équipement": "Seleccionar tipo de equipo",
+        "Inconnu": "Desconocido",
         "Découverte": "Descubrimiento",
         "Templates": "Plantillas",
         "Nom": "Apellido",

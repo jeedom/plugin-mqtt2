@@ -59,6 +59,7 @@
         "Création réussie": "Création réussie"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
+        "Aucun": "Aucun",
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Gestion": "Gestion",
         "Ajouter": "Ajouter",
@@ -77,7 +78,6 @@
         "Paramètres généraux": "Paramètres généraux",
         "Nom de l'équipement": "Nom de l'équipement",
         "Objet parent": "Objet parent",
-        "Aucun": "Aucun",
         "Catégorie": "Catégorie",
         "Options": "Options",
         "Activer": "Activer",
@@ -87,6 +87,10 @@
         "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)",
         "Informations": "Informations",
         "Description": "Description",
+        "Fabricant": "Fabricant",
+        "Sélectionner le fabricant du module": "Sélectionner le fabricant du module",
+        "Sélectionner le type d'équipement": "Sélectionner le type d'équipement",
+        "Inconnu": "Inconnu",
         "Découverte": "Découverte",
         "Templates": "Templates",
         "Nom": "Nom",

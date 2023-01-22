@@ -59,6 +59,7 @@
         "Création réussie": "Erfolgreiche Kreation"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
+        "Aucun": "Nein",
         "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
@@ -77,7 +78,6 @@
         "Paramètres généraux": "Allgemeine Einstellungen",
         "Nom de l'équipement": "Ausrüstungsname",
         "Objet parent": "Übergeordnetes Objekt",
-        "Aucun": "Nein",
         "Catégorie": "Kategorie",
         "Options": "Optionen",
         "Activer": "Aktivieren Sie",
@@ -87,6 +87,10 @@
         "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Aktivieren Sie die Analyse von Werten für die vereinfachte Erstellung von Bestellungen (Achtung, dies verbraucht mehr Ressourcen)",
         "Informations": "Information",
         "Description": "Beschreibung",
+        "Fabricant": "Hersteller",
+        "Sélectionner le fabricant du module": "Modulhersteller auswählen",
+        "Sélectionner le type d'équipement": "Gerätetyp auswählen",
+        "Inconnu": "Unbekannt",
         "Découverte": "Entdeckung",
         "Templates": "Vorlagen",
         "Nom": "Name",
