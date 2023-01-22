@@ -594,7 +594,7 @@ class mqtt2 extends eqLogic {
          foreach ($devices as $id => $device) {
             foreach ($device as $name => $configuration) {
                //log::add(__CLASS__, 'debug', 'HA : ' . print_r($configuration, true));
-               if (!is_array($configuration) || !isset($configuration['config']['dev']['mf'])) {
+               if (!is_array($configuration) || !isset($configuration['config']['dev']['mf']) || !isset($configuration['config']['stat_t'])) {
                   continue;
                }
                if (trim($configuration['config']['dev']['mf']) != 'espressif') {
@@ -612,7 +612,165 @@ class mqtt2 extends eqLogic {
                   $eqLogic->setEqType_name('mqtt2');
                   $eqLogic->setIsVisible(1);
                   $eqLogic->setIsEnable(1);
+                  $eqLogic->setConfiguration('device', 'esphome');
                   $eqLogic->save();
+                  $eqlogics = array($eqLogic);
+               }
+               switch ($type) {
+                  case 'sensor':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('numeric');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'binary_sensor':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'text':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'button':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'switch':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' état');
+                     $cmd->setType('info');
+                     $cmd->setSubType('binary');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setIsVisible(0);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     $info_id = $cmd->getId();
+
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' on');
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', 'on');
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->setValue($info_id);
+                     $cmd->save();
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' off');
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', 'off');
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->setValue($info_id);
+                     $cmd->save();
+                     break;
+                  case 'number':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' état');
+                     $cmd->setType('info');
+                     $cmd->setSubType('numeric');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setIsVisible(0);
+                     if (isset($configuration['config']['min'])) {
+                        $cmd->setConfiguration('minValue', $configuration['config']['min']);
+                     }
+                     if (isset($configuration['config']['max'])) {
+                        $cmd->setConfiguration('maxValue', $configuration['config']['max']);
+                     }
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     $info_id = $cmd->getId();
+
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('action');
+                     $cmd->setSubType('slider');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', '#slider#');
+                     if (isset($configuration['config']['min'])) {
+                        $cmd->setConfiguration('minValue', $configuration['config']['min']);
+                     }
+                     if (isset($configuration['config']['max'])) {
+                        $cmd->setConfiguration('maxValue', $configuration['config']['max']);
+                     }
+                     $cmd->setValue($info_id);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'device_automation':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['topic']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $name = (isset($configuration['config']['subtype'])) ? $configuration['config']['subtype'] : $subtopic;
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($name);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
                }
             }
          }
