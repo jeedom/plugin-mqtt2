@@ -2,6 +2,7 @@
     "plugins\/mqtt2\/plugin_info\/configuration.php": {
         "Mode": "Moda",
         "Sélectionner le mode de connexion au broker": "Selecione o modo de conexão do corretor",
+        "A configurer": "Para configurar",
         "Broker local": "Corretor local",
         "Broker local docker": "Docker local do corretor",
         "Broker distant": "Corretor remoto",
@@ -64,6 +65,8 @@
         "Gestion": "Gestão",
         "Ajouter": "Adicionar",
         "Configuration": "Configuração",
+        "Désactiver auto-decouverte": "Desativar descoberta automática",
+        "Activer auto-decouverte": "Ativar descoberta automática",
         "Mes MQTT": "Meu MQTT",
         "Aucun équipement MQTT trouvé, cliquer sur \"Ajouter\" pour commencer": "Nenhum dispositivo MQTT encontrado, clique em \"Adicionar\" para iniciar",
         "Rechercher": "Pesquisar",
