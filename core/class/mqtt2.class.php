@@ -475,45 +475,55 @@ class mqtt2 extends eqLogic {
                self::announce($topic, $message);
             }
          }
-         $eqlogics = self::byLogicalId($topic, __CLASS__, true);
-         if (count($eqlogics) == 0) {
-            continue;
-         }
-         $values = implode_recursive($message, '/');
-         foreach ($eqlogics as $eqlogic) {
-            if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
-               $discoverCmd = $eqlogic->getDiscover();
-               if (!is_array($discoverCmd)) {
-                  $discoverCmd = array();
-               }
-               foreach ($values as $logicalId => $value) {
-                  $cmd = $eqlogic->getCmd('info', $logicalId);
-                  if (is_object($cmd)) {
-                     continue;
-                  }
-                  if (!isset($discoverCmd[$logicalId])) {
-                     $discoverCmd[$logicalId] = array();
-                  }
-                  $discoverCmd[$logicalId]['value'] = $value;
-               }
-               $eqlogic->setDiscover($discoverCmd);
-            }
 
-            foreach ($eqlogic->getCmd('info') as $cmd) {
-               $paths = explode('/', $cmd->getLogicalId());
-               $value = $message;
-               foreach ($paths as $path) {
-                  if (!isset($value[$path])) {
-                     continue 2;
-                  }
-                  $value = $value[$path];
-               }
-               if (is_array($value) || is_object($value)) {
-                  $value = json_encode($cmd);
-               }
-               log::add(__CLASS__, 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $value);
-               $eqlogic->checkAndUpdateCmd($cmd, $value);
+         $eqlogics = self::byLogicalId($topic, __CLASS__, true);
+         if (count($eqlogics) != 0) {
+            self::handleMqttSubMessage($eqlogics, $message);
+         }
+         foreach ($message as $key => $value) {
+            $eqlogics = self::byLogicalId($topic . '/' . $key, __CLASS__, true);
+            if (count($eqlogics) != 0) {
+               self::handleMqttSubMessage($eqlogics, $value);
             }
+         }
+      }
+   }
+
+   public static function handleMqttSubMessage($_eqlogics, $_message) {
+      $values = implode_recursive($_message, '/');
+      foreach ($_eqlogics as $eqlogic) {
+         if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
+            $discoverCmd = $eqlogic->getDiscover();
+            if (!is_array($discoverCmd)) {
+               $discoverCmd = array();
+            }
+            foreach ($values as $logicalId => $value) {
+               $cmd = $eqlogic->getCmd('info', $logicalId);
+               if (is_object($cmd)) {
+                  continue;
+               }
+               if (!isset($discoverCmd[$logicalId])) {
+                  $discoverCmd[$logicalId] = array();
+               }
+               $discoverCmd[$logicalId]['value'] = $value;
+            }
+            $eqlogic->setDiscover($discoverCmd);
+         }
+
+         foreach ($eqlogic->getCmd('info') as $cmd) {
+            $paths = explode('/', $cmd->getLogicalId());
+            $value = $_message;
+            foreach ($paths as $path) {
+               if (!isset($value[$path])) {
+                  continue 2;
+               }
+               $value = $value[$path];
+            }
+            if (is_array($value) || is_object($value)) {
+               $value = json_encode($cmd);
+            }
+            log::add(__CLASS__, 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $value);
+            $eqlogic->checkAndUpdateCmd($cmd, $value);
          }
       }
    }
