@@ -26,8 +26,8 @@ function sortDevice($a, $b) {
 	return ($a['name'] < $b['name']) ? -1 : 1;
 }
 
-foreach ($manufacturers as &$manufacturer) {
-	uasort($manufacturer, "sortDevice");
+foreach ($manufacturers as &$array) {
+	uasort($array, "sortDevice");
 }
 ?>
 
@@ -205,6 +205,7 @@ foreach ($manufacturers as &$manufacturer) {
 											if (!is_array($devices) || count($devices) == 0) {
 												continue;
 											}
+
 											foreach ($devices as $id => $info) {
 												if (!isset($info['name'])) {
 													continue;

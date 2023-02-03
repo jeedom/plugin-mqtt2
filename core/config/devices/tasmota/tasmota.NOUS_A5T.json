@@ -1,0 +1,260 @@
+{
+    "name" : "Nous A5T (tasmotat)",
+    "parameters" : [
+    ],
+    "commands" : [
+        {
+            "name": "Etat 1",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "stat/POWER1"
+        },
+        {
+            "name": "On 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER1",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"ON"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER1",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"OFF"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER1",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"TOGGLE"
+            }
+        },
+        {
+            "name": "Etat 2",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "stat/POWER2"
+        },
+        {
+            "name": "On 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER2",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"ON"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER2",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"OFF"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER2",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"TOGGLE"
+            }
+        },
+        {
+            "name": "Etat 3",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "stat/POWER3"
+        },
+        {
+            "name": "On 3",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER3",
+            "value" : "Etat",
+            "configuration":{
+                "message":"ON"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off 3",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER3",
+            "value" : "Etat 3",
+            "configuration":{
+                "message":"OFF"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle 3",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER3",
+            "value" : "Etat 3",
+            "configuration":{
+                "message":"TOGGLE"
+            }
+        },
+        {
+            "name": "Etat USB",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "stat/POWER4"
+        },
+        {
+            "name": "On USB",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER4",
+            "value" : "Etat USB",
+            "configuration":{
+                "message":"ON"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off USB",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER4",
+            "value" : "Etat USB",
+            "configuration":{
+                "message":"OFF"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle USB4",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "cmnd/POWER4",
+            "value" : "Etat USB",
+            "configuration":{
+                "message":"TOGGLE"
+            }
+        },
+        {
+            "name": "Puissance",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "W",
+            "logicalId" : "tele/SENSOR/ENERGY/Power"
+        },
+        {
+            "name": "Consommation Jour",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "tele/SENSOR/ENERGY/Today"
+        },
+        {
+            "name": "Consommation Total",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "tele/SENSOR/ENERGY/Total"
+        },
+        {
+            "name": "Voltage",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "unite" : "V",
+            "logicalId" : "tele/SENSOR/ENERGY/Voltage"
+        },
+        {
+            "name": "Courrant",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "unite" : "A",
+            "logicalId" : "tele/SENSOR/ENERGY/Current"
+        }
+    ]
+}
