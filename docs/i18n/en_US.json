@@ -88,6 +88,7 @@
         "` ou `": "` or `",
         "` qui seront automatiquement remplacés par leur valeur lors de l'exécution de la commande": "` which will be automatically replaced by their value when executing the command",
         "D'autre part, si le message est de type `json` il faut lui ajouter le préfixe `json": "On the other hand, if the message is of the `json` type, you must add the `json` prefix to it",
+        "Le topic `jeedom` est reservé (cela peut se changer dans la configuration), il ne faut donc rien envoyer d'autre dessus que des commandes pour piloter jeedom": "The `jeedom` topic is reserved (this can be changed in the configuration), so do not send anything other than commands to drive jeedom",
         "Jeedom via MQTT": "Jeedom via MQTT",
         "à adapter si vous avez modifié la configuration par défaut": "to adapt if you have modified the default configuration",
         "Il est possible de piloter Jeedom à travers MQTT": "It is possible to pilot Jeedom through MQTT",

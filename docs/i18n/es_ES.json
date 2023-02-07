@@ -88,6 +88,7 @@
         "` ou `": "` o `",
         "` qui seront automatiquement remplacés par leur valeur lors de l'exécution de la commande": "` que se reemplazará automáticamente por su valor al ejecutar el comando",
         "D'autre part, si le message est de type `json` il faut lui ajouter le préfixe `json": "Por otro lado, si el mensaje es del tipo `json`, debes agregarle el prefijo `json`",
+        "Le topic `jeedom` est reservé (cela peut se changer dans la configuration), il ne faut donc rien envoyer d'autre dessus que des commandes pour piloter jeedom": "El tema `jeedom` está reservado (esto se puede cambiar en la configuración), así que no envíe nada más que comandos para conducir jeedom",
         "Jeedom via MQTT": "Jeedom a través de MQTT",
         "à adapter si vous avez modifié la configuration par défaut": "para adaptar si ha modificado la configuración por defecto",
         "Il est possible de piloter Jeedom à travers MQTT": "Es posible pilotar Jeedom a través de MQTT",
