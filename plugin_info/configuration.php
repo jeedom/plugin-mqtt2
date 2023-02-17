@@ -134,7 +134,7 @@ if (!isConnect()) {
           <textarea class="configKey form-control autogrow" data-l1key="mosquitto::parameters"></textarea>
         </div>
       </div>
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker">
         <label class="col-md-4 control-label">{{Port(s)}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
         </label>
