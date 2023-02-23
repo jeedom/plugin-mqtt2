@@ -132,7 +132,7 @@ Jeedom.http.app.post('/publish', function(req, res) {
       }
     }
     Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + String(req.body.message)+' with options : '+JSON.stringify(options))
-    client.publish(req.body.topic, String(req.body.message,options), function(err) {
+    client.publish(req.body.topic, String(req.body.message),options, function(err) {
       if (err) {
         Jeedom.log.debug('Error on message publish : ' + error)
         res.setHeader('Content-Type', 'application/json')
