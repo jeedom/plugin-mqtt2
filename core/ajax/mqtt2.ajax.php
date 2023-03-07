@@ -65,6 +65,34 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'createDiscoverCmd') {
+    $eqLogic = eqLogic::byId(init('eqLogic_id'));
+    if (!is_object($eqLogic)) {
+      throw new Exception('{{Equipement introuvable}} : ' . init('eqLogic_id'));
+    }
+    if ($eqLogic->getEqType_name() != 'mqtt2') {
+      throw new Exception('{{Equipement pas de type MQTT}}');
+    }
+    $discoverCmd = $eqLogic->getDiscover();
+    $discovers = json_decode(init('discover'), true);
+    foreach ($discovers as $discover) {
+      if ($discover['create'] == 0) {
+        continue;
+      }
+      $cmd = new mqtt2Cmd();
+      $cmd->setName($discover['name']);
+      $cmd->setEqLogic_id($eqLogic->getId());
+      $cmd->setLogicalId($discover['logicalId']);
+      $cmd->setType('info');
+      $cmd->setSubtype($discover['subType']);
+      $cmd->save();
+      if (isset($discoverCmd[$discover['logicalId']])) {
+        unset($discoverCmd[$discover['logicalId']]);
+      }
+    }
+    $eqLogic->setDiscover($discoverCmd);
+    ajax::success();
+  }
 
   throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
 } catch (Exception $e) {

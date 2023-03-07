@@ -6,6 +6,29 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('mqtt2');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+$manufacturers = array();
+foreach (mqtt2::devicesParameters() as $id => &$info) {
+	if (!isset($info['manufacturer'])) {
+		$info['manufacturer'] = __('Aucun', __FILE__);
+	}
+	if (!isset($manufacturers[$info['manufacturer']])) {
+		$manufacturers[$info['manufacturer']] = array();
+	}
+	$manufacturers[$info['manufacturer']][$id] = $info;
+}
+ksort($manufacturers);
+
+function sortDevice($a, $b) {
+	if ($a['name'] == $b['name']) {
+		return 0;
+	}
+	return ($a['name'] < $b['name']) ? -1 : 1;
+}
+
+foreach ($manufacturers as &$array) {
+	uasort($array, "sortDevice");
+}
 ?>
 
 <div class="row row-overflow">
@@ -22,6 +45,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<br>
 				<span>{{Configuration}}</span>
 			</div>
+			<?php if (config::byKey('autodiscovery', 'mqtt2') == 1) { ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_disableAutoDiscovery">
+					<i class="fas fa-times"></i>
+					<br>
+					<span>{{Désactiver auto-decouverte}}</span>
+				</div>
+			<?php } else { ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_enableAutoDiscovery">
+					<i class="fas fa-check"></i>
+					<br>
+					<span>{{Activer auto-decouverte}}</span>
+				</div>
+			<?php } ?>
 		</div>
 		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
 		<?php
@@ -39,7 +75,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				echo '<img src="' . $plugin->getPathImgIcon() . '">';
+				echo '<img src="' . $eqLogic->getImage() . '"/>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '<span class="hiddenAsCard displayTableRight hidden">';
@@ -124,14 +160,76 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId">
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)}}</label>
+								<div class="col-sm-6">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="enableDiscoverCmd">
+								</div>
+							</div>
 						</div>
 
 						<div class="col-lg-6">
 							<legend><i class="fas fa-info"></i> {{Informations}}</legend>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Description}}</label>
-								<div class="col-sm-6">
+								<label class="col-sm-3 control-label">{{Description}}</label>
+								<div class="col-sm-7">
 									<textarea class="form-control eqLogicAttr autogrow" data-l1key="comment"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Fabricant}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le fabricant du module}}"></i></sup>
+								</label>
+								<div class="col-sm-7">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="manufacturer">
+										<option value="">{{Aucun}}</option>
+										<?php
+										foreach ($manufacturers as $manufacturer => $devices) {
+											echo '<option value="' . $manufacturer . '">' . $manufacturer . '</option>';
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Equipement}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type d'équipement}}"></i></sup>
+								</label>
+								<div class="col-sm-7">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="device">
+										<option value="" data-manufacturer="all">{{Inconnu}}</option>
+										<?php
+										$options = '';
+										foreach ($manufacturers as $manufacturer => $devices) {
+											if (!is_array($devices) || count($devices) == 0) {
+												continue;
+											}
+
+											foreach ($devices as $id => $info) {
+												if (!isset($info['name'])) {
+													continue;
+												}
+												$name = (isset($info['ref'])) ?  $info['name'] . ' [' . $info['ref'] . '] ' : $info['name'];
+												if (isset($info['instruction'])) {
+													$options .= '<option data-manufacturer="' . $manufacturer . '" value="' . $id . '" data-img="' . mqtt2::getImgFilePath($id, $manufacturer) . '" data-instruction="' . $info['instruction'] . '" style="display:none;">' . $name . '</option>';
+												} else {
+													$options .= '<option data-manufacturer="' . $manufacturer . '" value="' . $id . '" data-img="' . mqtt2::getImgFilePath($id, $manufacturer) . '" style="display:none;">' . $name . '</option>';
+												}
+											}
+										}
+										echo $options;
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"></label>
+								<div class="col-sm-7">
+									<div id="div_instruction"></div>
+									<div style="height:220px;display:flex;justify-content:center;align-items:center;">
+										<img src="plugins/mqtt2/plugin_info/mqtt2_icon.png" data-original=".jpg" id="img_device" class="img-responsive" style="max-height:200px;max-width:200px;" onerror="this.src='plugins/mqtt2/plugin_info/mqtt2_icon.png'" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -142,7 +240,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<div class="input-group pull-right" style="display:inline-flex">
 					<span class="input-group-btn">
-						<a class="btn btn-default btn-sm cmdAction roundedLeft" data-action="importFromTemplate"><i class="fas fa-file"></i> {{Templates}}</a><a class="btn btn-success btn-sm cmdAction roundedRight" data-action="add"><i class="fas fa-plus-circle"></i> {{Commandes}}</a>
+						<a class="btn btn-info btn-sm cmdAction roundedLeft" data-action="discover"><i class="fas fa-search"></i> {{Découverte}}</a><a class="btn btn-default btn-sm cmdAction" data-action="importFromTemplate"><i class="fas fa-file"></i> {{Templates}}</a><a class="btn btn-success btn-sm cmdAction roundedRight" data-action="add"><i class="fas fa-plus-circle"></i> {{Commandes}}</a>
 					</span>
 				</div>
 				<br><br>

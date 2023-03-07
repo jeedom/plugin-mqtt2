@@ -1,0 +1,135 @@
+{
+    "name" : "HomeButtons",
+    "commands" : [
+        {
+            "name": "Bouton 1",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_1"
+        },{
+            "name": "Bouton 2",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_2"
+        },{
+            "name": "Bouton 3",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_3"
+        },{
+            "name": "Bouton 4",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_4"
+        },{
+            "name": "Bouton 5",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_5"
+        },{
+            "name": "Bouton 6",
+            "type": "info",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/button_6"
+        },{
+            "name": "Batterie",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/battery"
+        },{
+            "name": "Température",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/temperature"
+        },{
+            "name": "Humidité",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/humidity"
+        },{
+            "name": "Label 1",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_1_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        },{
+            "name": "Label 2",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_2_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        },{
+            "name": "Label 3",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_3_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        },{
+            "name": "Label 4",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_4_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        },{
+            "name": "Label 5",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_5_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        },{
+            "name": "Label 6",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "Home Buttons/cmd/btn_6_label",
+            "configuration":{
+                "message":"#message#",
+                "retain" : 1
+            }
+        }
+    ]
+}

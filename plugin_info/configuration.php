@@ -31,6 +31,7 @@ if (!isConnect()) {
         </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
+            <option value="none">{{A configurer}}</option>
             <option value="local">{{Broker local}}</option>
             <option value="docker">{{Broker local docker}}</option>
             <option value="remote">{{Broker distant}}</option>
@@ -125,7 +126,7 @@ if (!isConnect()) {
     </div>
 
     <div class="col-lg-6">
-      <div class="form-group mqtt2Mode docker">
+      <div class="form-group mqtt2Mode docker local">
         <label class="col-md-4 control-label">{{Paramètres Mosquitto}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
         </label>

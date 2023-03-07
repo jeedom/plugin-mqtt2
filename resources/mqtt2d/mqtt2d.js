@@ -45,7 +45,7 @@ Jeedom.com.test()
 var mqtt = require('mqtt')
 if (args.ca) {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom",
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
     rejectUnauthorized: false,
     key: fs.readFileSync(args.client_key),
     cert: fs.readFileSync(args.client_crt),
@@ -54,7 +54,7 @@ if (args.ca) {
   })
 } else {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom",
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
     rejectUnauthorized: false,
     username: args.username,
     password: args.password
@@ -67,6 +67,10 @@ Jeedom.log.info('Connect to mqtt server')
 client.on('error', function(error) {
   Jeedom.log.error('Error on connection to mqtt server : ' + error)
   process.exit()
+})
+
+client.on('reconnect', function() {
+  Jeedom.log.error('Reconnection to mqtt server')
 })
 
 client.on('connect', function() {
@@ -121,14 +125,14 @@ Jeedom.http.app.post('/publish', function(req, res) {
         options.retain = req.body.options.retain
       }
       if(req.body.options.qos){
-        options.retain = req.body.options.qos
+        options.qos = req.body.options.qos
       }
       if(req.body.options.dup){
-        options.retain = req.body.options.dup
+        options.dup = req.body.options.dup
       }
     }
-    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + req.body.message+' with options : '+JSON.stringify(options))
-    client.publish(req.body.topic, req.body.message,options, function(err) {
+    Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + String(req.body.message)+' with options : '+JSON.stringify(options))
+    client.publish(req.body.topic, String(req.body.message),options, function(err) {
       if (err) {
         Jeedom.log.debug('Error on message publish : ' + error)
         res.setHeader('Content-Type', 'application/json')

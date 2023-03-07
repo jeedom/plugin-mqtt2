@@ -21,8 +21,44 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function devicesParameters($_device = '') {
+      $return = array();
+      foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
+         $path = __DIR__ . '/../config/devices/' . $dir;
+         if (!is_dir($path)) {
+            continue;
+         }
+         $files = ls($path, '*.json', false, array('files', 'quiet'));
+         foreach ($files as $file) {
+            try {
+               $content = is_json(file_get_contents($path . '/' . $file), false);
+               if ($content != false) {
+                  $content['manufacturer'] = ucfirst(trim($dir, '/'));
+                  $return[str_replace('.json', '', $file)] = $content;
+               }
+            } catch (Exception $e) {
+            }
+         }
+      }
+      if (isset($_device) && $_device != '') {
+         if (isset($return[$_device])) {
+            return $return[$_device];
+         }
+         foreach ($return as $device => $value) {
+            if (strtolower($device) == strtolower($_device)) {
+               return $value;
+            }
+         }
+         return array();
+      }
+      return $return;
+   }
+
    public static function dependancy_end() {
       $mode = config::byKey('mode', __CLASS__, 'local');
+      if ($mode == 'none') {
+         return;
+      }
       if ($mode != 'local' && $mode != 'docker') {
          return;
       }
@@ -430,21 +466,324 @@ class mqtt2 extends eqLogic {
             }
             continue;
          }
-         $eqlogics = self::byLogicalId($topic, __CLASS__, true);
-         if (count($eqlogics) == 0) {
-            continue;
+         if (config::byKey('autodiscovery', 'mqtt2') == 1) {
+            if ($topic == 'homeassistant') {
+               self::ha_discovery($topic, $message);
+               continue;
+            }
+            if (isset($message['announce']) || isset($message['discovery'])) {
+               self::announce($topic, $message);
+            }
          }
-         $values = implode_recursive($message, '/');
-         foreach ($eqlogics as $eqlogic) {
-            foreach ($values as $key => $value) {
-               log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . ' => ' . $value);
-               $eqlogic->checkAndUpdateCmd($key, $value);
-               if (is_json($value)) {
-                  $datas = implode_recursive(json_decode($value, true), '::');
-                  foreach ($datas as $k2 => $v2) {
-                     log::add(__CLASS__, 'debug', $eqlogic->getHumanName() . ' ' . __('Tentative de mise à jour', __FILE__) . ' : ' . $key . '#' . $k2 . ' => ' . $v2);
-                     $eqlogic->checkAndUpdateCmd($key . '#' . $k2, $v2);
-                  }
+
+         $eqlogics = self::byLogicalId($topic, __CLASS__, true);
+         if (count($eqlogics) != 0) {
+            self::handleMqttSubMessage($eqlogics, $message);
+         }
+         foreach ($message as $key => $value) {
+            $eqlogics = self::byLogicalId($topic . '/' . $key, __CLASS__, true);
+            if (count($eqlogics) != 0) {
+               self::handleMqttSubMessage($eqlogics, $value);
+            }
+         }
+      }
+   }
+
+   public static function handleMqttSubMessage($_eqlogics, $_message) {
+      $values = implode_recursive($_message, '/');
+      foreach ($_eqlogics as $eqlogic) {
+         if ($eqlogic->getConfiguration('enableDiscoverCmd') == 1) {
+            $discoverCmd = $eqlogic->getDiscover();
+            if (!is_array($discoverCmd)) {
+               $discoverCmd = array();
+            }
+            foreach ($values as $logicalId => $value) {
+               $cmd = $eqlogic->getCmd('info', $logicalId);
+               if (is_object($cmd)) {
+                  continue;
+               }
+               if (!isset($discoverCmd[$logicalId])) {
+                  $discoverCmd[$logicalId] = array();
+               }
+               $discoverCmd[$logicalId]['value'] = $value;
+            }
+            $eqlogic->setDiscover($discoverCmd);
+         }
+
+         foreach ($eqlogic->getCmd('info') as $cmd) {
+            $paths = explode('/', $cmd->getLogicalId());
+            $value = $_message;
+            foreach ($paths as $path) {
+               if (!isset($value[$path])) {
+                  continue 2;
+               }
+               $value = $value[$path];
+            }
+            if (is_array($value) || is_object($value)) {
+               $value = json_encode($cmd);
+            }
+            log::add(__CLASS__, 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $value);
+            $eqlogic->checkAndUpdateCmd($cmd, $value);
+         }
+      }
+   }
+
+   public static function announce($_topic, $_message) {
+      log::add(__CLASS__, 'debug', 'Découverte sur : ' . $_topic);
+      switch ($_topic) {
+         case 'shellies':
+            if (!isset($_message['announce'])) {
+               return;
+            }
+            if (self::searchEqLogicWithCmd($_topic, $_message['announce']['id'])) {
+               return;
+            }
+            log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id'] . __(' type : ', __FILE__) . $_message['announce']['model']);
+            $eqLogic = new self();
+            $eqLogic->setLogicalId($_topic);
+            $eqLogic->setName($_message['announce']['id']);
+            $eqLogic->setEqType_name('mqtt2');
+            $eqLogic->setIsVisible(1);
+            $eqLogic->setIsEnable(1);
+            $eqLogic->save();
+            try {
+               $eqLogic->applyCmdTemplate(array(
+                  'template' => 'shelly.' . $_message['announce']['model'],
+                  'id' => $_message['announce']['id']
+               ));
+            } catch (\Throwable $th) {
+            }
+            break;
+         case 'tasmota':
+            if (!isset($_message['discovery'])) {
+               return;
+            }
+            foreach ($_message['discovery'] as $discovery) {
+               if ($discovery['config']['ft'] != '%topic%/%prefix%/') {
+                  log::add(__CLASS__, 'debug', __('Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic : ', __FILE__) . $discovery['config']['ft'] . __(' au lieu de : %topic%/%prefix%/', __FILE__));
+                  continue;
+               }
+               $eqlogics = self::byLogicalId($discovery['config']['t'], __CLASS__, true);
+               if (count($eqlogics) > 0) {
+                  continue;
+               }
+               log::add(__CLASS__, 'debug', __('Nouvel équipement Tasmota découvert : ', __FILE__) . $discovery['config']['t'] . __(' type : ', __FILE__) . $discovery['config']['md']);
+               $eqLogic = new self();
+               $eqLogic->setLogicalId($discovery['config']['t']);
+               $eqLogic->setName($discovery['config']['hn']);
+               $eqLogic->setEqType_name('mqtt2');
+               $eqLogic->setIsVisible(1);
+               $eqLogic->setIsEnable(1);
+               $eqLogic->save();
+               try {
+                  log::add(__CLASS__, 'debug', 'Template : ' . 'tasmota.' . str_replace(' ', '_', $discovery['config']['md']));
+                  $eqLogic->applyCmdTemplate(array(
+                     'template' => 'tasmota.' . str_replace(' ', '_', $discovery['config']['md'])
+                  ));
+               } catch (\Throwable $th) {
+               }
+            }
+            break;
+      }
+   }
+
+   public static function searchEqLogicWithCmd($_topic, $_cmd_preffix) {
+      $eqlogics = self::byLogicalId($_topic, __CLASS__, true);
+      if (count($eqlogics) == 0) {
+         return false;
+      }
+      foreach ($eqlogics as $eqLogic) {
+         foreach ($eqLogic->getCmd() as $cmd) {
+            if (strpos($cmd->getLogicalId(), $_cmd_preffix) !== false) {
+               return true;
+            }
+         }
+      }
+      return false;
+   }
+
+   public static function ha_discovery($_topic, $_messages) {
+      foreach ($_messages as $type => $devices) {
+         foreach ($devices as $id => $device) {
+            foreach ($device as $name => $configuration) {
+               //log::add(__CLASS__, 'debug', 'HA : ' . print_r($configuration, true));
+               if (!is_array($configuration) || !isset($configuration['config']['dev']['mf']) || !isset($configuration['config']['stat_t'])) {
+                  continue;
+               }
+               if (trim($configuration['config']['dev']['mf']) != 'espressif') {
+                  continue;
+               }
+               $root = explode('/', $configuration['config']['stat_t'])[0];
+               if (trim($root) == '') {
+                  continue;
+               }
+               $eqlogics = self::byLogicalId($root, __CLASS__, true);
+               if (count($eqlogics) == 0) {
+                  $eqLogic = new self();
+                  $eqLogic->setLogicalId($root);
+                  $eqLogic->setName($configuration['config']['dev']['name']);
+                  $eqLogic->setEqType_name('mqtt2');
+                  $eqLogic->setIsVisible(1);
+                  $eqLogic->setIsEnable(1);
+                  $eqLogic->setConfiguration('device', 'esphome');
+                  $eqLogic->save();
+                  $eqlogics = array($eqLogic);
+               }
+               switch ($type) {
+                  case 'sensor':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('numeric');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'binary_sensor':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'text':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     if (isset($configuration['config']['unit_of_meas'])) {
+                        $cmd->setUnite($configuration['config']['unit_of_meas']);
+                     }
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'button':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'switch':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' état');
+                     $cmd->setType('info');
+                     $cmd->setSubType('binary');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setIsVisible(0);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     $info_id = $cmd->getId();
+
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' on');
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', 'on');
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->setValue($info_id);
+                     $cmd->save();
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' off');
+                     $cmd->setType('action');
+                     $cmd->setSubType('other');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', 'off');
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->setValue($info_id);
+                     $cmd->save();
+                     break;
+                  case 'number':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['stat_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name'] . ' état');
+                     $cmd->setType('info');
+                     $cmd->setSubType('numeric');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setIsVisible(0);
+                     if (isset($configuration['config']['min'])) {
+                        $cmd->setConfiguration('minValue', $configuration['config']['min']);
+                     }
+                     if (isset($configuration['config']['max'])) {
+                        $cmd->setConfiguration('maxValue', $configuration['config']['max']);
+                     }
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     $info_id = $cmd->getId();
+
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['cmd_t']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($configuration['config']['name']);
+                     $cmd->setType('action');
+                     $cmd->setSubType('slider');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setConfiguration('message', '#slider#');
+                     if (isset($configuration['config']['min'])) {
+                        $cmd->setConfiguration('minValue', $configuration['config']['min']);
+                     }
+                     if (isset($configuration['config']['max'])) {
+                        $cmd->setConfiguration('maxValue', $configuration['config']['max']);
+                     }
+                     $cmd->setValue($info_id);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
+                  case 'device_automation':
+                     $subtopic = str_replace($root . '/', '', $configuration['config']['topic']);
+                     if (self::searchEqLogicWithCmd($root, $subtopic)) {
+                        continue 2;
+                     }
+                     $name = (isset($configuration['config']['subtype'])) ? $configuration['config']['subtype'] : $subtopic;
+                     $cmd = new mqtt2Cmd();
+                     $cmd->setName($name);
+                     $cmd->setType('info');
+                     $cmd->setSubType('string');
+                     $cmd->setLogicalId($subtopic);
+                     $cmd->setEqLogic_id($eqlogics[0]->getId());
+                     $cmd->save();
+                     break;
                }
             }
          }
@@ -512,25 +851,17 @@ class mqtt2 extends eqLogic {
    }
 
    public static function listCmdTemplate($_template = '') {
-      $path = dirname(__FILE__) . '/../config/template';
-      if (isset($_template) && $_template != '') {
-         $files = ls($path, $_template . '.json', false, array('files', 'quiet'));
-         if (count($files) == 1) {
-            try {
-               $content = file_get_contents($path . '/' . $files[0]);
-               return is_json($content, array(), true);
-            } catch (Exception $e) {
-            }
-         }
-         return array();
-      }
-      $files = ls($path, '*.json', false, array('files', 'quiet'));
       $return = array();
-      foreach ($files as $file) {
-         try {
-            $content = file_get_contents($path . '/' . $file);
-            $return[str_replace('.json', '', $file)] = is_json($content, array());
-         } catch (Exception $e) {
+      $path = __DIR__ . '/../config/devices';
+      foreach (ls($path, '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls($path . '/' . $folder, '*.json', false, array('files', 'quiet')) as $file) {
+            if ($_template != '') {
+               if ($file == $_template . '.json') {
+                  return is_json(file_get_contents($path . '/' . $folder . '/' . $file), array(), true);
+               }
+               continue;
+            }
+            $return[str_replace('.json', '', $file)] = is_json(file_get_contents($path . '/' . $folder . '/' . $file), array());
          }
       }
       return $return;
@@ -550,13 +881,121 @@ class mqtt2 extends eqLogic {
       if (!isset($template['commands']) || count($template['commands']) < 1) {
          throw new Exception(__('Aucune commandes trouvé dans le template', __FILE__));
       }
+      $this->setConfiguration('device', $_config['template']);
       $config = array();
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
       }
       $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
-      $this->import(array('commands' => $cmds_template), true);
+      foreach ($cmds_template as $cmd_template) {
+         $cmd = new mqtt2Cmd();
+         $cmd->setEqLogic_id($this->getId());
+         utils::a2o($cmd, $cmd_template);
+         try {
+            $cmd->save(true);
+            if (isset($cmd_template['value'])) {
+               $link_cmds[$cmd->getId()] = $cmd_template['value'];
+            }
+         } catch (\Throwable $th) {
+         }
+      }
+      if (count($link_cmds) > 0) {
+         foreach (($this->getCmd()) as $eqLogic_cmd) {
+            foreach ($link_cmds as $cmd_id => $link_cmd) {
+               if ($link_cmd == $eqLogic_cmd->getName()) {
+                  $cmd = cmd::byId($cmd_id);
+                  if (is_object($cmd)) {
+                     $cmd->setValue($eqLogic_cmd->getId());
+                     $cmd->save(true);
+                  }
+               }
+            }
+         }
+      }
+      $this->save(true);
       return;
+   }
+
+   public static function ciGlob($pat) {
+      $p = '';
+      for ($x = 0; $x < strlen($pat); $x++) {
+         $c = substr($pat, $x, 1);
+         if (preg_match("/[^A-Za-z]/", $c)) {
+            $p .= $c;
+            continue;
+         }
+         $a = strtolower($c);
+         $b = strtoupper($c);
+         $p .= "[{$a}{$b}]";
+      }
+      return $p;
+   }
+
+   public static function getImgFilePath($_device, $_manufacturer = null) {
+      if ($_manufacturer != null) {
+         if (file_exists(__DIR__ . '/../config/devices/' . $_manufacturer . '/' . $_device . '.png')) {
+            return $_manufacturer . '/' . $_device . '.png';
+         }
+         if (file_exists(__DIR__ . '/../config/devices/' . mb_strtolower($_manufacturer) . '/' . $_device . '.png')) {
+            return mb_strtolower($_manufacturer) . '/' . $_device . '.png';
+         }
+      }
+      if (file_exists(__DIR__ . '/../config/devices/' . $_device . '.png')) {
+         return  $_device . '.png';
+      }
+      $device = self::ciGlob($_device);
+      foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/devices/' . $folder, $device . '.{jpg,png}', false, array('files', 'quiet')) as $file) {
+            return $folder . $file;
+         }
+      }
+      foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
+         foreach (ls(__DIR__ . '/../config/devices/' . $folder, '*.{jpg,png}', false, array('files', 'quiet')) as $file) {
+            if (strtolower($_device) . '.png' == strtolower($file)) {
+               return $file;
+            }
+            if (strtolower($_device) . '.jpg' == strtolower($file)) {
+               return $file;
+            }
+         }
+      }
+      return '.png';
+   }
+
+   /*     * *********************Méthodes d'instance************************* */
+
+   public function getImage() {
+      $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
+      if (!file_exists(__DIR__ . '/../../../../' . $file)) {
+         return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';
+      }
+      return $file;
+   }
+
+   public function setDiscover($_values) {
+      if (is_array($_values)) {
+         $_values = json_encode($_values);
+      }
+      $folder = __DIR__ . '/../../data/discover';
+      if (!file_exists($folder)) {
+         mkdir($folder);
+      }
+      if (file_exists($folder . '/' . $this->getId() . '.json')) {
+         unlink($folder . '/' . $this->getId() . '.json');
+      }
+      file_put_contents($folder . '/' . $this->getId() . '.json', $_values);
+   }
+
+   public function getDiscover() {
+      $folder = __DIR__ . '/../../data/discover/';
+      if (!file_exists($folder)) {
+         mkdir($folder);
+      }
+      if (!file_exists($folder . '/' . $this->getId() . '.json')) {
+         return array();
+      }
+      $content = file_get_contents($folder . '/' . $this->getId() . '.json');
+      return is_json($content, array());
    }
 }
 
@@ -583,6 +1022,7 @@ class mqtt2Cmd extends cmd {
             $value = str_replace('#title#', $_options['title'], $value);
             break;
       }
+      $value = jeedom::evaluateExpression($value);
       $prefix = 'json::';
       if (substr($value, 0, strlen($prefix)) == $prefix) {
          $value = substr($value, strlen($prefix));
