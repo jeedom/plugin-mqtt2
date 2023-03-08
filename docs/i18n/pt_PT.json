@@ -2,10 +2,12 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
-        "Ajout d'un systeme d'autodecouverte pour certain module (beta": "Adição de um sistema de descoberta automática para determinados módulos (beta",
+        "07\/03\/2023": "07\/03\/2023",
+        "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Adição de um sistema de autodiscovery para alguns módulos beta (esphome, tasmota e shelly",
         "Ajout de l'image des modules": "Adicionada a imagem dos módulos",
         "Correction d'un bug sur le client ID (si plusieurs jeedom sur le meme broker": "Corrigido um bug no ID do cliente (se vários jeedom no mesmo corretor",
         "Support d'un sous niveau dans les topics d'équipement": "Suporte de subnível em tópicos de equipamentos",
+        "Correction de bug": "Correção de bug",
         "23\/12\/2022": "23\/12\/2022",
         "Correction d'un bug sur le temps maximum autorisé pour l'installation des dépendances": "Corrigido um bug no tempo máximo permitido para instalação de dependências",
         "Ajout d'un système de template d'équipement (beta": "Adicionado sistema de modelo de equipamento (beta",
