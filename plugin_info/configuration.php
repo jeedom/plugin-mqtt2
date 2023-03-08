@@ -44,6 +44,7 @@ if (!isConnect()) {
           <sup><i class="fas fa-question-circle tooltips" title="{{Installer, désinstaller ou télécharger le certificat client du broker Mosquitto}}"></i></sup>
         </label>
         <div class="col-md-7">
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-minus-square"></i> {{Redémarrer Mosquitto}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{Installer Mosquitto}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller Mosquitto}}</a>
           <a class="btn btn-sm btn-primary pull-right" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
@@ -149,6 +150,39 @@ if (!isConnect()) {
   $('.configKey[data-l1key=mode]').off('change').on('change', function() {
     $('.mqtt2Mode').hide()
     $('.mqtt2Mode.' + $(this).value()).show()
+  })
+
+  $('#bt_mqtt2RestartMosquitto').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "restartMosquitto"
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({
+          message: error.message,
+          level: 'danger'
+        })
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({
+            message: data.result,
+            level: 'danger'
+          })
+          return
+        } else {
+          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+          $.fn.showAlert({
+            message: '{{Redemarrage réussie}}',
+            level: 'success',
+            emptyBefore: true
+          })
+        }
+      }
+    })
   })
 
   $('#bt_mqtt2InstallMosquitto').off('click').on('click', function() {

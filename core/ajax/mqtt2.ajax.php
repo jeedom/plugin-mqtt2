@@ -31,6 +31,11 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'restartMosquitto') {
+    mqtt2::restartMosquitto();
+    ajax::success();
+  }
+
   if (init('action') == 'uninstallMosquitto') {
     if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
       event::add('jeedom::alert', array(

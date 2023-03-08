@@ -278,6 +278,29 @@ class mqtt2 extends eqLogic {
       }
    }
 
+   public static function restartMosquitto() {
+      switch (config::byKey('mode', __CLASS__)) {
+         case 'remote':
+            throw new Exception(__('Cette action n\'est pas possible avec un brocker distant', __FILE__), 1);
+            break;
+         case 'docker':
+            $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+               throw new Exception(__('Veuillez désinstaller Mosquitto local', __FILE__));
+            } else if (!is_object($docker)) {
+               throw new Exception(__('Veuillez installer Mosquitto', __FILE__));
+            }
+            $docker->restartDocker();
+            break;
+         default:
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
+               throw new Exception(__('Veuillez d\'abord installer Mosquitto', __FILE__), 1);
+            }
+            shell_exec(system::getCmdSudo() . ' systemctl restart mosquitto');
+            break;
+      }
+   }
+
    public static function deamon_info() {
       $return = array();
       $return['log'] = __CLASS__;
