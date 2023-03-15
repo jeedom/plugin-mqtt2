@@ -96,7 +96,7 @@ Es posible pilotar Jeedom a través de MQTT. Aquí están los diferentes temas p
 - **Corredor local** : A continuación, debe utilizar el botón rojo **Desinstalar Mosquito** desde la página de configuración general del plugin.
 
 
-# Autodescubrimiento)
+# Autodescubrimiento
 
 El complemento puede realizar el descubrimiento automático de varios tipos de módulos. Para hacer esto, solo necesita autorizar el descubrimiento automático en la página principal del complemento y reiniciar el demonio.
 

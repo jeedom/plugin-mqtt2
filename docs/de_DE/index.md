@@ -96,7 +96,7 @@ Es ist möglich, Jeedom über MQTT zu steuern. Hier sind die verschiedenen mögl
 - **Lokaler Makler** : Sie müssen dann die rote Taste verwenden **Moskito deinstallieren** von der allgemeinen Konfigurationsseite des Plugins.
 
 
-# Selbstfindung)
+# Selbstfindung
 
 Das Plugin kann verschiedene Arten von Modulen automatisch erkennen. Dazu müssen Sie nur die automatische Erkennung auf der Hauptseite des Plugins autorisieren und den Dämon neu starten.
 

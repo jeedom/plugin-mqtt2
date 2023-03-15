@@ -126,7 +126,7 @@
         "Désinstaller Mosquitto": "Desinstalar Mosquito",
         "Il faut alors utiliser le bouton rouge": "A continuación, debe utilizar el botón rojo",
         "depuis la page de configuration générale du plugin": "desde la página de configuración general del plugin",
-        "Découverte auto (disvoery": "Autodescubrimiento",
+        "Découverte auto (discovery": "Autodescubrimiento",
         "Le plugin peux faire de la decouverte auto de plusieurs type de module": "El complemento puede realizar el descubrimiento automático de varios tipos de módulos",
         "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "Para hacer esto, solo necesita autorizar el descubrimiento automático en la página principal del complemento y reiniciar el demonio",
         "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Para los módulos tipo tasmota es absolutamente necesario que la configuración completa del tema sea `%topic%\/%prefix%\/`",
