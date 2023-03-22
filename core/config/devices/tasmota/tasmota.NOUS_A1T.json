@@ -92,7 +92,7 @@
             "logicalId" : "tele/SENSOR/ENERGY/Voltage"
         },
         {
-            "name": "Courrant",
+            "name": "Courant",
             "type": "info",
             "subtype": "numeric",
             "isVisible": 0,
