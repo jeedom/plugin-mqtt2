@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "22\/03\/2023": "22\/03\/2023",
+        "Correction de bugs": "Arreglo del fallo",
         "07\/03\/2023": "03\/07\/2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Adición de un sistema de autodescubrimiento para algunos módulos beta (esphome, tasmota y shelly)",
         "Ajout de l'image des modules": "Añadida la imagen de los módulos",
