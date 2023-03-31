@@ -826,7 +826,7 @@ class mqtt2 extends eqLogic {
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
       }
-      $topics = explode($_topic, '/');
+      $topics = explode('/', $_topic);
       if ($topics[0] == config::byKey('root_topic', 'mqtt2')) {
          $plugin = mqtt2::getPluginForTopic($topics[0]);
          if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
