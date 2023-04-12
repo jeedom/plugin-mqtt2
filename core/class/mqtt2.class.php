@@ -836,7 +836,7 @@ class mqtt2 extends eqLogic {
                $message[$topic] = array();
                $message = &$message[$topic];
             }
-            $message = $_message;
+            $message = json_decode($_message,true);
             $plugin::handleMqttMessage($data);
          }
       }
