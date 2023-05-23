@@ -134,9 +134,9 @@ Jeedom.http.app.post('/publish', function(req, res) {
     Jeedom.log.debug('Publish message on topic : ' + req.body.topic + ' => ' + String(req.body.message)+' with options : '+JSON.stringify(options))
     client.publish(req.body.topic, String(req.body.message),options, function(err) {
       if (err) {
-        Jeedom.log.debug('Error on message publish : ' + error)
+        Jeedom.log.debug('Error on message publish : ' + err)
         res.setHeader('Content-Type', 'application/json')
-        res.send({ state: "nok", result: JSON.stringify(error) })
+        res.send({ state: "nok", result: JSON.stringify(err) })
         return
       }
       LAST_SEND_TOPIC[req.body.topic] = (new Date().getTime())
