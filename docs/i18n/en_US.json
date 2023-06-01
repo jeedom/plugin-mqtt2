@@ -64,6 +64,7 @@
         "mot de passe` pour Jeedom (exemple": "password` for Jeedom (example",
         "si le nom d'utilisateur est `jeedom`et le mot de passe `mqtt`, il faut renseigner `jeedom": "if the username is `jeedom` and the password `mqtt`, you must fill in `jeedom",
         "L'authentification est obligatoire en mode local": "Authentication is mandatory in local mode",
+        "Il faut aussi suite a l'ajout redemarrer jeedom pour que ca soit pris en compte": "It is also necessary following the addition to restart jeedom so that it is taken into account",
         "Topic racine Jeedom": "Jeedom root topic",
         "Sujet racine pour envoyer une commande à Jeedom ou sur lequel il renvoit les évènements": "Root topic to send a command to Jeedom or on which it sends the events",
         "Attention il n'est possible de mettre que 1 ou 2 niveaux maximum": "Attention it is only possible to put 1 or 2 levels maximum",
