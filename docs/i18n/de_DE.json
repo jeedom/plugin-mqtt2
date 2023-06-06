@@ -64,6 +64,7 @@
         "mot de passe` pour Jeedom (exemple": "Passwort` für Jeedom (Beispiel",
         "si le nom d'utilisateur est `jeedom`et le mot de passe `mqtt`, il faut renseigner `jeedom": "Wenn der Benutzername „jeedom“ und das Passwort „mqtt“ lautet, müssen Sie „jeedom“ eingeben",
         "L'authentification est obligatoire en mode local": "Im lokalen Modus ist die Authentifizierung obligatorisch",
+        "Il faut aussi suite a l'ajout redemarrer jeedom pour que ca soit pris en compte": "Nach dem Zusatz ist es außerdem erforderlich, jeedom neu zu starten, damit es berücksichtigt wird",
         "Topic racine Jeedom": "Jeedom-Wurzelthema",
         "Sujet racine pour envoyer une commande à Jeedom ou sur lequel il renvoit les évènements": "Stammthema, um einen Befehl an Jeedom zu senden oder auf dem es die Ereignisse sendet",
         "Attention il n'est possible de mettre que 1 ou 2 niveaux maximum": "Achtung, es ist nur möglich, maximal 1 oder 2 Ebenen zu setzen",
