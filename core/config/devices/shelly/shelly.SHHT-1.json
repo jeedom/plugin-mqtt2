@@ -1,0 +1,41 @@
+{
+    "name" : "Shelly HT",
+    "parameters" : [
+        {
+            "name" : "Id",
+            "key" : "id",
+            "type" : "input"
+        }
+    ],
+    "commands" : [
+        {
+            "name": "Température",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "°C",
+            "generic_type": "TEMPERATURE",
+            "logicalId" : "#id#/sensor/temperature"
+        },
+        {
+            "name": "Humidité",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "°C",
+            "generic_type": "HUMIDITY",
+            "logicalId" : "#id#/sensor/humidity"
+        },
+        {
+            "name": "Batterie",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "%",
+            "logicalId" : "#id#/sensor/battery"
+        }
+    ]
+}
