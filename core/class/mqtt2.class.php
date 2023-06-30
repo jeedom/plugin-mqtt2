@@ -561,9 +561,13 @@ class mqtt2 extends eqLogic {
             if (self::searchEqLogicWithCmd($_topic, $_message['announce']['id'])) {
                return;
             }
+            $eqlogics = self::byLogicalId($_topic . '/' . $_message['announce']['id'], __CLASS__, true);
+            if (count($eqlogics) > 0) {
+               continue;
+            }
             log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id'] . __(' type : ', __FILE__) . $_message['announce']['model']);
             $eqLogic = new self();
-            $eqLogic->setLogicalId($_topic);
+            $eqLogic->setLogicalId($_topic . '/' . $_message['announce']['id']);
             $eqLogic->setName($_message['announce']['id']);
             $eqLogic->setEqType_name('mqtt2');
             $eqLogic->setIsVisible(1);
@@ -836,7 +840,7 @@ class mqtt2 extends eqLogic {
                $message[$topic] = array();
                $message = &$message[$topic];
             }
-            $message = json_decode($_message,true);
+            $message = json_decode($_message, true);
             $plugin::handleMqttMessage($data);
          }
       }
