@@ -563,7 +563,7 @@ class mqtt2 extends eqLogic {
             }
             $eqlogics = self::byLogicalId($_topic . '/' . $_message['announce']['id'], __CLASS__, true);
             if (count($eqlogics) > 0) {
-               continue;
+               return;
             }
             log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id'] . __(' type : ', __FILE__) . $_message['announce']['model']);
             $eqLogic = new self();
