@@ -262,7 +262,7 @@ class mqtt2 extends eqLogic {
             '/data/ssl/' => '/data/config/ssl/',
          );
       }
-      config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
+      config::save('mosquitto::parameters', str_replace(($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
@@ -859,6 +859,7 @@ class mqtt2 extends eqLogic {
             $replace['#type#'] = $cmd->getType();
             $replace['#subtype#'] = $cmd->getSubType();
          }
+         $message = str_replace(array_keys($replace),$replace,config::byKey('publish_template', 'mqtt2', ''));
       } else {
          $message = array('value' => $_option['value']);
          if (is_object($cmd)) {
@@ -927,7 +928,7 @@ class mqtt2 extends eqLogic {
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
       }
-      $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
+      $cmds_template = json_decode(str_replace(($config), $config, json_encode($template['commands'])), true);
       foreach ($cmds_template as $cmd_template) {
          $cmd = new mqtt2Cmd();
          $cmd->setEqLogic_id($this->getId());
