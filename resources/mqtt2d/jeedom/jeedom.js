@@ -14,7 +14,7 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
-const request = require('request');
+const axios = require('axios');
 var express = require('express');
 
 var Jeedom = {}
@@ -141,19 +141,22 @@ Jeedom.com.add_changes = function(_key,_value){
 
 Jeedom.com.send_change_immediate = function(_changes){
   Jeedom.log.debug('Send data to jeedom : '+JSON.stringify(_changes));
-  request.post({url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey, json: _changes}, function(error, response, body){
-    if(!response || response.statusCode != 200){
+  axios({
+    method : 'POST',
+    url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey,
+    data: JSON.stringify(_changes)
+  }).catch(function (error) {
       Jeedom.log.error('Error on send to jeedom : '+JSON.stringify(error));
-    }
   })
 }
 
 Jeedom.com.test = function(){
-  request.post({url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey, json: {}}, function(error, response, body){
-    if(!response || response.statusCode != 200){
-      Jeedom.log.error('Callback error.Please check your network configuration page : '+JSON.stringify(error));
-      process.exit();
-    }
+  axios({
+    method:'GET',
+    url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey
+  }).catch(function (error) {
+    Jeedom.log.error('Callback error.Please check your network configuration page : '+JSON.stringify(error));
+    process.exit();
   })
 }
 
