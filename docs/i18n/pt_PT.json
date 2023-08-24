@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "Possibilité de corriger le QOS par defaut": "Possibilidade de corrigir o QOS padrão",
         "22\/03\/2023": "22\/03\/2023",
         "Correction de bugs": "Bugfix",
         "07\/03\/2023": "07\/03\/2023",

@@ -29,6 +29,7 @@
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Marque la casilla para que todos los eventos de pedidos se transmitan al corredor MQTT",
         "Template de publication": "Plantilla de publicación",
         "Template de publication des évènements Jeedom": "Plantilla de publicación de eventos Jeedom",
+        "QOS par defaut": "QOS predeterminada",
         "Plugins abonnés": "Complementos de suscriptor",
         "Liste des plugins Jeedom abonnés au plugin MQTT Manager": "Lista de complementos de Jeedom suscritos al complemento MQTT Manager",
         "Paramètres Mosquitto": "Configuración de Mosquitto",

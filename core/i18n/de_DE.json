@@ -29,6 +29,7 @@
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Aktivieren Sie das Kontrollkästchen, damit alle Orderereignisse an den MQTT-Broker übermittelt werden",
         "Template de publication": "Beitragsvorlage",
         "Template de publication des évènements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
+        "QOS par defaut": "Standard-QOS",
         "Plugins abonnés": "Abonnenten-Plugins",
         "Liste des plugins Jeedom abonnés au plugin MQTT Manager": "Liste der Jeedom-Plug-ins, die das MQTT-Manager-Plug-in abonniert haben",
         "Paramètres Mosquitto": "Moskito-Einstellungen",
