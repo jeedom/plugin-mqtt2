@@ -1073,6 +1073,7 @@ class mqtt2Cmd extends cmd {
       if ($this->getConfiguration('retain') == 1) {
          $options['retain'] = 1;
       }
+      $options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
       mqtt2::publish($eqLogic->getLogicalid() . '/' . $this->getLogicalId(), $value, $options);
    }
 }
