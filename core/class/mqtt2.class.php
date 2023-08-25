@@ -819,7 +819,7 @@ class mqtt2 extends eqLogic {
 
    public static function publish($_topic, $_message = '', $_options = array()) {
       if(!isset($_options['qos'])){
-         $options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
+         $_options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
       }
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
