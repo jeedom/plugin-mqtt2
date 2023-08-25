@@ -31,7 +31,7 @@
         "Template de publication des évènements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
         "QOS par defaut": "Standard-QOS",
         "Plugins abonnés": "Abonnenten-Plugins",
-        "Liste des plugins Jeedom abonnés au plugin MQTT Manager": "Liste der Jeedom-Plug-ins, die das MQTT-Manager-Plug-in abonniert haben",
+        "Liste des plugins Jeedom abonnés au plugin MQTT Manager [topic ( plugin id)]": "Liste der Jeedom-Plugins, die das MQTT Manager-Plugin abonniert haben [Thema (Plugin-ID)]",
         "Paramètres Mosquitto": "Moskito-Einstellungen",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Speichern Sie die Installation von mosquitto und starten Sie sie erneut, um die Änderungen in diesem Konfigurationsfeld zu berücksichtigen",
         "Port(s)": "Häfen)",
