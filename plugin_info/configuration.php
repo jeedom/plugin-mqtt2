@@ -118,8 +118,12 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{QOS par defaut}}
           <sup><i class="fas fa-question-circle tooltips"></i></sup>
         </label>
-        <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="qos::default">
+         <div class="col-md-7">
+          <select class="configKey form-control" data-l1key="qos::default">
+            <option value="0">{{QOS 0 (défaut)}}</option>
+            <option value="1">{{QOS 1}}</option>
+            <option value="2">{{QOS 2}}</option>
+          </select>
         </div>
       </div>
       <div class="form-group">
