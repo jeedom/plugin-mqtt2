@@ -124,7 +124,7 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin MQTT Manager}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin MQTT Manager [topic ( plugin id)]}}"></i></sup>
         </label>
         <div class="subscribed col-md-7">
           <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
