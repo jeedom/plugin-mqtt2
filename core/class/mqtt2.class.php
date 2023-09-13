@@ -428,6 +428,16 @@ class mqtt2 extends eqLogic {
       config::save('mapping', $mapping, __CLASS__);
    }
 
+    public static function removePluginTopicByPlugin($_plugin) {
+      $mapping = config::byKey('mapping', __CLASS__, array());
+      foreach($mapping as $topic => $plugin){
+         if($plugin == $_plugin){
+            unset($mapping[$topic]);
+         }
+      }
+      config::save('mapping', $mapping, __CLASS__);
+   }
+
    /**
     * @return array
     */
