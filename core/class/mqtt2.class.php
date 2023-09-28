@@ -262,7 +262,7 @@ class mqtt2 extends eqLogic {
             '/data/ssl/' => '/data/config/ssl/',
          );
       }
-      config::save('mosquitto::parameters', str_replace(($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
+      config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
