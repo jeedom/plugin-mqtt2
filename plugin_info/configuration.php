@@ -51,6 +51,20 @@ if (!isConnect()) {
         </div>
       </div>
 
+      <div class="form-group mqtt2Mode local docker">
+        <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
+        <div class="col-md-7">
+          <?php 
+              $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | wc -l');
+              if($state == 0){
+                  echo '<span class="label label-danger">{{NOK}}</span>';
+              }else{
+                  echo '<span class="label label-success">{{OK}}</span>';
+              }
+          ?>
+        </div>
+      </div>
+
       <div class="form-group mqtt2Mode remote">
         <label class="col-md-4 control-label">{{Adresse du broker}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse du broker}}"></i></sup>
