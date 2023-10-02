@@ -55,11 +55,15 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
         <div class="col-md-7">
           <?php 
-              $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | wc -l');
-              if($state == 0){
-                  echo '<span class="label label-danger">{{NOK}}</span>';
+              if (config::byKey('mode', 'mqtt2') == 'local' )){
+                $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | wc -l');
+                if($state == 0){
+                    echo '<span class="label label-danger">{{NOK}}</span>';
+                }else{
+                    echo '<span class="label label-success">{{OK}}</span>';
+                }
               }else{
-                  echo '<span class="label label-success">{{OK}}</span>';
+                     echo '<span class="label label-info">{{N/A}}</span>';
               }
           ?>
         </div>
