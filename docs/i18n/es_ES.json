@@ -2,9 +2,12 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "Amélioration de la gestion de mosquitto en mode local": "Gestión mejorada de mosquitos en modo local",
+        "02\/10\/2023": "10\/02\/2023",
         "Possibilité de corriger le QOS par defaut": "Posibilidad de corregir la QOS predeterminada",
-        "22\/03\/2023": "22\/03\/2023",
         "Correction de bugs": "Arreglo del fallo",
+        "Début d'ajout du systeme de découverte auto": "Inicio de agregar el sistema de descubrimiento automático",
+        "22\/03\/2023": "22\/03\/2023",
         "07\/03\/2023": "03\/07\/2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Adición de un sistema de autodescubrimiento para algunos módulos beta (esphome, tasmota y shelly)",
         "Ajout de l'image des modules": "Añadida la imagen de los módulos",
@@ -134,6 +137,9 @@
         "Le plugin peux faire de la decouverte auto de plusieurs type de module": "El complemento puede realizar el descubrimiento automático de varios tipos de módulos",
         "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "Para hacer esto, solo necesita autorizar el descubrimiento automático en la página principal del complemento y reiniciar el demonio",
         "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Para los módulos tipo tasmota es absolutamente necesario que la configuración completa del tema sea `%topic%\/%prefix%\/`",
+        "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche": "Después de una actualización de los paquetes del sistema (apt) o de una actualización desatendida, ya nada funciona",
+        "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "La actualización del paquete mosquitto restablece el archivo de servicio a los valores predeterminados y, por lo tanto, mosquitto ya no apunta al archivo de configuración correcto",
+        "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin": "Para corregir esto, es muy simple, simplemente reinicie la instalación de mosquitto desde la página de configuración del complemento",
         " Description.": " Descripción.",
         " Description?": " Descripción?",
         "Description ": "Descripción ",
@@ -280,6 +286,13 @@
         " Supprimer]": " Borrar]",
         "[Supprimer]": "[Borrar]",
         "*Supprimer*": "*Borrar*",
-        " Supprimer*": " Borrar*"
+        " Supprimer*": " Borrar*",
+        " FAQ.": " Preguntas frecuentes.",
+        " FAQ?": " Preguntas frecuentes?",
+        "FAQ ": "Preguntas frecuentes ",
+        " FAQ]": " Preguntas frecuentes]",
+        "[FAQ]": "[Preguntas frecuentes]",
+        "*FAQ*": "*Preguntas frecuentes*",
+        " FAQ*": " Preguntas frecuentes*"
     }
 }

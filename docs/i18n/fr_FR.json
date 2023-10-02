@@ -3,9 +3,12 @@
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "IMPORTANT": "IMPORTANT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte",
+        "Amélioration de la gestion de mosquitto en mode local": "Amélioration de la gestion de mosquitto en mode local",
+        "02\/10\/2023": "02\/10\/2023",
         "Possibilité de corriger le QOS par defaut": "Possibilité de corriger le QOS par defaut",
-        "22\/03\/2023": "22\/03\/2023",
         "Correction de bugs": "Correction de bugs",
+        "Début d'ajout du systeme de découverte auto": "Début d'ajout du systeme de découverte auto",
+        "22\/03\/2023": "22\/03\/2023",
         "07\/03\/2023": "07\/03\/2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly",
         "Ajout de l'image des modules": "Ajout de l'image des modules",
@@ -148,6 +151,10 @@
         "Découverte auto (discovery": "Découverte auto (discovery",
         "Le plugin peux faire de la decouverte auto de plusieurs type de module": "Le plugin peux faire de la decouverte auto de plusieurs type de module",
         "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon",
-        "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`"
+        "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`",
+        "FAQ": "FAQ",
+        "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche": "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche",
+        "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration",
+        "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin": "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin"
     }
 }
