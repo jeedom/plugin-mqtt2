@@ -34,4 +34,7 @@ foreach ($results as $key => $value) {
     } else {
         mqtt2::removePluginTopic($key);
     }
+    if ($key == config::byKey('root_topic', 'mqtt2')) {
+        mqtt2::handleMqttMessage(array($key => $value));
+    }
 }

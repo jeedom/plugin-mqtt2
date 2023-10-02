@@ -263,6 +263,7 @@ class mqtt2 extends eqLogic {
          );
       }
       config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
+      shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
@@ -332,7 +333,7 @@ class mqtt2 extends eqLogic {
 
       $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
       if ($return['launchable'] == 'ok' && file_exists($pid_file)) {
-         if (@posix_getsid(trim(file_get_contents($pid_file)))) {
+         if (@posix_getsid((int)trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
             if (trim(file_get_contents($pid_file)) != '') {
@@ -425,6 +426,16 @@ class mqtt2 extends eqLogic {
    public static function removePluginTopic($_topic) {
       $mapping = config::byKey('mapping', __CLASS__, array());
       unset($mapping[$_topic]);
+      config::save('mapping', $mapping, __CLASS__);
+   }
+
+    public static function removePluginTopicByPlugin($_plugin) {
+      $mapping = config::byKey('mapping', __CLASS__, array());
+      foreach($mapping as $topic => $plugin){
+         if($plugin == $_plugin){
+            unset($mapping[$topic]);
+         }
+      }
       config::save('mapping', $mapping, __CLASS__);
    }
 
@@ -561,9 +572,13 @@ class mqtt2 extends eqLogic {
             if (self::searchEqLogicWithCmd($_topic, $_message['announce']['id'])) {
                return;
             }
+            $eqlogics = self::byLogicalId($_topic . '/' . $_message['announce']['id'], __CLASS__, true);
+            if (count($eqlogics) > 0) {
+               return;
+            }
             log::add(__CLASS__, 'debug', __('Nouvel équipement Shelly découvert : ', __FILE__) . $_message['announce']['id'] . __(' type : ', __FILE__) . $_message['announce']['model']);
             $eqLogic = new self();
-            $eqLogic->setLogicalId($_topic);
+            $eqLogic->setLogicalId($_topic . '/' . $_message['announce']['id']);
             $eqLogic->setName($_message['announce']['id']);
             $eqLogic->setEqType_name('mqtt2');
             $eqLogic->setIsVisible(1);
@@ -814,6 +829,9 @@ class mqtt2 extends eqLogic {
    }
 
    public static function publish($_topic, $_message = '', $_options = array()) {
+      if(!isset($_options['qos'])){
+         $_options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
+      }
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
          'Content-Type: application/json'
@@ -825,6 +843,20 @@ class mqtt2 extends eqLogic {
       $result = json_decode($request_http->exec(30), true);
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
+      }
+      $topics = explode('/', $_topic);
+      if ($topics[0] == config::byKey('root_topic', 'mqtt2')) {
+         $plugin = mqtt2::getPluginForTopic($topics[0]);
+         if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
+            $data = array();
+            $message = &$data;
+            foreach ($topics as $topic) {
+               $message[$topic] = array();
+               $message = &$message[$topic];
+            }
+            $message = json_decode($_message, true);
+            $plugin::handleMqttMessage($data);
+         }
       }
    }
 
@@ -841,6 +873,7 @@ class mqtt2 extends eqLogic {
             $replace['#type#'] = $cmd->getType();
             $replace['#subtype#'] = $cmd->getSubType();
          }
+         $message = str_replace(array_keys($replace),$replace,config::byKey('publish_template', 'mqtt2', ''));
       } else {
          $message = array('value' => $_option['value']);
          if (is_object($cmd)) {
@@ -909,7 +942,7 @@ class mqtt2 extends eqLogic {
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
       }
-      $cmds_template = json_decode(str_replace(array_keys($config), $config, json_encode($template['commands'])), true);
+      $cmds_template = json_decode(str_replace(($config), $config, json_encode($template['commands'])), true);
       foreach ($cmds_template as $cmd_template) {
          $cmd = new mqtt2Cmd();
          $cmd->setEqLogic_id($this->getId());

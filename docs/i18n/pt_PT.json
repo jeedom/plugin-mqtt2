@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "Possibilité de corriger le QOS par defaut": "Possibilidade de corrigir o QOS padrão",
+        "22\/03\/2023": "22\/03\/2023",
+        "Correction de bugs": "Bugfix",
         "07\/03\/2023": "07\/03\/2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Adição de um sistema de autodiscovery para alguns módulos beta (esphome, tasmota e shelly",
         "Ajout de l'image des modules": "Adicionada a imagem dos módulos",
@@ -62,6 +65,7 @@
         "mot de passe` pour Jeedom (exemple": "password` para Jeedom (exemplo",
         "si le nom d'utilisateur est `jeedom`et le mot de passe `mqtt`, il faut renseigner `jeedom": "se o nome de usuário for `jeedom` e a senha `mqtt`, você deve preencher `jeedom`",
         "L'authentification est obligatoire en mode local": "A autenticação é obrigatória no modo local",
+        "Il faut aussi suite a l'ajout redemarrer jeedom pour que ca soit pris en compte": "Também é necessário após a adição reiniciar o jeedom para que seja levado em consideração",
         "Topic racine Jeedom": "Jeedom root topic",
         "Sujet racine pour envoyer une commande à Jeedom ou sur lequel il renvoit les évènements": "Tópico raiz para enviar um comando ao Jeedom ou no qual ele envia os eventos",
         "Attention il n'est possible de mettre que 1 ou 2 niveaux maximum": "Atenção só é possível colocar 1 ou 2 níveis no máximo",

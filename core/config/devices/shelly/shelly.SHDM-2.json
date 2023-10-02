@@ -1,0 +1,109 @@
+{
+    "name" : "Shelly dimmer 2",
+    "commands" : [
+        {
+            "name": "Température",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "°C",
+            "generic_type": "TEMPERATURE",
+            "logicalId" : "temperature"
+        },
+        {
+            "name": "Etat",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "light/0/status/ison"
+        },
+        {
+            "name": "On",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "light/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"on"
+            },
+            "template":{
+                "dashboard":"core::light",
+                "mobile":"core::light"
+            }
+        },
+        {
+            "name": "Off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "light/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"off"
+            },
+            "template":{
+                "dashboard":"core::light",
+                "mobile":"core::light"
+            }
+        },
+        {
+            "name": "Toggle",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "light/0/command",
+            "value" : "Etat",
+            "configuration":{
+                "message":"toggle"
+            }
+        },
+        {
+            "name": "Puissance",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "W",
+            "logicalId" : "light/0/power"
+        },
+        {
+            "name": "Consommation",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "light/0/energy"
+        },
+        {
+            "name": "Etat luminosité",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "light/0/status/brightness"
+        },
+        {
+            "name": "Luminosité",
+            "type": "action",
+            "subtype": "slider",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "light/0/set",
+            "value" : "Etat luminosité",
+            "configuration":{
+                "message":"{\"brightness\": #slider#,\"turn\":\"on\"}"
+            },
+            "template":{
+                "dashboard":"core::light",
+                "mobile":"core::light"
+            }
+        },
+    ]
+}

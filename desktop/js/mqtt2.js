@@ -163,7 +163,7 @@ function addCmdToTable(_cmd) {
 }
 
 $('#table_cmd').on('change', '.cmdAttr[data-l1key=type]', function() {
-  let tr = $(this)
+  let tr = $(this).closest('tr')
   tr.find('.cmdType').hide()
   if ($(this).value() != '') {
     tr.find('.cmdType.' + $(this).value()).show()

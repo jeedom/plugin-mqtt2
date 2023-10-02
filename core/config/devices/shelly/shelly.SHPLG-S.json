@@ -1,12 +1,5 @@
 {
     "name" : "Shelly plug S",
-    "parameters" : [
-        {
-            "name" : "Id de la prise",
-            "key" : "id",
-            "type" : "input"
-        }
-    ],
     "commands" : [
         {
             "name": "Etat",
@@ -14,7 +7,7 @@
             "subtype": "binary",
             "isVisible": 0,
             "isHistorized": 0,
-            "logicalId" : "#id#/relay/0"
+            "logicalId" : "relay/0"
         },
         {
             "name": "On",
@@ -22,7 +15,7 @@
             "subtype": "other",
             "isVisible": 1,
             "isHistorized": 0,
-            "logicalId" : "#id#/relay/0/command",
+            "logicalId" : "relay/0/command",
             "value" : "Etat",
             "configuration":{
                 "message":"on"
@@ -38,7 +31,7 @@
             "subtype": "other",
             "isVisible": 1,
             "isHistorized": 0,
-            "logicalId" : "#id#/relay/0/command",
+            "logicalId" : "relay/0/command",
             "value" : "Etat",
             "configuration":{
                 "message":"off"
@@ -54,7 +47,7 @@
             "subtype": "other",
             "isVisible": 0,
             "isHistorized": 0,
-            "logicalId" : "#id#/relay/0/command",
+            "logicalId" : "relay/0/command",
             "value" : "Etat",
             "configuration":{
                 "message":"toggle"
@@ -67,7 +60,7 @@
             "isVisible": 1,
             "isHistorized": 0,
             "unite" : "W",
-            "logicalId" : "#id#/relay/0/power"
+            "logicalId" : "relay/0/power"
         },
         {
             "name": "Consommation",
@@ -76,7 +69,7 @@
             "isVisible": 1,
             "isHistorized": 0,
             "unite" : "kWh",
-            "logicalId" : "#id#/relay/0/energy"
+            "logicalId" : "relay/0/energy"
         },
         {
             "name": "Température",
@@ -85,7 +78,7 @@
             "isVisible": 1,
             "isHistorized": 0,
             "unite": "°C",
-            "logicalId" : "#id#/temperature"
+            "logicalId" : "temperature"
         }
     ]
 }

@@ -1,0 +1,179 @@
+{
+    "name" : "Shelly switch 2.5",
+    "commands" : [
+        {
+            "name": "Etat 1",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "relay/0"
+        },
+        {
+            "name": "On 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "relay/0/command",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"on"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "relay/0/command",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"off"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle 1",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "relay/0/command",
+            "value" : "Etat 1",
+            "configuration":{
+                "message":"toggle"
+            }
+        },
+        {
+            "name": "Puissance 1",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "W",
+            "logicalId" : "relay/0/power"
+        },
+        {
+            "name": "Consommation 1",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "relay/0/energy"
+        },
+        {
+            "name": "Etat 2",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "relay/1"
+        },
+        {
+            "name": "On 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "relay/1/command",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"on"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Off 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "relay/1/command",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"off"
+            },
+            "template":{
+                "dashboard":"core::prise",
+                "mobile":"core::prise"
+            }
+        },
+        {
+            "name": "Toggle 2",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "relay/1/command",
+            "value" : "Etat 2",
+            "configuration":{
+                "message":"toggle"
+            }
+        },
+        {
+            "name": "Puissance 2",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "W",
+            "logicalId" : "relay/1/power"
+        },
+        {
+            "name": "Consommation 2",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite" : "kWh",
+            "logicalId" : "relay/1/energy"
+        },
+        {
+            "name": "Entrée 1",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "input/0"
+        },
+        {
+            "name": "Entrée 2",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 0,
+            "isHistorized": 0,
+            "logicalId" : "input/1"
+        },
+        {
+            "name": "Température",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "°C",
+            "logicalId" : "temperature"
+        },
+        {
+            "name": "Voltage",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "unite": "V",
+            "logicalId" : "voltage"
+        }
+    ]
+}
