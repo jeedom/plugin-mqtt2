@@ -333,7 +333,7 @@ class mqtt2 extends eqLogic {
 
       $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
       if ($return['launchable'] == 'ok' && file_exists($pid_file)) {
-         if (@posix_getsid(trim(file_get_contents($pid_file)))) {
+         if (@posix_getsid((int)trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
             if (trim(file_get_contents($pid_file)) != '') {
