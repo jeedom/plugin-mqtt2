@@ -2,9 +2,12 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Änderungsprotokoll MQTT-Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen über die Aktualisierung vorliegen, liegt dies daran, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Amélioration de la gestion de mosquitto en mode local": "Verbesserte Handhabung von Mücken im lokalen Modus",
+        "02\/10\/2023": "10.02.2023",
         "Possibilité de corriger le QOS par defaut": "Möglichkeit zur Korrektur des Standard-QOS",
-        "22\/03\/2023": "22.03.2023",
         "Correction de bugs": "Bug-Fix",
+        "Début d'ajout du systeme de découverte auto": "Beginn des Hinzufügens des automatischen Erkennungssystems",
+        "22\/03\/2023": "22.03.2023",
         "07\/03\/2023": "03.07.2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Hinzufügen eines Autodiscovery-Systems für einige Beta-Module (esphome, tasmota und shelly",
         "Ajout de l'image des modules": "Bild der Module hinzugefügt",
@@ -134,6 +137,9 @@
         "Le plugin peux faire de la decouverte auto de plusieurs type de module": "Das Plugin kann verschiedene Arten von Modulen automatisch erkennen",
         "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "Dazu müssen Sie nur die automatische Erkennung auf der Hauptseite des Plugins autorisieren und den Dämon neu starten",
         "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Für Module vom Typ Tasmota ist es absolut notwendig, dass die vollständige Topic-Konfiguration `%topic%\/%prefix%\/` ist",
+        "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche": "Nach einem Update der Systempakete (apt) oder einem unbeaufsichtigten Upgrade funktioniert nichts mehr",
+        "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "Durch das Aktualisieren des Mosquito-Pakets wird die Servicedatei auf die Standardeinstellungen zurückgesetzt, sodass Mosquito nicht mehr auf die richtige Konfigurationsdatei verweist",
+        "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin": "Um dies zu beheben, ist es sehr einfach, die Installation von Mosquito auf der Plugin-Konfigurationsseite neu zu starten",
         " Description.": " Beschreibung.",
         " Description?": " Beschreibung?",
         "Description ": "Beschreibung ",
@@ -280,6 +286,13 @@
         " Supprimer]": " Löschen]",
         "[Supprimer]": "[Löschen]",
         "*Supprimer*": "*Löschen*",
-        " Supprimer*": " Löschen*"
+        " Supprimer*": " Löschen*",
+        " FAQ.": " FAQs.",
+        " FAQ?": " FAQs?",
+        "FAQ ": "FAQs ",
+        " FAQ]": " FAQs]",
+        "[FAQ]": "[FAQs]",
+        "*FAQ*": "*FAQs*",
+        " FAQ*": " FAQs*"
     }
 }

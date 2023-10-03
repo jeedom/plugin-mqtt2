@@ -2,9 +2,12 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "Amélioration de la gestion de mosquitto en mode local": "Improved mosquitto handling in local mode",
+        "02\/10\/2023": "02\/10\/2023",
         "Possibilité de corriger le QOS par defaut": "Possibility to correct the default QOS",
-        "22\/03\/2023": "03\/22\/2023",
         "Correction de bugs": "Bugfix",
+        "Début d'ajout du systeme de découverte auto": "Start of adding the auto discovery system",
+        "22\/03\/2023": "03\/22\/2023",
         "07\/03\/2023": "07\/03\/2023",
         "Ajout d'un systeme d'autodecouverte pour certain module en beta (esphome, tasmota et shelly": "Addition of an autodiscovery system for some beta modules (esphome, tasmota and shelly",
         "Ajout de l'image des modules": "Added the image of the modules",
@@ -134,6 +137,9 @@
         "Le plugin peux faire de la decouverte auto de plusieurs type de module": "The plugin can do auto discovery of several types of modules",
         "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "To do this, you just need to authorize auto discovery on the main page of the plugin and restart the demon",
         "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "For tasmota type modules it is absolutely necessary that the full topic configuration be `%topic%\/%prefix%\/`",
+        "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche": "Following an update of the system packages (apt) or an unattended upgrades, nothing works anymore",
+        "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "Updating the mosquitto package resets the service file to default and therefore mosquitto no longer points to the correct configuration file",
+        "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin": "To correct this, it's very simple, just restart the installation of mosquitto from the plugin configuration page",
         " Description.": " Description.",
         " Description?": " Description?",
         "Description ": "Description ",
@@ -280,6 +286,13 @@
         " Supprimer]": " To delete]",
         "[Supprimer]": "[To delete]",
         "*Supprimer*": "*To delete*",
-        " Supprimer*": " To delete*"
+        " Supprimer*": " To delete*",
+        " FAQ.": " FAQs.",
+        " FAQ?": " FAQs?",
+        "FAQ ": "FAQs ",
+        " FAQ]": " FAQs]",
+        "[FAQ]": "[FAQs]",
+        "*FAQ*": "*FAQs*",
+        " FAQ*": " FAQs*"
     }
 }
