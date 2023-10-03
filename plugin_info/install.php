@@ -25,6 +25,7 @@ function mqtt2_install() {
 }
 
 function mqtt2_update() {
+  shell_exec(system::getCmdSudo().' rm -rf '.__DIR__.'/../resources/mqtt2d/node_modules');
   if (config::byKey('mode', 'mqtt2', '') == 'remote') {
     if (strpos(config::byKey('remote::ip', 'mqtt2', ''), ':') !== false) {
       $remoteAddr = explode(":", config::byKey('remote::ip', 'mqtt2'));
