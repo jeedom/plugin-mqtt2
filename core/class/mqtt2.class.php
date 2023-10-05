@@ -347,7 +347,7 @@ class mqtt2 extends eqLogic {
    public static function deamon_start() {
        log::remove(__CLASS__ . '_update');
        if (config::byKey('mode', __CLASS__, 'local') == 'local') {
-          if(shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | wc -l') == 0){
+          if(shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0){
              log::add(__CLASS__, 'warning', __('Service mosquitto non lancé, je lance une installation', __FILE__));
              self::installMosquitto(config::byKey('mode', __CLASS__, 'local'));
           }

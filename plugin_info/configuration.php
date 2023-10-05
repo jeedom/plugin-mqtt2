@@ -56,7 +56,7 @@ if (!isConnect()) {
         <div class="col-md-7">
           <?php 
               if (config::byKey('mode', 'mqtt2') == 'local' ){
-                $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | wc -l');
+                $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
                 if($state == 0){
                     echo '<span class="label label-danger">{{NOK}}</span>';
                 }else{
