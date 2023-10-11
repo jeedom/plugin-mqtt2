@@ -46,7 +46,7 @@ global $JEEDOM_INTERNAL_CONFIG;
             echo '<td>';
             echo '<select class="form-control discoverAttr" data-l1key="subType">';
             $subtype = 'string';
-            if (!is_nan($value['value'])) {
+            if (is_numeric($value['value'])) {
                 $subtype = 'numeric';
                 if ($value['value'] == 0 || $value['value'] == 1) {
                     $subtype = 'binary';
