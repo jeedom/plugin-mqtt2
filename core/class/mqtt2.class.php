@@ -336,7 +336,7 @@ class mqtt2 extends eqLogic {
          if (trim(file_get_contents($pid_file)) != '' && @posix_getsid((int)trim(file_get_contents($pid_file)))) {
             $return['state'] = 'ok';
          } else {
-            if (file_exists($pid_file)) {
+            if (trim(file_get_contents($pid_file)) != '') {
                shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
             }
          }
