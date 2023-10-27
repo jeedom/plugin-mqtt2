@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "27\/10\/2023": "10\/27\/2023",
+        "Correction d'un bug sur l'état du démon (démarré alors que non": "Fixed a bug on the state of the daemon (started when not",
         "05\/10\/2023": "05\/10\/2023",
         "Correction d'un bug sur l'état du brocker": "Fixed a bug on brocker status",
         "02\/10\/2023": "02\/10\/2023",
