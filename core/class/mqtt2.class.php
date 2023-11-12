@@ -464,7 +464,7 @@ class mqtt2 extends eqLogic {
          $infos['port'] = config::byKey('remote::port', __CLASS__);
       }
       $infos['user'] = $authentifications[0];
-      $infos['password'] = $authentifications[1];
+      $infos['password'] = $authentifications[1] ?? null;
       return $infos;
    }
 
