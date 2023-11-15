@@ -97,7 +97,7 @@ class mqtt2 extends eqLogic {
    public static function generateClientCert() {
       $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
-         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquer sur le bouton Installer Mosquitto', __FILE__));
+         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer Mosquitto', __FILE__));
       }
       $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
       if (file_exists($tmp_folder)) {
@@ -178,7 +178,7 @@ class mqtt2 extends eqLogic {
             sleep(5);
             $i++;
             if ($i > 50) {
-               throw new Exception(__("Delai maximum autorisé pour l'installation des dépendances dépassé", __FILE__));
+               throw new Exception(__("Délai maximum autorisé pour l'installation des dépendances dépassé", __FILE__));
             }
          }
       }
@@ -282,7 +282,7 @@ class mqtt2 extends eqLogic {
    public static function restartMosquitto() {
       switch (config::byKey('mode', __CLASS__)) {
          case 'remote':
-            throw new Exception(__('Cette action n\'est pas possible avec un brocker distant', __FILE__), 1);
+            throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;
          case 'docker':
             $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
@@ -931,7 +931,7 @@ class mqtt2 extends eqLogic {
 
    public function applyCmdTemplate($_config) {
       if (!is_array($_config)) {
-         throw new Exception(__('La configuration d\'un template doit etre un tableau', __FILE__));
+         throw new Exception(__('La configuration d\'un template doit être un tableau', __FILE__));
       }
       if (!isset($_config['template'])) {
          throw new Exception(__('Aucun nom de template trouvé', __FILE__));
@@ -941,7 +941,7 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Template introuvable', __FILE__));
       }
       if (!isset($template['commands']) || count($template['commands']) < 1) {
-         throw new Exception(__('Aucune commandes trouvé dans le template', __FILE__));
+         throw new Exception(__('Aucune commande trouvée dans le template', __FILE__));
       }
       $this->setConfiguration('device', $_config['template']);
       $config = array();
