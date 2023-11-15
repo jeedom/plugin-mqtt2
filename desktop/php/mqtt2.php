@@ -49,20 +49,20 @@ foreach ($manufacturers as &$array) {
 				<div class="cursor eqLogicAction logoSecondary" id="bt_disableAutoDiscovery">
 					<i class="fas fa-times"></i>
 					<br>
-					<span>{{Désactiver auto-decouverte}}</span>
+					<span>{{Désactiver auto-découverte}}</span>
 				</div>
 			<?php } else { ?>
 				<div class="cursor eqLogicAction logoSecondary" id="bt_enableAutoDiscovery">
 					<i class="fas fa-check"></i>
 					<br>
-					<span>{{Activer auto-decouverte}}</span>
+					<span>{{Activer auto-découverte}}</span>
 				</div>
 			<?php } ?>
 		</div>
 		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
 		<?php
 		if (count($eqLogics) == 0) {
-			echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement MQTT trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
+			echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement MQTT trouvé, cliquez sur "Ajouter" pour commencer}}</div>';
 		} else {
 			echo '<div class="input-group" style="margin:5px;">';
 			echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">';
