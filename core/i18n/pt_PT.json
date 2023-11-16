@@ -75,10 +75,10 @@
         "Gestion": "Gestão",
         "Ajouter": "Adicionar",
         "Configuration": "Configuração",
-        "Désactiver auto-decouverte": "Desativar descoberta automática",
-        "Activer auto-decouverte": "Ativar descoberta automática",
+        "Désactiver auto-découverte": "Desativar descoberta automática",
+        "Activer auto-découverte": "Ativar descoberta automática",
         "Mes MQTT": "Meu MQTT",
-        "Aucun équipement MQTT trouvé, cliquer sur \"Ajouter\" pour commencer": "Nenhum dispositivo MQTT encontrado, clique em \"Adicionar\" para iniciar",
+        "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "Nenhum equipamento MQTT encontrado, clique em \"Adicionar\" para começar",
         "Rechercher": "Pesquisar",
         "Equipement visible": "Equipamento visível",
         "Equipement non visible": "Equipamento não visível",
@@ -131,7 +131,7 @@
         "Tester": "Teste"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
-        "Vous n\\'etes pas autorisé à effectuer cette action": "Você não está autorizado a realizar esta ação"
+        "Vous n\\'êtes pas autorisé à effectuer cette action": "Você não está autorizado a realizar esta ação"
     },
     "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
         "Erreur lors de la génération des certificats client": "Erro ao gerar certificados de cliente",
@@ -147,18 +147,18 @@
         "Equipement pas de type MQTT": "Equipamento não do tipo MQTT"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
-        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Nenhuma pasta SSL encontrada, restaure os direitos nas pastas e arquivos da configuração do Jeedom (guia OS\/DB) e clique no botão Instalar Mosquitto",
+        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquez sur le bouton Installer Mosquitto": "Nenhuma pasta SSL encontrada, restaure os direitos para pastas e arquivos da configuração do Jeedom (guia OS\/DB) e clique no botão Instalar Mosquitto",
         "Installation locale du broker Mosquitto en cours": "Instalação local do corretor Mosquitto em andamento",
         "Installation du plugin Docker Management": "Instalando o plug-in de gerenciamento do Docker",
         "Le plugin Docker management doit être installé": "O plugin de gerenciamento do Docker deve ser instalado",
         "Le plugin Docker management doit être activé": "O plug-in de gerenciamento do Docker deve ser ativado",
         "Pause de 120s le temps de l'installation des dépendances du plugin Docker Management": "Pausa de 120 segundos ao instalar as dependências do plug-in do Docker Management",
-        "Delai maximum autorisé pour l'installation des dépendances dépassé": "Tempo máximo permitido para instalação de dependências excedido",
+        "Délai maximum autorisé pour l'installation des dépendances dépassé": "Tempo máximo permitido para instalação de dependências excedido",
         "Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller": "Um broker Mosquitto já está instalado localmente na máquina. Por favor, desinstale-o",
         "Génération des certificats": "Gerando certificados",
         "Mise en place des identifiants MQTT": "Configurando identificadores MQTT",
         "Création du conteneur Mosquitto": "Criando o Recipiente do Mosquito",
-        "Cette action n\\'est pas possible avec un brocker distant": "Esta ação não é possível com um corretor remoto",
+        "Cette action est impossible avec un brocker distant": "Esta ação é impossível com um corretor remoto",
         "Veuillez désinstaller Mosquitto local": "Por favor, desinstale o Mosquitto local",
         "Veuillez installer Mosquitto": "Por favor, instale o Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Instale o Mosquitto primeiro",
@@ -174,10 +174,10 @@
         "Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic : ": "Novo equipamento Tasmota descoberto com má configuração no tópico:",
         " au lieu de : %topic%\/%prefix%\/": "em vez de: %topic%\/%prefix%\/",
         "Nouvel équipement Tasmota découvert : ": "Novo equipamento Tasmota descoberto:",
-        "La configuration d\\'un template doit etre un tableau": "A configuração do modelo deve ser uma matriz",
+        "La configuration d\\'un template doit être un tableau": "A configuração do modelo deve ser uma matriz",
         "Aucun nom de template trouvé": "Nenhum nome de modelo encontrado",
         "Template introuvable": "Modelo não encontrado",
-        "Aucune commandes trouvé dans le template": "Nenhum comando encontrado no modelo"
+        "Aucune commande trouvée dans le template": "Nenhum comando encontrado no modelo"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plug-in servindo como base para plug-ins usando MQTT"

@@ -75,10 +75,10 @@
         "Gestion": "Gestion",
         "Ajouter": "Ajouter",
         "Configuration": "Configuration",
-        "Désactiver auto-decouverte": "Désactiver auto-decouverte",
-        "Activer auto-decouverte": "Activer auto-decouverte",
+        "Désactiver auto-découverte": "Désactiver auto-decouverte",
+        "Activer auto-découverte": "Activer auto-decouverte",
         "Mes MQTT": "Mes MQTT",
-        "Aucun équipement MQTT trouvé, cliquer sur \"Ajouter\" pour commencer": "Aucun équipement MQTT trouvé, cliquer sur \"Ajouter\" pour commencer",
+        "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer",
         "Rechercher": "Rechercher",
         "Equipement visible": "Equipement visible",
         "Equipement non visible": "Equipement non visible",
@@ -131,7 +131,7 @@
         "Tester": "Tester"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
-        "Vous n\\'etes pas autorisé à effectuer cette action": "Vous n\\'etes pas autorisé à effectuer cette action"
+        "Vous n\\'êtes pas autorisé à effectuer cette action": "Vous n\\'etes pas autorisé à effectuer cette action"
     },
     "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
         "Erreur lors de la génération des certificats client": "Erreur lors de la génération des certificats client",
@@ -147,18 +147,18 @@
         "Equipement pas de type MQTT": "Equipement pas de type MQTT"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
-        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto",
+        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquez sur le bouton Installer Mosquitto": "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquez sur le bouton Installer Mosquitto",
         "Installation locale du broker Mosquitto en cours": "Installation locale du broker Mosquitto en cours",
         "Installation du plugin Docker Management": "Installation du plugin Docker Management",
         "Le plugin Docker management doit être installé": "Le plugin Docker management doit être installé",
         "Le plugin Docker management doit être activé": "Le plugin Docker management doit être activé",
         "Pause de 120s le temps de l'installation des dépendances du plugin Docker Management": "Pause de 120s le temps de l'installation des dépendances du plugin Docker Management",
-        "Delai maximum autorisé pour l'installation des dépendances dépassé": "Delai maximum autorisé pour l'installation des dépendances dépassé",
+        "Délai maximum autorisé pour l'installation des dépendances dépassé": "Delai maximum autorisé pour l'installation des dépendances dépassé",
         "Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller": "Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller",
         "Génération des certificats": "Génération des certificats",
         "Mise en place des identifiants MQTT": "Mise en place des identifiants MQTT",
         "Création du conteneur Mosquitto": "Création du conteneur Mosquitto",
-        "Cette action n\\'est pas possible avec un brocker distant": "Cette action n\\'est pas possible avec un brocker distant",
+        "Cette action est impossible avec un brocker distant": "Cette action est impossible avec un brocker distant",
         "Veuillez désinstaller Mosquitto local": "Veuillez désinstaller Mosquitto local",
         "Veuillez installer Mosquitto": "Veuillez installer Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Veuillez d\\'abord installer Mosquitto",
@@ -174,10 +174,10 @@
         "Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic : ": "Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic :",
         " au lieu de : %topic%\/%prefix%\/": "au lieu de : %topic%\/%prefix%\/",
         "Nouvel équipement Tasmota découvert : ": "Nouvel équipement Tasmota découvert :",
-        "La configuration d\\'un template doit etre un tableau": "La configuration d\\'un template doit etre un tableau",
+        "La configuration d\\'un template doit être un tableau": "La configuration d\\'un template doit etre un tableau",
         "Aucun nom de template trouvé": "Aucun nom de template trouvé",
         "Template introuvable": "Template introuvable",
-        "Aucune commandes trouvé dans le template": "Aucune commandes trouvé dans le template"
+        "Aucune commande trouvée dans le template": "Aucune commande trouvée dans le template"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin servant de base pour les plugins utilisant MQTT"

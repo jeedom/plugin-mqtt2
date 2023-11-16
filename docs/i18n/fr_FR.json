@@ -75,7 +75,7 @@
         "mqtt`": "mqtt`",
         "IMPORTANT": "IMPORTANT",
         "L'authentification est obligatoire en mode local": "L'authentification est obligatoire en mode local",
-        "Il faut aussi suite a l'ajout redemarrer jeedom pour que ca soit pris en compte": "Il faut aussi suite a l'ajout redemarrer jeedom pour que ca soit pris en compte",
+        "Suite à l'ajout il faut redémarrer Jeedom pour que cela soit pris en compte": "Suite à l'ajout il faut redémarrer Jeedom pour que cela soit pris en compte",
         "Topic racine Jeedom": "Topic racine Jeedom",
         "Sujet racine pour envoyer une commande à Jeedom ou sur lequel il renvoit les évènements": "Sujet racine pour envoyer une commande à Jeedom ou sur lequel il renvoit les évènements",
         "Attention il n'est possible de mettre que 1 ou 2 niveaux maximum": "Attention il n'est possible de mettre que 1 ou 2 niveaux maximum",
@@ -153,12 +153,12 @@
         "Il faut alors utiliser le bouton rouge": "Il faut alors utiliser le bouton rouge",
         "depuis la page de configuration générale du plugin": "depuis la page de configuration générale du plugin",
         "Découverte auto (discovery": "Découverte auto (discovery",
-        "Le plugin peux faire de la decouverte auto de plusieurs type de module": "Le plugin peux faire de la decouverte auto de plusieurs type de module",
-        "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon": "Pour cela il vous suffit juste d'autoriser la decouverte auto sur la page principale du plugin et de relancer le demon",
+        "Le plugin peut faire de la découverte auto de plusieurs type de module": "Le plugin peut faire de la découverte auto de plusieurs type de module",
+        "Pour cela il vous suffit juste d'autoriser la découverte auto sur la page principale du plugin et de relancer le démon": "Pour cela il vous suffit juste d'autoriser la découverte auto sur la page principale du plugin et de relancer le démon",
         "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`": "Pour les modules de type tasmota il faut absolument que la configuration du full topic soit `%topic%\/%prefix%\/`",
         "FAQ": "FAQ",
-        "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche": "Suite a une mise à jour des packages systeme (apt) ou a un unattended upgrades plus rien de marche",
-        "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "La mise à jour du package mosquitto remet par defaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration",
+        "Suite a une mise à jour des packages système (apt) ou a un unattended upgrades plus rien de marche": "Suite a une mise à jour des packages système (apt) ou a un unattended upgrades plus rien de marche",
+        "La mise à jour du package mosquitto remet par défaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration": "La mise à jour du package mosquitto remet par défaut le fichier de service et donc mosquitto ne pointe plus vers le bon fichier de configuration",
         "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin": "Pour corriger cela c'est très simple il suffit de relancer l'installation de mosquitto depuis la page de configuration du plugin"
     }
 }

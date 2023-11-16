@@ -75,10 +75,10 @@
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
-        "Désactiver auto-decouverte": "Deaktivieren Sie die automatische Erkennung",
-        "Activer auto-decouverte": "Aktivieren Sie die automatische Erkennung",
+        "Désactiver auto-découverte": "Deaktivieren Sie die automatische Erkennung",
+        "Activer auto-découverte": "Aktivieren Sie die automatische Erkennung",
         "Mes MQTT": "Mein MQTT",
-        "Aucun équipement MQTT trouvé, cliquer sur \"Ajouter\" pour commencer": "Kein MQTT-Gerät gefunden, klicken Sie zum Starten auf „Hinzufügen“",
+        "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "Keine MQTT-Ausrüstung gefunden. Klicken Sie auf „Hinzufügen“, um zu beginnen",
         "Rechercher": "Forschen",
         "Equipement visible": "Sichtbare Ausrüstung",
         "Equipement non visible": "Ausrüstung nicht sichtbar",
@@ -131,7 +131,7 @@
         "Tester": "Prüfen"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
-        "Vous n\\'etes pas autorisé à effectuer cette action": "Sie sind nicht berechtigt, diese Aktion auszuführen"
+        "Vous n\\'êtes pas autorisé à effectuer cette action": "Sie sind nicht berechtigt, diese Aktion auszuführen"
     },
     "plugins\/mqtt2\/core\/php\/downloadClientSsl.php": {
         "Erreur lors de la génération des certificats client": "Fehler beim Generieren von Client-Zertifikaten",
@@ -147,18 +147,18 @@
         "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
-        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquer sur le bouton Installer Mosquitto": "Kein SSL-Ordner gefunden, bitte stellen Sie die Rechte für die Ordner und Dateien aus der Jeedom-Konfiguration (Registerkarte OS\/DB) wieder her und klicken Sie dann auf die Schaltfläche Mosquitto installieren",
+        "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquez sur le bouton Installer Mosquitto": "Kein SSL-Ordner gefunden. Bitte stellen Sie die Rechte für Ordner und Dateien in der Jeedom-Konfiguration (Registerkarte „OS\/DB“) wieder her und klicken Sie dann auf die Schaltfläche „Mosquitto installieren“",
         "Installation locale du broker Mosquitto en cours": "Lokale Installation des Mosquitto-Brokers läuft",
         "Installation du plugin Docker Management": "Installation des Docker Management-Plugins",
         "Le plugin Docker management doit être installé": "Das Docker Management Plugin muss installiert sein",
         "Le plugin Docker management doit être activé": "Das Docker Management Plugin muss aktiviert sein",
         "Pause de 120s le temps de l'installation des dépendances du plugin Docker Management": "120 Sekunden Pause während der Installation von Abhängigkeiten des Docker Management-Plugins",
-        "Delai maximum autorisé pour l'installation des dépendances dépassé": "Maximal zulässige Zeit für die Installation von Abhängigkeiten überschritten",
+        "Délai maximum autorisé pour l'installation des dépendances dépassé": "Maximal zulässige Zeit für die Installation von Abhängigkeiten überschritten",
         "Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller": "Ein Mosquitto-Broker ist bereits lokal auf der Maschine installiert. Bitte deinstallieren Sie es",
         "Génération des certificats": "Zertifikate erstellen",
         "Mise en place des identifiants MQTT": "MQTT-Identifikatoren einrichten",
         "Création du conteneur Mosquitto": "Erstellen des Mosquitto-Containers",
-        "Cette action n\\'est pas possible avec un brocker distant": "Diese Aktion ist mit einem Remote-Broker nicht möglich",
+        "Cette action est impossible avec un brocker distant": "Diese Aktion ist mit einem Remote-Brocker nicht möglich",
         "Veuillez désinstaller Mosquitto local": "Bitte deinstallieren Sie das lokale Mosquitto",
         "Veuillez installer Mosquitto": "Bitte installieren Sie Moskito",
         "Veuillez d\\'abord installer Mosquitto": "Bitte installieren Sie zuerst Mosquitto",
@@ -174,10 +174,10 @@
         "Nouvel équipement Tasmota découvert avec mauvaise configuration sur le topic : ": "Neues Tasmota-Gerät mit schlechter Konfiguration zum Thema entdeckt:",
         " au lieu de : %topic%\/%prefix%\/": "statt: %topic%\/%prefix%\/",
         "Nouvel équipement Tasmota découvert : ": "Neue Tasmota-Ausrüstung entdeckt:",
-        "La configuration d\\'un template doit etre un tableau": "Die Vorlagenkonfiguration muss ein Array sein",
+        "La configuration d\\'un template doit être un tableau": "Die Vorlagenkonfiguration muss ein Array sein",
         "Aucun nom de template trouvé": "Kein Vorlagenname gefunden",
         "Template introuvable": "Vorlage nicht gefunden",
-        "Aucune commandes trouvé dans le template": "Keine Befehle in Vorlage gefunden"
+        "Aucune commande trouvée dans le template": "In der Vorlage wurden keine Befehle gefunden"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin als Basis für Plugins mit MQTT"
