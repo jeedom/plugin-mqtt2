@@ -26,15 +26,16 @@ if (isset($_GET['test'])) {
 }
 $results = json_decode(file_get_contents("php://input"), true);
 //log::add('mqtt2', 'debug', json_encode($results));
-
-foreach ($results as $key => $value) {
-    $plugin = mqtt2::getPluginForTopic($key);
-    if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
-        $plugin::handleMqttMessage(array($key => $value));
-    } else {
-        mqtt2::removePluginTopic($key);
-    }
-    if ($key == config::byKey('root_topic', 'mqtt2')) {
-        mqtt2::handleMqttMessage(array($key => $value));
+if(is_array($results)){
+    foreach ($results as $key => $value) {
+        $plugin = mqtt2::getPluginForTopic($key);
+        if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
+            $plugin::handleMqttMessage(array($key => $value));
+        } else {
+            mqtt2::removePluginTopic($key);
+        }
+        if ($key == config::byKey('root_topic', 'mqtt2')) {
+            mqtt2::handleMqttMessage(array($key => $value));
+        }
     }
 }
