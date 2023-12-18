@@ -267,6 +267,17 @@ class mqtt2 extends eqLogic {
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
+      } elseif (jeedom::getHardwareName() == 'docker') {
+         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
+         if (!is_file('/etc/init.d/mosquitto.original')) {
+            shell_exec(system::getCmdSudo() . ' cp -p /etc/init.d/mosquitto /etc/init.d/mosquitto.original');
+            shell_exec(system::getCmdSudo() . ' chmod uog-x /etc/init.d/mosquitto.original');
+         }
+         shell_exec(system::getCmdSudo() . ' cp -p /etc/init.d/mosquitto.original /etc/init.d/mosquitto');
+         shell_exec(system::getCmdSudo() . ' chmod uog+x /etc/init.d/mosquitto');
+         shell_exec(system::getCmdSudo() . ' sed -i s#/etc/mosquitto/mosquitto.conf#' . __DIR__ . '/../../data/mosquitto.conf' . '#g /etc/init.d/mosquitto');
+         shell_exec(system::getCmdSudo() . ' service mosquitto stop');
+         shell_exec(system::getCmdSudo() . ' service mosquitto start');
       } else {
          file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
          $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.service');
@@ -297,7 +308,11 @@ class mqtt2 extends eqLogic {
             if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
                throw new Exception(__('Veuillez d\'abord installer Mosquitto', __FILE__), 1);
             }
-            shell_exec(system::getCmdSudo() . ' systemctl restart mosquitto');
+            if (jeedom::getHardwareName() == 'docker') {
+               shell_exec(system::getCmdSudo() . ' service mosquitto restart');
+            } else {
+               shell_exec(system::getCmdSudo() . ' systemctl restart mosquitto');
+            }
             break;
       }
    }
