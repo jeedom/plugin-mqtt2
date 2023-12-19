@@ -397,7 +397,7 @@ class mqtt2 extends eqLogic {
       }
       $cmd .= ' --username "' . $authentifications[0].'"';
       $cmd .= ' --password "' . $authentifications[1].'"';
-      $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
+      $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
       $cmd .= ' --pid ' . jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
