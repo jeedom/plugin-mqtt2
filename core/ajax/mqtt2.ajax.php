@@ -37,18 +37,7 @@ try {
   }
 
   if (init('action') == 'uninstallMosquitto') {
-    if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
-      event::add('jeedom::alert', array(
-        'level' => 'warning',
-        'page' => 'plugin',
-        'message' => __('Désinstallation du broker Mosquitto en cours', __FILE__),
-      ));
-      shell_exec(system::getCmdSudo() . ' apt remove -y mosquitto');
-    } else if (is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
-      throw new Exception(__("Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management", __FILE__));
-    } else {
-      throw new Exception(__("Aucun broker Mosquitto trouvé", __FILE__));
-    }
+    mqtt2::uninstallMosquitto();
     ajax::success();
   }
 
