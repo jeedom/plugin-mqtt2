@@ -268,7 +268,6 @@ class mqtt2 extends eqLogic {
       if ($_mode == 'docker') {
          $docker->create();
       } elseif (jeedom::getHardwareName() == 'docker') {
-         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
          if (!is_file('/etc/init.d/mosquitto.original')) {
             shell_exec(system::getCmdSudo() . ' cp -p /etc/init.d/mosquitto /etc/init.d/mosquitto.original');
             shell_exec(system::getCmdSudo() . ' chmod uog-x /etc/init.d/mosquitto.original');
@@ -279,7 +278,6 @@ class mqtt2 extends eqLogic {
          shell_exec(system::getCmdSudo() . ' service mosquitto stop');
          shell_exec(system::getCmdSudo() . ' service mosquitto start');
       } else {
-         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
          $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.service');
          file_put_contents('/tmp/mosquitto.service', str_replace("#config_path#", __DIR__ . '/../../data/mosquitto.conf', $service));
          shell_exec(system::getCmdSudo() . ' mv /tmp/mosquitto.service /lib/systemd/system/mosquitto.service');
