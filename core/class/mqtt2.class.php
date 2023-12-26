@@ -287,7 +287,7 @@ class mqtt2 extends eqLogic {
       }
    }
 
-   public static function uninstallMosquitto($_mode = 'local') {
+   public static function uninstallMosquitto() {
       if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
          event::add('jeedom::alert', array(
          'level' => 'warning',
