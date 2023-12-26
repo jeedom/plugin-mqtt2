@@ -36,6 +36,11 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'stopMosquitto') {
+    mqtt2::stopMosquitto();
+    ajax::success();
+  }
+
   if (init('action') == 'uninstallMosquitto') {
     mqtt2::uninstallMosquitto();
     ajax::success();
