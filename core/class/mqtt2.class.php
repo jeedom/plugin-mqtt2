@@ -263,30 +263,43 @@ class mqtt2 extends eqLogic {
          );
       }
       config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
-      shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
+      //shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
       } elseif (jeedom::getHardwareName() == 'docker') {
-         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
-         if (!is_file('/etc/init.d/mosquitto.original')) {
-            shell_exec(system::getCmdSudo() . ' cp -p /etc/init.d/mosquitto /etc/init.d/mosquitto.original');
-            shell_exec(system::getCmdSudo() . ' chmod uog-x /etc/init.d/mosquitto.original');
-         }
-         shell_exec(system::getCmdSudo() . ' cp -p /etc/init.d/mosquitto.original /etc/init.d/mosquitto');
+         $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.init');
+         file_put_contents('/tmp/mosquitto.init', str_replace("#config_path#", __DIR__ . '/../../data/mosquitto.conf', $service));
+         shell_exec(system::getCmdSudo() . ' mv /tmp/mosquitto.init /etc/init.d/mosquitto');
+         shell_exec(system::getCmdSudo() . ' chown root: /etc/init.d/mosquitto');
          shell_exec(system::getCmdSudo() . ' chmod uog+x /etc/init.d/mosquitto');
-         shell_exec(system::getCmdSudo() . ' sed -i s#/etc/mosquitto/mosquitto.conf#' . __DIR__ . '/../../data/mosquitto.conf' . '#g /etc/init.d/mosquitto');
          shell_exec(system::getCmdSudo() . ' service mosquitto stop');
          shell_exec(system::getCmdSudo() . ' service mosquitto start');
       } else {
-         file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
          $service = file_get_contents(__DIR__ . '/../../resources/mosquitto.service');
          file_put_contents('/tmp/mosquitto.service', str_replace("#config_path#", __DIR__ . '/../../data/mosquitto.conf', $service));
          shell_exec(system::getCmdSudo() . ' mv /tmp/mosquitto.service /lib/systemd/system/mosquitto.service');
+         shell_exec(system::getCmdSudo() . ' chown root: /lib/systemd/system/mosquitto.service');
          shell_exec(system::getCmdSudo() . ' systemctl daemon-reload');
          shell_exec(system::getCmdSudo() . ' systemctl enable mosquitto');
          shell_exec(system::getCmdSudo() . ' systemctl stop mosquitto');
          shell_exec(system::getCmdSudo() . ' systemctl start mosquitto');
+      }
+   }
+
+   public static function uninstallMosquitto() {
+      if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+         event::add('jeedom::alert', array(
+         'level' => 'warning',
+         'page' => 'plugin',
+         'message' => __('Désinstallation du broker Mosquitto en cours', __FILE__),
+         ));
+         self::stopMosquitto();
+         shell_exec(system::getCmdSudo() . ' apt remove -y mosquitto');
+      } else if (is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
+         throw new Exception(__("Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management", __FILE__));
+      } else {
+         throw new Exception(__("Aucun broker Mosquitto trouvé", __FILE__));
       }
    }
 
@@ -317,6 +330,33 @@ class mqtt2 extends eqLogic {
       }
    }
 
+   public static function stopMosquitto() {
+      switch (config::byKey('mode', __CLASS__)) {
+         case 'remote':
+            throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
+            break;
+         case 'docker':
+            $docker = self::byLogicalId('1::mqtt2_mosquitto', 'docker2');
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+               throw new Exception(__('Veuillez désinstaller Mosquitto local', __FILE__));
+            } else if (!is_object($docker)) {
+               throw new Exception(__('Veuillez installer Mosquitto', __FILE__));
+            }
+            $docker->stopDocker();
+            break;
+         default:
+            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
+               throw new Exception(__('Veuillez d\'abord installer Mosquitto', __FILE__), 1);
+            }
+            if (jeedom::getHardwareName() == 'docker') {
+               shell_exec(system::getCmdSudo() . ' service mosquitto stop');
+            } else {
+               shell_exec(system::getCmdSudo() . ' systemctl stop mosquitto');
+            }
+            break;
+      }
+   }
+
    public static function deamon_info() {
       $return = array();
       $return['log'] = __CLASS__;
@@ -342,6 +382,10 @@ class mqtt2 extends eqLogic {
             if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
                $return['launchable'] = 'nok';
                $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
+            }
+            elseif(shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0){
+               $return['launchable'] = 'nok';
+               $return['launchable_message'] = __('Veuillez lancer Mosquitto', __FILE__);
             }
             break;
       }
