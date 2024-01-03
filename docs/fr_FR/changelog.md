@@ -7,6 +7,7 @@
 # 03/01/2023
 
 - Préparation pour jeedom 4.4
+- Amélioration de la gestion de mosquitto sous Docker
 
 # 27/10/2023
 
