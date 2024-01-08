@@ -967,6 +967,7 @@ class mqtt2 extends eqLogic {
          $listener->setFunction('handleEvent');
          $listener->emptyEvent();
          $listener->addEvent('*');
+         $listener->setOption(array('background' => false));
          $listener->save();
       }
    }
