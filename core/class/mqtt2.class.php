@@ -418,7 +418,7 @@ class mqtt2 extends eqLogic {
       }
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
-         if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key')) {
+         if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0 ) {
             self::generateClientCert();
             shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
             shell_exec(system::getCmdSudo() . ' rm -rf ' . jeedom::getTmpFolder(__CLASS__) . '/ssl');
