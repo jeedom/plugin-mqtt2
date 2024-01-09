@@ -75,19 +75,19 @@ class mqtt2 extends eqLogic {
       }
       shell_exec(system::getCmdSudo() . ' chmod -R 777  ' . $path);
       shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $path);
-      if (!file_exists($path . '/ca.key')) {
+      if (!file_exists($path . '/ca.key') || filesize($path . '/ca.key') == 0) {
          shell_exec(system::getCmdSudo() . ' openssl genrsa -out ' . $path . '/ca.key 2048');
       }
-      if (!file_exists($path . '/ca.crt')) {
+      if (!file_exists($path . '/ca.crt') || filesize($path . '/ca.crt') == 0) {
          shell_exec(system::getCmdSudo() . ' openssl req -new -x509 -days 9999 -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom" -key ' . $path . '/ca.key -out ' . $path . '/ca.crt');
       }
-      if (!file_exists($path . '/mosquitto.key')) {
+      if (!file_exists($path . '/mosquitto.key') || filesize($path . '/mosquitto.key') == 0) {
          shell_exec(system::getCmdSudo() . ' openssl genrsa -out ' . $path . '/mosquitto.key 2048');
       }
-      if (!file_exists($path . '/mosquitto.csr')) {
+      if (!file_exists($path . '/mosquitto.csr') || filesize($path . '/mosquitto.csr') == 0) {
          shell_exec(system::getCmdSudo() . ' openssl req -new -subj "/C=FR/ST=Paris/L=Paris/O=jeedom/CN=jeedom-mosquitto" -key ' . $path . '/mosquitto.key -out ' . $path . '/mosquitto.csr');
       }
-      if (!file_exists($path . '/mosquitto.crt')) {
+      if (!file_exists($path . '/mosquitto.crt') || filesize($path . '/mosquitto.crt') == 0) {
          shell_exec(system::getCmdSudo() . ' openssl x509 -req -in ' . $path . '/mosquitto.csr -CA ' . $path . '/ca.crt -CAkey ' . $path . '/ca.key -CAcreateserial -out ' . $path . '/mosquitto.crt -days 9999 -sha256');
       }
       shell_exec(system::getCmdSudo() . ' chmod -R 777  ' . $path);
