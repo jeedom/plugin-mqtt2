@@ -130,6 +130,8 @@
         "Min": "Mínimo",
         "Max": "Máx.",
         "Unité": "Unidad",
+        "Liste de valeur|texte séparé par ;": "Lista de valores|texto separado por ;",
+        "Liste": "Lista",
         "Tester": "Prueba"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
