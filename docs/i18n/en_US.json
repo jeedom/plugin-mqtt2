@@ -2,7 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
-        "03\/01\/2024": "03\/01\/2024",
+        "15\/01\/2024": "01\/15\/2024",
         "Préparation pour jeedom 4.4": "Preparing for jeedom 4.4",
         "Amélioration de la gestion de mosquitto sous Docker": "Improved mosquitto management under Docker",
         "27\/10\/2023": "10\/27\/2023",
