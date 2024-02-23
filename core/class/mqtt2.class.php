@@ -379,14 +379,7 @@ class mqtt2 extends eqLogic {
             }
             break;
          default:
-            if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') == 0) {
-               $return['launchable'] = 'nok';
-               $return['launchable_message'] = __('Veuillez installer Mosquitto', __FILE__);
-            }
-            elseif(shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0){
-               $return['launchable'] = 'nok';
-               $return['launchable_message'] = __('Veuillez lancer Mosquitto', __FILE__);
-            }
+                $return['launchable'] = 'ok';
             break;
       }
 
