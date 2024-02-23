@@ -167,7 +167,6 @@
         "Veuillez installer Mosquitto": "Veuillez installer Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Veuillez d\\'abord installer Mosquitto",
         "Veuillez renseigner l'adresse complète du broker": "Veuillez renseigner l'adresse complète du broker",
-        "Veuillez lancer Mosquitto": "Veuillez lancer Mosquitto",
         "Service mosquitto non lancé, je lance une installation": "Service mosquitto non lancé, je lance une installation",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration",
         "Démarrage du démon MQTT Manager": "Démarrage du démon MQTT Manager",
