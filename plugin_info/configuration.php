@@ -134,8 +134,8 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">{{QOS par defaut}}
-          <sup><i class="fas fa-question-circle tooltips"></i></sup>
+        <label class="col-md-4 control-label">{{QOS}}
+        <sup><i class="fas fa-question-circle tooltips"title="QoS 0: Le message est distribué une fois tout au plus.<br/>QoS 1: Le message est toujours distribué au moins une fois.<br/>QoS 2: Le message est toujours distribué une seule fois."></i></sup>
         </label>
          <div class="col-md-7">
           <select class="configKey form-control" data-l1key="qos::default">
