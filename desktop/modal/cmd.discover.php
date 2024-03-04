@@ -17,10 +17,10 @@ global $JEEDOM_INTERNAL_CONFIG;
 ?>
 <div style="display: none;" id="md_cmdDiscoverAlert"></div>
 <a class="btn btn-success pull-right" id="bt_saveDiscover"><i class="fa fa-check"></i> {{Sauvegarder}}</a>
-<table class="table table-bordered table-condensed" id="table_mqttDiscover">
+<table class="table table-bordered table-condensed tablesorter" id="table_mqttDiscover">
     <thead>
         <tr>
-            <th></th>
+            <th data-sorter="false" data-filter="false"></th>
             <th>{{Topic}}</th>
             <th>{{Valeur}}</th>
             <th>{{Nom}}</th>
@@ -65,6 +65,7 @@ global $JEEDOM_INTERNAL_CONFIG;
 </table>
 
 <script>
+    initTableSorter()
     $('#bt_saveDiscover').off('click').on('click', function() {
         let discovers = $('#table_mqttDiscover tbody .discover').getValues('.discoverAttr')
         $.ajax({
