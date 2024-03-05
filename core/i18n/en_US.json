@@ -34,7 +34,7 @@
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Check the box so that all order events are transmitted to the MQTT broker",
         "Template de publication": "Post template",
         "Template de publication des évènements Jeedom": "Jeedom event publication template",
-        "QOS par defaut": "Default QOS",
+        "QOS": "QOS",
         "QOS 0 (défaut)": "QOS 0 (default)",
         "QOS 1": "QOS 1",
         "QOS 2": "QOS 2",

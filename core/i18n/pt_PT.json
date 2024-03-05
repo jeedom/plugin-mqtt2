@@ -34,7 +34,7 @@
         "Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT": "Marque a caixa para que todos os eventos do pedido sejam transmitidos ao broker MQTT",
         "Template de publication": "Modelo de postagem",
         "Template de publication des évènements Jeedom": "Modelo de publicação de evento Jeedom",
-        "QOS par defaut": "QoS padrão",
+        "QOS": "QoS",
         "QOS 0 (défaut)": "QoS 0 (padrão)",
         "QOS 1": "QoS 1",
         "QOS 2": "QoS 2",
