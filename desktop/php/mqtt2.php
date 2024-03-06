@@ -161,7 +161,9 @@ foreach ($manufacturers as &$array) {
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)}}</label>
+								<label class="col-sm-4 control-label">{{Activer l'analyse des valeurs}}
+							        <sup><i class="fas fa-question-circle tooltips" title="{{Permet la création simplifiée des commandes (attention cela consomme plus de ressources)}}"></i></sup>	
+								</label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="enableDiscoverCmd">
 								</div>
