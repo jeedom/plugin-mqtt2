@@ -66,8 +66,8 @@
         "Equipement introuvable": "Equipement introuvable",
         "Equipement pas de type mqtt2": "Equipement pas de type mqtt2",
         "Template": "Template",
-        "Choisir": "Choisir",
-        "Créér": "Créér",
+        "Choisissez un template": "Choisissez un template",
+        "Appliquer": "Appliquer",
         "Vous devez choisir un template": "Vous devez choisir un template",
         "Création réussie": "Création réussie"
     },

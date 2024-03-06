@@ -66,8 +66,8 @@
         "Equipement introuvable": "Equipo no encontrado",
         "Equipement pas de type mqtt2": "Equipo no tipo mqtt2",
         "Template": "Modelo",
-        "Choisir": "Eligiendo",
-        "Créér": "Crear",
+        "Choisissez un template": "Elige una plantilla",
+        "Appliquer": "Aplicar",
         "Vous devez choisir un template": "Debes elegir una plantilla",
         "Création réussie": "Creación exitosa"
     },

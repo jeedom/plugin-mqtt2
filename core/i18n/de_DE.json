@@ -66,8 +66,8 @@
         "Equipement introuvable": "Gerät nicht gefunden",
         "Equipement pas de type mqtt2": "Geräte nicht vom Typ mqtt2",
         "Template": "Schablone",
-        "Choisir": "Aussuchen",
-        "Créér": "Schaffen",
+        "Choisissez un template": "Wählen Sie eine Vorlage",
+        "Appliquer": "Anwenden",
         "Vous devez choisir un template": "Sie müssen eine Vorlage auswählen",
         "Création réussie": "Erfolgreiche Kreation"
     },

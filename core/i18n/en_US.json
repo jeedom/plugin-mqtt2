@@ -66,8 +66,8 @@
         "Equipement introuvable": "Equipment not found",
         "Equipement pas de type mqtt2": "Equipment not type mqtt2",
         "Template": "Template",
-        "Choisir": "Picking out",
-        "Créér": "Create",
+        "Choisissez un template": "Choose a template",
+        "Appliquer": "Apply",
         "Vous devez choisir un template": "You must choose a template",
         "Création réussie": "Successful creation"
     },
