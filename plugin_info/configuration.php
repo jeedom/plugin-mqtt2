@@ -27,7 +27,7 @@ if (!isConnect()) {
     <div class="col-lg-6">
       <div class="form-group">
         <label class="col-md-4 control-label">{{Mode}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le mode de connexion au broker}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Broker local : <small>(mode par défaut) Le broker Mosquitto est installé directement sur la machine qui héberge Jeedom</small><br/>Broker local Docker : <small>Le broker Mosquitto est installé et configuré automatiquement dans un conteneur Docker à l’aide du plugin officiel Docker Management</small><br/>Broker distant : <small>Dans le cas de l’utilisation d’un broker déjà existant, il suffit de renseigner son adresse (exemple : mqtt://192.168.1.10:1883)</small>}}"></i></sup>
         </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
@@ -98,7 +98,7 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Port socket interne}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangeureuse}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangereuse (55035 par défaut)}}"></i></sup>
         </label>
         <div class="col-md-7">
           <input class="configKey form-control" data-l1key="socketport">
