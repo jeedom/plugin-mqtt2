@@ -1,7 +1,7 @@
 {
     "plugins\/mqtt2\/plugin_info\/configuration.php": {
         "Mode": "Mode",
-        "Sélectionner le mode de connexion au broker": "Select broker connection mode",
+        "Broker local : <small>(mode par défaut) Le broker Mosquitto est installé directement sur la machine qui héberge Jeedom<\/small><br\/>Broker local Docker : <small>Le broker Mosquitto est installé et configuré automatiquement dans un conteneur Docker à l’aide du plugin officiel Docker Management<\/small><br\/>Broker distant : <small>Dans le cas de l’utilisation d’un broker déjà existant, il suffit de renseigner son adresse (exemple : mqtt:\/\/192.168.1.10:1883)<\/small>": "Local broker: <small>(default mode) The Mosquitto broker is installed directly on the machine hosting Jeedom<\/small><br\/> Docker local broker: <small>The Mosquitto broker is installed and configured automatically in a Docker container using the official Docker Management plugin<\/small><br\/> Remote broker: <small>If using an existing broker, simply enter its address (example: mqtt:\/\/192.168.1.10:1883)<\/small>",
         "A configurer": "To configure",
         "Broker local": "Local broker",
         "Broker local docker": "Broker local docker",
@@ -24,7 +24,7 @@
         "Authentification": "Authentication",
         "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "MQTT broker login and password separated by colons",
         "Port socket interne": "Internal socket port",
-        "Modification dangeureuse": "Dangerous modification",
+        "Modification dangereuse (55035 par défaut)": "Dangerous modification (55035 by default)",
         "Cycle": "Cycle",
         "secondes": "seconds",
         "Fréquence de rafraichissement en secondes": "Refresh rate in seconds",
@@ -99,7 +99,8 @@
         "Visible": "Visible",
         "Paramètres spécifiques": "Specific settings",
         "Topic racine": "Root Topic",
-        "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Activate the analysis of values for the simplified creation of orders (be careful, this consumes more resources)",
+        "Activer l'analyse des valeurs": "Enable value analysis",
+        "Permet la création simplifiée des commandes (attention cela consomme plus de ressources)": "Allows simplified creation of orders (be careful, this consumes more resources)",
         "Informations": "Information",
         "Description": "Description",
         "Fabricant": "Maker",

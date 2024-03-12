@@ -1,7 +1,7 @@
 {
     "plugins\/mqtt2\/plugin_info\/configuration.php": {
         "Mode": "Moda",
-        "Sélectionner le mode de connexion au broker": "Seleccione el modo de conexión del intermediario",
+        "Broker local : <small>(mode par défaut) Le broker Mosquitto est installé directement sur la machine qui héberge Jeedom<\/small><br\/>Broker local Docker : <small>Le broker Mosquitto est installé et configuré automatiquement dans un conteneur Docker à l’aide du plugin officiel Docker Management<\/small><br\/>Broker distant : <small>Dans le cas de l’utilisation d’un broker déjà existant, il suffit de renseigner son adresse (exemple : mqtt:\/\/192.168.1.10:1883)<\/small>": "Agente local: <small>(modo predeterminado) El agente Mosquitto se instala directamente en la máquina que aloja Jeedom<\/small><br\/> Agente local de Docker: <small>el agente Mosquitto se instala y configura automáticamente en un contenedor Docker utilizando el complemento oficial de Docker Management.<\/small><br\/> Agente remoto: <small>si utiliza un agente existente, simplemente ingrese su dirección (ejemplo: mqtt:\/\/192.168.1.10:1883)<\/small>",
         "A configurer": "Para configurar",
         "Broker local": "Corredor local",
         "Broker local docker": "Ventana acoplable local del intermediario",
@@ -24,7 +24,7 @@
         "Authentification": "Autenticación",
         "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "Nombre de usuario y contraseña del agente de MQTT separados por dos puntos",
         "Port socket interne": "Puerto de enchufe interno",
-        "Modification dangeureuse": "Modificación peligrosa",
+        "Modification dangereuse (55035 par défaut)": "Modificación peligrosa (55035 por defecto)",
         "Cycle": "Ciclo",
         "secondes": "segundos",
         "Fréquence de rafraichissement en secondes": "Frecuencia de actualización en segundos",
@@ -99,7 +99,8 @@
         "Visible": "Visible",
         "Paramètres spécifiques": "Parámetros específicos",
         "Topic racine": "Tema raíz",
-        "Activer l'analyse des valeurs pour la création simplifiée des commandes (attention cela consomme plus de ressources)": "Activar el análisis de valores para la creación simplificada de pedidos (ojo, esto consume más recursos)",
+        "Activer l'analyse des valeurs": "Habilitar análisis de valor",
+        "Permet la création simplifiée des commandes (attention cela consomme plus de ressources)": "Permite la creación simplificada de pedidos (ojo, esto consume más recursos)",
         "Informations": "Información",
         "Description": "Descripción",
         "Fabricant": "Fabricante",
