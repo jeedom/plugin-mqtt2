@@ -38,6 +38,9 @@ global $JEEDOM_INTERNAL_CONFIG;
             echo '<span class="discoverAttr" data-l1key="logicalId">' . $key . '</span>';
             echo '</td>';
             echo '<td>';
+            if (is_bool($value['value'])) {
+                $value['value'] = $value['value'] ? 1 : 0;
+            }
             echo $value['value'];
             echo '</td>';
             echo '<td>';
