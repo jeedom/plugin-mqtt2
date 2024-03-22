@@ -27,12 +27,12 @@ if (!isConnect()) {
     <div class="col-lg-6">
       <div class="form-group">
         <label class="col-md-4 control-label">{{Mode}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Broker local : <small>(mode par défaut) Le broker Mosquitto est installé directement sur la machine qui héberge Jeedom</small><br/>Broker local Docker : <small>Le broker Mosquitto est installé et configuré automatiquement dans un conteneur Docker à l’aide du plugin officiel Docker Management</small><br/>Broker distant : <small>Dans le cas de l’utilisation d’un broker déjà existant, il suffit de renseigner son adresse (exemple : mqtt://192.168.1.10:1883)</small>}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le mode d'installation du broker (voir documentation)}}"></i></sup>
         </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
-            <option value="none">{{A configurer}}</option>
-            <option value="local">{{Broker local}}</option>
+            <option value="none" disabled>{{A configurer}}</option>
+            <option value="local">{{Broker local (par défaut)}}</option>
             <option value="docker">{{Broker local docker}}</option>
             <option value="remote">{{Broker distant}}</option>
           </select>
@@ -45,8 +45,8 @@ if (!isConnect()) {
         </label>
         <div class="col-md-7">
           <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer Mosquitto}}</a>
-          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arreter Mosquitto}}</a>
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Re)Installer Mosquitto}}</a>
+          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter Mosquitto}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer Mosquitto}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller Mosquitto}}</a>
           <a class="btn btn-sm btn-primary pull-right" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
@@ -55,17 +55,17 @@ if (!isConnect()) {
       <div class="form-group mqtt2Mode local docker">
         <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
         <div class="col-md-7">
-          <?php 
-              if (config::byKey('mode', 'mqtt2') == 'local' ){
-                $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
-                if($state == 0){
-                    echo '<span class="label label-danger">{{NOK}}</span>';
-                }else{
-                    echo '<span class="label label-success">{{OK}}</span>';
-                }
-              }else{
-                     echo '<span class="label label-info">{{N/A}}</span>';
-              }
+          <?php
+          if (config::byKey('mode', 'mqtt2') == 'local') {
+            $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
+            if ($state == 0) {
+              echo '<span class="label label-danger">{{NOK}}</span>';
+            } else {
+              echo '<span class="label label-success">{{OK}}</span>';
+            }
+          } else {
+            echo '<span class="label label-info">{{N/A}}</span>';
+          }
           ?>
         </div>
       </div>
@@ -98,10 +98,10 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Port socket interne}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangereuse (55035 par défaut)}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangereuse}}"></i></sup>
         </label>
         <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="socketport">
+          <input class="configKey form-control" data-l1key="socketport" placeholder="55035">
         </div>
       </div>
       <div class="form-group">
@@ -135,9 +135,9 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{QOS}}
-        <sup><i class="fas fa-question-circle tooltips"title="QoS 0: Le message est distribué une fois tout au plus.<br/>QoS 1: Le message est toujours distribué au moins une fois.<br/>QoS 2: Le message est toujours distribué une seule fois."></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="QoS 0: Le message est distribué une fois tout au plus.<br/>QoS 1: Le message est toujours distribué au moins une fois.<br/>QoS 2: Le message est toujours distribué une seule fois."></i></sup>
         </label>
-         <div class="col-md-7">
+        <div class="col-md-7">
           <select class="configKey form-control" data-l1key="qos::default">
             <option value="0">{{QOS 0 (défaut)}}</option>
             <option value="1">{{QOS 1}}</option>
