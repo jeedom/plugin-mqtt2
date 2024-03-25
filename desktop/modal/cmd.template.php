@@ -18,7 +18,7 @@ $templates = mqtt2::listCmdTemplate();
             <label class="col-sm-2 control-label">{{Template}}</label>
             <div class="col-sm-3">
                 <select class="form-control cmdTemplateAttr" data-l1key="templateName">
-                    <option value="">{{Choisir}}</option>
+                    <option value="">{{Choisir un template}}</option>
                     <?php
                     foreach ($templates as $key => $value) {
                         echo '<option value="' . $key . '">' . $value['name'] . '</option>';
@@ -27,7 +27,7 @@ $templates = mqtt2::listCmdTemplate();
                 </select>
             </div>
             <div class="col-sm-3">
-                <a class="btn btn-success" id="bt_cmdTemplateCreate">{{Créér}}</a>
+                <a class="btn btn-success" id="bt_cmdTemplateCreate">{{Appliquer}}</a>
             </div>
         </div>
     </fieldset>

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+* along with Jeedom. If not, see <http://www.gnu.org/licenses>.
 */
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
@@ -27,12 +27,12 @@ if (!isConnect()) {
     <div class="col-lg-6">
       <div class="form-group">
         <label class="col-md-4 control-label">{{Mode}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le mode de connexion au broker}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le mode d'installation du broker (voir documentation)}}"></i></sup>
         </label>
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
-            <option value="none">{{A configurer}}</option>
-            <option value="local">{{Broker local}}</option>
+            <option value="none" disabled>{{A configurer}}</option>
+            <option value="local">{{Broker local (par défaut)}}</option>
             <option value="docker">{{Broker local docker}}</option>
             <option value="remote">{{Broker distant}}</option>
           </select>
@@ -45,8 +45,8 @@ if (!isConnect()) {
         </label>
         <div class="col-md-7">
           <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer Mosquitto}}</a>
-          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arreter Mosquitto}}</a>
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Re)Installer Mosquitto}}</a>
+          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter Mosquitto}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer Mosquitto}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller Mosquitto}}</a>
           <a class="btn btn-sm btn-primary pull-right" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
@@ -55,17 +55,17 @@ if (!isConnect()) {
       <div class="form-group mqtt2Mode local docker">
         <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
         <div class="col-md-7">
-          <?php 
-              if (config::byKey('mode', 'mqtt2') == 'local' ){
-                $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
-                if($state == 0){
-                    echo '<span class="label label-danger">{{NOK}}</span>';
-                }else{
-                    echo '<span class="label label-success">{{OK}}</span>';
-                }
-              }else{
-                     echo '<span class="label label-info">{{N/A}}</span>';
-              }
+          <?php
+          if (config::byKey('mode', 'mqtt2') == 'local') {
+            $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
+            if ($state == 0) {
+              echo '<span class="label label-danger">{{NOK}}</span>';
+            } else {
+              echo '<span class="label label-success">{{OK}}</span>';
+            }
+          } else {
+            echo '<span class="label label-info">{{N/A}}</span>';
+          }
           ?>
         </div>
       </div>
@@ -98,10 +98,10 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Port socket interne}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangeureuse}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangereuse}}"></i></sup>
         </label>
         <div class="col-md-7">
-          <input class="configKey form-control" data-l1key="socketport">
+          <input class="configKey form-control" data-l1key="socketport" placeholder="55035">
         </div>
       </div>
       <div class="form-group">
@@ -121,33 +121,33 @@ if (!isConnect()) {
         <div class="col-md-7 form-inline">
           <input class="configKey form-control" data-l1key="root_topic">
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
-            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les évènements des commandes soient transmis au broker MQTT}}"></i></sup>
+            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT}}"></i></sup>
           </label>
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Template de publication}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Template de publication des évènements Jeedom}} (tags : #value#, #humanName#, #unit#, #name#, #type#, #subtype#)"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Template de publication des événements Jeedom}} (tags : #value#, #humanName#, #unit#, #name#, #type#, #subtype#)"></i></sup>
         </label>
         <div class="col-md-7">
           <input class="configKey form-control" data-l1key="publish_template">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">{{QOS par defaut}}
-          <sup><i class="fas fa-question-circle tooltips"></i></sup>
+        <label class="col-md-4 control-label">QoS
+          <sup><i class="fas fa-question-circle tooltips" title="QoS 0: {{Le message est envoyé une seule fois}}<br>QoS 1: {{Le message est envoyé au moins une fois}}<br>QoS 2: {{Le message est distribué une seule fois}}"></i></sup>
         </label>
-         <div class="col-md-7">
+        <div class="col-md-7">
           <select class="configKey form-control" data-l1key="qos::default">
-            <option value="0">{{QOS 0 (défaut)}}</option>
-            <option value="1">{{QOS 1}}</option>
-            <option value="2">{{QOS 2}}</option>
+            <option value="0">QoS 0 ({{par défaut}})</option>
+            <option value="1">QoS 1</option>
+            <option value="2">QoS 2</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin MQTT Manager [topic ( plugin id)]}}"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
         </label>
         <div class="subscribed col-md-7">
           <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
@@ -207,7 +207,7 @@ if (!isConnect()) {
         } else {
           $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
           $.fn.showAlert({
-            message: '{{Redemarrage réussie}}',
+            message: '{{Redémarrage réussi}}',
             level: 'success',
             emptyBefore: true
           })
@@ -240,7 +240,7 @@ if (!isConnect()) {
         } else {
           $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
           $.fn.showAlert({
-            message: '{{Arret réussie}}',
+            message: '{{Arrêt réussi}}',
             level: 'success',
             emptyBefore: true
           })
