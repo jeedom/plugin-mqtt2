@@ -511,9 +511,11 @@ class mqtt2 extends eqLogic {
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $infos['ip'] = '127.0.0.1';
          $infos['port'] = '1883';
+         $infos['protocol'] = 'mqtt';
       } else {
          $infos['ip'] = config::byKey('remote::ip', __CLASS__);
          $infos['port'] = config::byKey('remote::port', __CLASS__);
+         $infos['protocol'] = config::byKey('remote::protocol', __CLASS__);
       }
       $infos['user'] = $authentifications[0];
       $infos['password'] = $authentifications[1];
