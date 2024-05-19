@@ -1,0 +1,500 @@
+{
+        "name": "UlanziTC001",
+        "commands": [
+		{                
+         	"name": "statsapp",
+            "type": "info",
+          	"subtype": "string",
+            "isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/app"			
+		},{                
+         	"name": "statsbat",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+          	"unite": "%",
+         	"minValue": "0",
+            "maxValue": "100",
+			"logicalId" : "stats/bat"			
+ 		},{              
+         	"name": "statsbat_raw",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/bat_raw"			
+		},{             
+         	"name": "statsbri",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/bri"			
+		},{               
+         	"name": "statscurrentApp",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/currentApp"			
+		},{                
+         	"name": "statshum",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+          	"unite": "%",
+         	"minValue": "0",
+            "maxValue": "100",
+			"logicalId" : "stats/hum"			
+		},{                
+         	"name": "statsindicator1",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/indicator1"			
+		},{                
+         	"name": "statsindicator2",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/indicator2"			
+		},{              
+         	"name": "statsindicator3",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/indicator3"			
+		},{              
+         	"name": "statsip_address",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/ip_address"			
+		},{              
+         	"name": "statsldr_raw",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/ldr_raw"			
+		},{               
+         	"name": "statslux",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/lux"			
+		},{              
+         	"name": "statsmatrix",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/matrix"			
+		},{                
+         	"name": "statsmessages",
+            "type": "info",
+            "subtype": "binary",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/messages"			
+		},{               
+         	"name": "statsram",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/ram"			
+		},{              
+         	"name": "statstemp",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+          	"unite": "°C",
+			"logicalId" : "stats/temp"			
+		},{                
+         	"name": "statstype",
+            "type": "info",
+            "subtype": "binary",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/type"			
+		},{               
+         	"name": "statsuid",
+            "type": "info",
+            "subtype": "string",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/uid"			
+		},{               
+         	"name": "statsuptime",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+         	 "unite": "h",
+			"logicalId" : "stats/uptime"			
+		},{                
+         	"name": "statsversion",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+			"logicalId" : "stats/version"			
+		},{                
+         	"name": "statswifi_signal",
+            "type": "info",
+            "subtype": "numeric",
+			"isVisible": 1,
+            "isHistorized": 0,
+          	"unite": "dBm",
+			"logicalId" : "stats/wifi_signal"			
+         },{
+            "name": "brightness_lvl",
+            "type": "action",
+            "subtype": "slider",
+            "isVisible": 1,
+            "isHistorized": 0,
+           "minValue": "0",
+            "maxValue": "255",
+            "logicalId" : "settings",
+            "value" : "statsbri",
+            "configuration":{
+                "message":"json::{BRI:#slider#,ABRI:false}"
+            },
+            "template":{
+                "dashboard":"core::light",
+                "mobile":"core::light"
+            }           
+         },{
+            "name": "brightness_auto_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",
+          	"value" : "brightness_auto_etat",
+            "configuration":{
+            	"message":"json::{ABRI:true}"
+            },
+           "template":{
+                "dashboard":"core::binarySwitch",
+                "mobile":"core::binarySwitch"
+           }  
+         
+         },{
+            "name": "tmode",
+            "type": "action",
+            "subtype": "slider",
+            "isVisible": 1,
+            "isHistorized": 0,
+           "minValue": "0",
+            "maxValue": "4",
+            "logicalId" : "settings",
+          	"value" : "tmode",
+            "configuration":{
+            	"message":"json::{TMODE:#slider#}"
+            },
+           "template":{
+                "dashboard":"core::light",
+                "mobile":"core::light"
+           }  
+         
+         },{
+            "name": "uppercase_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{UPPERCASE:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "uppercase_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{UPPERCASE:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "tim_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{TIM:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "tim_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{TIM:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "dat_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{DAT:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "dat_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{DAT:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "hum_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{HUM:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "hum_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{HUM:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "temp_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{TEMP:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "temp_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{TEMP:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "bat_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{BAT:true}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "bat_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "settings",         
+            "configuration":{
+            	"message":"json::{BAT:false}"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "reboot",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "reboot",         
+            "configuration":{
+            	"message":""
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "teff",
+            "type": "action",
+            "subtype": "select",
+            "isVisible": 1,
+            "isHistorized": 0,
+           "minValue": "0",
+            "maxValue": "10",
+           "listValue":"0|Al\u00e9atoire;1|Diapositive;2|Faible;3|Zoomer;4|Rotation;5|Pixeliser;6|Rideau;7|Ondulation;8|Clignement des yeux;9|Recharger;10|Fondu",
+            "logicalId" : "settings",
+          	"value" : "teff",
+            "configuration":{
+            "message":"json::{TEFF:#select#}"              
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "indicator1",
+            "type": "action",
+            "subtype": "message",
+          	"logicalId" : "indicator1", 
+            "isVisible": 1,
+            "isHistorized": 0,
+           	"configuration":{
+            "message":"json::{\"color\":[0,255,255]}","retain":"0","minValue":"","maxValue":"","listValue":"","lastCmdValue":"#ff000"              
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "indicator2",
+            "type": "action",
+            "subtype": "message",
+           	"logicalId" : "indicator2", 
+            "isVisible": 1,
+            "isHistorized": 0,
+           	"configuration":{
+            "message":"#message#"              
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "indicator3",
+            "type": "action",
+            "subtype": "message",
+           	"logicalId" : "indicator3", 
+            "isVisible": 1,
+            "isHistorized": 0,
+           	"configuration":{
+            "message":"#message#"              
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         
+         },{
+            "name": "power_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "power",         
+            "configuration":{
+            	"message":"json::{\"power\":false}","retain":"0"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         },{
+            "name": "power_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "power",         
+            "configuration":{
+            	"message":"json::{\"power\":true}","retain":"0"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         }
+    ]
+}
