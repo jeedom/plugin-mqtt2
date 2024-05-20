@@ -431,25 +431,24 @@
                 "mobile":"default"
            }  
          
-         },{
+         },{            
             "name": "teff",
             "type": "action",
             "subtype": "select",
             "isVisible": 1,
             "isHistorized": 0,
-           "minValue": "0",
-            "maxValue": "10",
-           "listValue":"0|Al\u00e9atoire;1|Diapositive;2|Faible;3|Zoomer;4|Rotation;5|Pixeliser;6|Rideau;7|Ondulation;8|Clignement des yeux;9|Recharger;10|Fondu",
-            "logicalId" : "settings",
-          	"value" : "teff",
+           "minValue": "",
+            "maxValue": "",             
+           "retain":"0",           
+          "logicalId" : "settings",        
             "configuration":{
-            "message":"json::{TEFF:#select#}"              
+            "message":"json::{TEFF:#select#}",
+             "listValue":"0|Al\u00e9atoire;1|Diapositive;2|Faible;3|Zoomer;4|Rotation;5|Pixeliser;6|Rideau;7|Ondulation;8|Clignement des yeux;9|Recharger;10|Fondu"
             },
            "template":{
                 "dashboard":"default",
                 "mobile":"default"
-           }  
-         
+           }          
          },{
             "name": "indicator1",
             "type": "action",
