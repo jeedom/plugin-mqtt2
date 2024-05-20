@@ -1,7 +1,35 @@
 {
         "name": "UlanziTC001",
         "commands": [
-		{                
+          {
+            "name": "power_off",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "power",         
+            "configuration":{
+            	"message":"json::{\"power\":false}","retain":"0"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         },{
+            "name": "power_on",
+            "type": "action",
+            "subtype": "other",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "power",         
+            "configuration":{
+            	"message":"json::{\"power\":true}","retain":"0"
+            },
+           "template":{
+                "dashboard":"default",
+                "mobile":"default"
+           }  
+         },{                
          	"name": "statsapp",
             "type": "info",
           	"subtype": "string",
@@ -466,35 +494,37 @@
                 "dashboard":"default",
                 "mobile":"default"
            }  
-         
+
          },{
-            "name": "power_off",
+            "name": "notify",
             "type": "action",
-            "subtype": "other",
+            "subtype": "message",
+           	"logicalId" : "notify", 
             "isVisible": 1,
             "isHistorized": 0,
-            "logicalId" : "power",         
-            "configuration":{
-            	"message":"json::{\"power\":false}","retain":"0"
+           	"configuration":{
+            "message":"#message#"              
             },
            "template":{
                 "dashboard":"default",
                 "mobile":"default"
            }  
+
          },{
-            "name": "power_on",
+            "name": "notify_dismiss",
             "type": "action",
-            "subtype": "other",
+            "subtype": "message",
+           	"logicalId" : "notify/dismiss", 
             "isVisible": 1,
             "isHistorized": 0,
-            "logicalId" : "power",         
-            "configuration":{
-            	"message":"json::{\"power\":true}","retain":"0"
+           	"configuration":{
+            "message":"#message#"              
             },
            "template":{
                 "dashboard":"default",
                 "mobile":"default"
            }  
+
          }
     ]
 }
