@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "Avec Jeedom 4.4": "Con Jeedom 4.4",
+        "8 possibilité de ne plus envoyer tous les équipements sur le brocker MQTT mais seulement certain (à configurer dans la configuration avancée de l'équipement a transmettre": "8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir",
         "22\/03\/2024": "22\/03\/2024",
         "Correction d'un soucis sous php8": "Se solucionó un problema en php8",
         "Correction d'un bug sous Debian 12": "Se corrigió un error en Debian 12",

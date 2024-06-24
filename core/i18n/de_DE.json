@@ -31,7 +31,7 @@
         "Topic racine Jeedom": "Jeedom-Wurzelthema",
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Stammthema, das Jeedom antreibt und an das es seine Ereignisse sendet",
         "Transmettre tous les évènements": "Übertragen Sie alle Ereignisse",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT": "Aktivieren Sie das Kontrollkästchen, damit alle Orderereignisse an den MQTT-Broker übermittelt werden",
+        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Aktivieren Sie das Kontrollkästchen, damit alle Befehlsereignisse an den MQTT-Broker übertragen werden. Sie können dies auch geräteweise tun (um nicht alles zu übertragen) in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten",
         "Template de publication": "Beitragsvorlage",
         "Template de publication des événements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
         "Le message est envoyé une seule fois": "Die Nachricht wird nur einmal gesendet",
