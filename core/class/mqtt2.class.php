@@ -919,10 +919,13 @@ class mqtt2 extends eqLogic {
          }
       }
    }
-
+   
 
    public static function handleEvent($_option) {
       $cmd = cmd::byId($_option['event_id']);
+      if(config::byKey('sendEvent','mqtt2',0) == 0 && $cmd->getEqLogic()->getConfiguration('mqttTranmit',0) == 0){
+         return;
+      }
       if (trim(config::byKey('publish_template', 'mqtt2', '')) != '') {
          $replace = array('#value#' => $_option['value']);
          if (is_object($cmd)) {
@@ -945,26 +948,6 @@ class mqtt2 extends eqLogic {
          }
       }
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
-   }
-
-   public static function postConfig_sendEvent($_value) {
-      if ($_value == 0) {
-         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
-         if (is_object($listener)) {
-            $listener->remove();
-         }
-      } else {
-         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
-         if (!is_object($listener)) {
-            $listener = new listener();
-         }
-         $listener->setClass(__CLASS__);
-         $listener->setFunction('handleEvent');
-         $listener->emptyEvent();
-         $listener->addEvent('*');
-         $listener->setOption(array('background' => false));
-         $listener->save();
-      }
    }
 
    public static function listCmdTemplate($_template = '') {

@@ -121,7 +121,7 @@ if (!isConnect()) {
         <div class="col-md-7 form-inline">
           <input class="configKey form-control" data-l1key="root_topic">
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
-            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT}}"></i></sup>
+            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre}}"></i></sup>
           </label>
         </div>
       </div>
