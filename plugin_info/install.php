@@ -26,7 +26,7 @@ function mqtt2_install() {
   if (!is_object($listener)) {
     $listener = new listener();
   }
-  $listener->setClass(__CLASS__);
+  $listener->setClass('mqtt2');
   $listener->setFunction('handleEvent');
   $listener->emptyEvent();
   $listener->addEvent('*');
@@ -39,7 +39,7 @@ function mqtt2_update() {
   if (!is_object($listener)) {
     $listener = new listener();
   }
-  $listener->setClass(__CLASS__);
+  $listener->setClass('mqtt2');
   $listener->setFunction('handleEvent');
   $listener->emptyEvent();
   $listener->addEvent('*');
