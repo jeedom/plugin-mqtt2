@@ -530,7 +530,7 @@ class mqtt2 extends eqLogic {
                if (isset($message['cmd']['get'])) {
                   foreach ($message['cmd']['get'] as $cmd_id => $options) {
                      $cmd = cmd::byId($cmd_id);
-                     if (!is_object($cmd) || $cmd->getType() == 'info') {
+                     if (!is_object($cmd) || $cmd->getType() != 'info') {
                         continue;
                      }
                      self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
