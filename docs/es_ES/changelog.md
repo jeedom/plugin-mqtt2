@@ -5,6 +5,7 @@
 >Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto.
 
 - Con Jeedom 4.4.8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir)
+- Corrección de errores (especialmente para compatibilidad con php8))
 
 # 22/03/2024
 

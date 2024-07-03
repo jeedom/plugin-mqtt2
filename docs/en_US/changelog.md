@@ -5,6 +5,7 @@
 >As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text.
 
 - With Jeedom 4.4.8 possibility of no longer sending all the equipment on the MQTT brocker but only certain ones (to be configured in the advanced configuration of the equipment to be transmitted)
+- Bug fixes (especially for php8 compatibility)
 
 # 03/22/2024
 
