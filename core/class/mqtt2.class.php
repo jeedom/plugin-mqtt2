@@ -900,7 +900,12 @@ class mqtt2 extends eqLogic {
          $_message = json_encode($_message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
       }
       $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message, 'options' => $_options)));
-      $result = json_decode($request_http->exec(30), true);
+      try{
+         $result = json_decode($request_http->exec(60,3), true);
+      }catch(Exception $e) {
+         sleep(10);
+         $result = json_decode($request_http->exec(60,3), true);
+      }
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
       }
