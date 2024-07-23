@@ -1047,7 +1047,7 @@ class mqtt2 extends eqLogic {
             if($_cmd['type'] == 'action'){
                $cmd->setLogicalId('set/' . $_cmd['id']);
             }else{
-               $cmd->setLogicalId('event/' . $_cmd['id']);
+               $cmd->setLogicalId('event/' . $_cmd['id'].'/value');
             }
             if($_cmd['type'] == 'action'){
                switch ($_cmd['subType']) {
