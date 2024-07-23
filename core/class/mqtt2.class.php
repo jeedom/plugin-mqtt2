@@ -1040,13 +1040,13 @@ class mqtt2 extends eqLogic {
             if($_cmd['type'] == 'action'){
                switch ($_cmd['subType']) {
                   case 'slider':
-                     $cmd->setConfiguration('message','json::{"slider":"#slider#"}')
+                     $cmd->setConfiguration('message','json::{"slider":"#slider#"}');
                      break;
                   case 'message':
-                     $cmd->setConfiguration('message','json::{"title":"#title#","message":"#message#"}')
+                     $cmd->setConfiguration('message','json::{"title":"#title#","message":"#message#"}');
                      break;
                   case 'select':
-                     $cmd->setConfiguration('message','json::{"select":"#select#"}')
+                     $cmd->setConfiguration('message','json::{"select":"#select#"}');
                      break;
                }
             }
