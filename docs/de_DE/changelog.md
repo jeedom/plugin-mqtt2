@@ -6,6 +6,7 @@
 
 - Mit Jeedom 4.4.8 Möglichkeit, nicht mehr alle Geräte auf dem MQTT-Brocker zu senden, sondern nur noch bestimmte (in der erweiterten Konfiguration der zu übertragenden Geräte zu konfigurieren))
 - Fehlerbehebungen (insbesondere für PHP8-Kompatibilität))
+- Beginn der Entdeckung (damit zwei Jeedoms über mqtt miteinander kommunizieren können)
 
 # 22.03.2024
 

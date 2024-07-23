@@ -5,6 +5,7 @@
         "Avec Jeedom 4.4": "Con Jeedom 4.4",
         "8 possibilité de ne plus envoyer tous les équipements sur le brocker MQTT mais seulement certain (à configurer dans la configuration avancée de l'équipement a transmettre": "8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir",
         "Correction de bugs (notamment pour la compatibilité php8": "Corrección de errores (especialmente para compatibilidad con php8)",
+        "Début du discovery (pour faire dialoguer 2 jeedoms entre eux par mqtt": "Inicio del descubrimiento (para hacer que 2 jeedoms se comuniquen entre sí usando mqtt",
         "22\/03\/2024": "22\/03\/2024",
         "Correction d'un soucis sous php8": "Se solucionó un problema en php8",
         "Correction d'un bug sous Debian 12": "Se corrigió un error en Debian 12",

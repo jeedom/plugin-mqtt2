@@ -6,6 +6,7 @@
 
 - Con Jeedom 4.4.8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir)
 - Corrección de errores (especialmente para compatibilidad con php8))
+- Inicio del descubrimiento (para hacer que 2 jeedoms se comuniquen entre sí usando mqtt)
 
 # 22/03/2024
 
