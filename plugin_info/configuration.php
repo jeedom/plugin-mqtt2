@@ -147,7 +147,7 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">{{Topic des Jeedom liée}}
+        <label class="col-md-4 control-label">{{Topic des Jeedoms liés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Topic des autres jeedom qu'il faut écouter (séparé par des ,)"></i></sup>
         </label>
         <div class="col-md-7">
