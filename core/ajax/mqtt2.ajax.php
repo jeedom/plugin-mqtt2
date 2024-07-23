@@ -26,8 +26,8 @@ try {
 
   ajax::init();
 
-  if (init('action') == 'sendDicovery') {
-    mqtt2::sendDicovery();
+  if (init('action') == 'sendDiscovery') {
+    mqtt2::sendDiscovery();
     ajax::success();
   }
 

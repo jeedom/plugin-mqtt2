@@ -197,7 +197,7 @@ if (!isConnect()) {
       type: "POST",
       url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
       data: {
-        action: "sendDicovery"
+        action: "sendDiscovery"
       },
       dataType: 'json',
       error: function(error) {
