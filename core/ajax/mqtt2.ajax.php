@@ -26,6 +26,11 @@ try {
 
   ajax::init();
 
+  if (init('action') == 'sendDicovery') {
+    mqtt2::sendDicovery();
+    ajax::success();
+  }
+
   if (init('action') == 'installMosquitto') {
     mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
     ajax::success();

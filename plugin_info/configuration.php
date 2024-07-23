@@ -123,6 +123,7 @@ if (!isConnect()) {
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
             <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre}}"></i></sup>
           </label>
+          <a class="btn btn-xs btn-success" id="bt_mqtt2SendDiscovery"><i class="fas fa-play"></i> {{Envoyer la découverte}}</a>
         </div>
       </div>
       <div class="form-group">
@@ -183,6 +184,27 @@ if (!isConnect()) {
     $('.mqtt2Mode.' + $(this).value()).show()
   })
 
+  $('#bt_mqtt2SendDiscovery').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "sendDicovery"
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $.fn.showAlert({message: '{{Envoi de la découverte réussi}}',level: 'success',emptyBefore: true})
+      }
+    })
+  })
+
   $('#bt_mqtt2RestartMosquitto').off('click').on('click', function() {
     $.ajax({
       type: "POST",
@@ -192,26 +214,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Redémarrage réussi}}',
-            level: 'success',
-            emptyBefore: true
-          })
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Redémarrage réussi}}',level: 'success', emptyBefore: true})
       }
     })
   })
@@ -225,26 +236,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Arrêt réussi}}',
-            level: 'success',
-            emptyBefore: true
-          })
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Arrêt réussi}}',level: 'success',emptyBefore: true})
       }
     })
   })
@@ -258,27 +258,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Installation réussie}}',
-            level: 'success',
-            emptyBefore: true
-          })
-
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Installation réussie}}',level: 'success',emptyBefore: true})
       }
     })
   })
@@ -294,26 +282,14 @@ if (!isConnect()) {
           },
           dataType: 'json',
           error: function(error) {
-            $.fn.showAlert({
-              message: error.message,
-              level: 'danger'
-            })
+            $.fn.showAlert({message: error.message,level: 'danger'})
           },
           success: function(data) {
             if (data.state != 'ok') {
-              $.fn.showAlert({
-                message: data.result,
-                level: 'danger'
-              })
+              $.fn.showAlert({message: data.result,level: 'danger'})
               return
-            } else {
-              $.fn.showAlert({
-                message: '{{Désinstallation réussie}}',
-                level: 'success',
-                emptyBefore: true
-              })
-
             }
+            $.fn.showAlert({message: '{{Désinstallation réussie}}',level: 'success',emptyBefore: true})
           }
         })
       }

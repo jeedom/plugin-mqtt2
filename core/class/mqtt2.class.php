@@ -955,6 +955,27 @@ class mqtt2 extends eqLogic {
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
 
+   public static function sendDiscovery(){
+      foreach (eqLogic::all() as $eqLogic) {
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('mqttTranmit', 0) == 0) {
+           continue;
+         }
+         $toSend = utils::o2a($eqLogic);
+         $toSend['object_name'] = '';
+         $object = $eqLogic->getObject();
+         if (is_object($object)) {
+            $toSend['object_name'] = $object->getName();
+         }
+         unset($toSend['html']);
+         unset($toSend['cache']);
+         $toSend['cmds'] = array();
+         foreach ($eqLogic->getCmd() as $cmd) {
+            $toSend['cmds'][$cmd->getId()] = utils::o2a($cmd);
+         }
+         self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
+      }
+   }
+
    public static function listCmdTemplate($_template = '') {
       $return = array();
       $path = __DIR__ . '/../config/devices';
