@@ -147,6 +147,14 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-4 control-label">{{Topic des Jeedom liée}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Topic des autres jeedom qu'il faut écouter (séparé par des ,)"></i></sup>
+        </label>
+        <div class="col-md-7">
+          <input class="configKey form-control" data-l1key="jeedom::link">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
         </label>

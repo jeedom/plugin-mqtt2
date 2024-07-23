@@ -568,6 +568,9 @@ class mqtt2 extends eqLogic {
             if (isset($message['announce']) || isset($message['discovery'])) {
                self::announce($topic, $message);
             }
+            if (in_array($topic,array(explode(',',config::byKey('jeedom::link', 'mqtt2')))) && isset($message['discovery'])) {
+               self::jeedom_discovery($topic,$message['discovery']);
+            }
          }
 
          $eqlogics = self::byLogicalId($topic, __CLASS__, true);
@@ -973,6 +976,102 @@ class mqtt2 extends eqLogic {
             $toSend['cmds'][$cmd->getId()] = utils::o2a($cmd);
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
+      }
+   }
+
+   public static function jeedom_discovery($_topic,$_discovery) {
+      if(!isset($_discovery['eqLogic']) || !is_array($_discovery['eqLogic']) || count($_discovery['eqLogic']) == 0){
+         return;
+      }
+      $eqLogics = self::byLogicalId(config::byKey('root_topic', __CLASS__).'/cmd');
+      foreach ($_discovery['eqLogic'] as $id => &$_eqLogic) {
+         log::add('mqtt2', 'debug', '[Discovery] Received eqLogic : '.json_encode($_eqLogic));
+         $eqLogic = null;
+         foreach ($eqLogics as $__eqLogic) {
+            if($__eqLogic->getConfiguration('link::eqLogic::id') != $id){
+               continue;
+            }
+            $eqLogic = $__eqLogic;
+         }
+         if(!is_object($found_eqLogic)){
+            log::add('mqtt2', 'debug', '[Discovery] EqLogic not exist create it');
+            $eqLogic = new self();
+            unset();
+            utils::a2o($eqLogic, $_eqLogic);
+            $eqLogic->setId('');
+				$eqLogic->setObject_id('');
+            if (isset($_eqLogic['object_name']) && $_eqLogic['object_name'] != '') {
+               $object = jeeObject::byName($_eqLogic['object_name']);
+               if (is_object($object)) {
+                  $eqLogic->setObject_id($object->getId());
+               }
+            }
+         }
+         $eqLogic->setEqType_name('mqtt2');
+         $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
+         try {
+				$eqLogic->save();
+			} catch (Exception $e) {
+				$eqLogic->setName($eqLogic->getName() . ' remote ' . rand(0, 9999));
+				$eqLogic->save();
+			}
+			log::add('mqtt2', 'debug', 'EqLogic save, create cmd');
+         foreach ($_eqLogic['cmds'] as &$_cmd) {
+				if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
+					unset($_cmd['configuration']['calculValueOffset']);
+				}
+            if($_cmd['type'] == 'action'){
+               $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
+            }else{
+               $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id']);
+            }
+				if (!is_object($cmd)) {
+					$cmd = new mqtt2Cmd();
+					utils::a2o($cmd, $_cmd);
+					$cmd->setId('');
+					$cmd->setValue('');
+				}
+				$cmd->setEqType('mqtt2');
+				$cmd->setEqLogic_id($eqLogic->getId());
+            if($_cmd['type'] == 'action'){
+               $cmd->setLogicalId('set/' . $_cmd['id']);
+            }else{
+               $cmd->setLogicalId('event/' . $_cmd['id']);
+            }
+            if($_cmd['type'] == 'action'){
+               switch ($_cmd['subType']) {
+                  case 'slider':
+                     $cmd->setConfiguration('message','json::{"slider":"#slider#"}')
+                     break;
+                  case 'message':
+                     $cmd->setConfiguration('message','json::{"title":"#title#","message":"#message#"}')
+                     break;
+                  case 'select':
+                     $cmd->setConfiguration('message','json::{"select":"#select#"}')
+                     break;
+               }
+            }
+				try {
+					$cmd->save();
+				} catch (Exception $e) {
+					$cmd->setName($cmd->getName() . ' remote ' . rand(0, 9999));
+					$cmd->save();
+				}
+				$map_id[$_cmd['id']] = $cmd->getId();
+			}
+
+			foreach ($_eqLogic['cmds'] as $_cmd) {
+				if (!isset($_cmd['value']) || !isset($map_id[$_cmd['value']]) || !isset($map_id[$_cmd['id']])) {
+					continue;
+				}
+				$cmd = cmd::byId($map_id[$_cmd['id']]);
+				if (!is_object($cmd)) {
+					continue;
+				}
+				$cmd->setValue($map_id[$_cmd['value']]);
+				$cmd->save();
+			}
+         
       }
    }
 
