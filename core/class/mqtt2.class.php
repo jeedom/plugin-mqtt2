@@ -1034,7 +1034,7 @@ class mqtt2 extends eqLogic {
             if($_cmd['type'] == 'action'){
                $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
             }else{
-               $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id']);
+               $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id'].'/value');
             }
 				if (!is_object($cmd)) {
 					$cmd = new mqtt2Cmd();
