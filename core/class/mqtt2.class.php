@@ -996,7 +996,6 @@ class mqtt2 extends eqLogic {
          if(!is_object($found_eqLogic)){
             log::add('mqtt2', 'debug', '[Discovery] EqLogic not exist create it');
             $eqLogic = new self();
-            unset();
             utils::a2o($eqLogic, $_eqLogic);
             $eqLogic->setId('');
 				$eqLogic->setObject_id('');
