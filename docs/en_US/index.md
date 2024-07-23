@@ -104,6 +104,28 @@ The plugin can auto-discover several types of modules. To do this, you just need
 >
 >For tasmota type modules it is absolutely necessary that the full topic configuration be `%topic%/%prefix%/`
 
+
+# Linked two different mosquitto 
+
+It is possible to link topics between several mosquitto, here is the configuration to add in mosquitto. The configuration only needs to be done on one of the brocker mosquitto : 
+
+````````
+connection #NOM_CONNEXION#
+address #REMOTE_ADDRESS#:#REMOTE_PORT#
+topic # both 0 #LOCAL_TOPIC#/ #REMOTE_TOPIC#/
+cleansession true
+notifications false
+remote_clientid #REMOTE_CLIENT_ID#
+remote_username #REMOTE_USERNAME#
+remote_password #REMOTE_PASSWORD#
+local_username #LOCAL_USERNAME#
+local_password #LOCAL_PASSWORD#
+start_type automatic
+try_private true
+bridge_insecure true
+bridge_tls_version tlsv1.3
+````````
+
 # FAQ
 
 >**Following an update of the system packages (apt) or an unattended upgrades, nothing works anymore**
