@@ -931,7 +931,7 @@ class mqtt2 extends eqLogic {
 
    public static function handleEvent($_option) {
       $cmd = cmd::byId($_option['event_id']);
-      if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $cmd->getEqLogic()->getConfiguration('mqttTranmit', 0) == 0) {
+      if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $cmd->getEqLogic()->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
          return;
       }
       if (trim(config::byKey('publish_template', 'mqtt2', '')) != '') {
@@ -960,9 +960,13 @@ class mqtt2 extends eqLogic {
 
    public static function sendDiscovery(){
       foreach (eqLogic::all() as $eqLogic) {
-         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('mqttTranmit', 0) == 0) {
+         if($eqLogic->getEqType_name() == 'mqtt2'){
+            continue;
+         }
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
            continue;
          }
+         log::add('mqtt2', 'debug', '[Discovery] Send : '.$eqLogic->getName().' - '.$eqLogic->getId());
          $toSend = utils::o2a($eqLogic);
          $toSend['object_name'] = '';
          $object = $eqLogic->getObject();
