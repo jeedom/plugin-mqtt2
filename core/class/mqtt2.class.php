@@ -568,9 +568,6 @@ class mqtt2 extends eqLogic {
             if (isset($message['announce']) || isset($message['discovery'])) {
                self::announce($topic, $message);
             }
-            if (in_array($topic,array(explode(',',config::byKey('jeedom::link', 'mqtt2')))) && isset($message['discovery'])) {
-               self::jeedom_discovery($topic,$message['discovery']);
-            }
          }
 
          $eqlogics = self::byLogicalId($topic, __CLASS__, true);
@@ -627,6 +624,10 @@ class mqtt2 extends eqLogic {
 
    public static function announce($_topic, $_message) {
       log::add(__CLASS__, 'debug', 'Découverte sur : ' . $_topic);
+      if (in_array($_topic,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+        self::jeedom_discovery($_topic,$_message['discovery']);
+        return;
+      }
       switch ($_topic) {
          case 'shellies':
             if (!isset($_message['announce'])) {
@@ -959,6 +960,9 @@ class mqtt2 extends eqLogic {
    }
 
    public static function sendDiscovery(){
+      if (in_array(config::byKey('root_topic', __CLASS__) ,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+         throw new Exception(__('Le "Topic racine Jeedom" ne peut etre dans "Topic des Jeedom liée"',__FILE__));
+      }
       foreach (eqLogic::all() as $eqLogic) {
          if($eqLogic->getEqType_name() == 'mqtt2'){
             continue;
@@ -987,22 +991,24 @@ class mqtt2 extends eqLogic {
       if(!isset($_discovery['eqLogic']) || !is_array($_discovery['eqLogic']) || count($_discovery['eqLogic']) == 0){
          return;
       }
-      $eqLogics = self::byLogicalId(config::byKey('root_topic', __CLASS__).'/cmd');
+      $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
       foreach ($_discovery['eqLogic'] as $id => &$_eqLogic) {
          log::add('mqtt2', 'debug', '[Discovery] Received eqLogic : '.json_encode($_eqLogic));
          $eqLogic = null;
-         foreach ($eqLogics as $__eqLogic) {
-            if($__eqLogic->getConfiguration('link::eqLogic::id') != $id){
-               continue;
-            }
-            $eqLogic = $__eqLogic;
+         if(is_array($eqLogics)){
+           foreach ($eqLogics as $__eqLogic) {
+              if($__eqLogic->getConfiguration('link::eqLogic::id') != $id){
+                 continue;
+              }
+              $eqLogic = $__eqLogic;
+           }
          }
-         if(!is_object($found_eqLogic)){
+         if(!is_object($eqLogic)){
             log::add('mqtt2', 'debug', '[Discovery] EqLogic not exist create it');
             $eqLogic = new self();
             utils::a2o($eqLogic, $_eqLogic);
             $eqLogic->setId('');
-				$eqLogic->setObject_id('');
+			$eqLogic->setObject_id('');
             if (isset($_eqLogic['object_name']) && $_eqLogic['object_name'] != '') {
                $object = jeeObject::byName($_eqLogic['object_name']);
                if (is_object($object)) {
@@ -1012,6 +1018,7 @@ class mqtt2 extends eqLogic {
          }
          $eqLogic->setEqType_name('mqtt2');
          $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
+         $eqLogic->setLogicalId($_topic.'/cmd');
          try {
 				$eqLogic->save();
 			} catch (Exception $e) {

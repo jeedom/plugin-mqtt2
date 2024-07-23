@@ -148,7 +148,7 @@ if (!isConnect()) {
       </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Topic des Jeedoms liés}}
-          <sup><i class="fas fa-question-circle tooltips" title="{{Topic des autres jeedom qu'il faut écouter (séparé par des ,)"></i></sup>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Topic des autres jeedom qu'il faut écouter (séparé par des ,)}}"></i></sup>
         </label>
         <div class="col-md-7">
           <input class="configKey form-control" data-l1key="jeedom::link">
