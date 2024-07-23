@@ -1008,13 +1008,14 @@ class mqtt2 extends eqLogic {
             $eqLogic = new self();
             utils::a2o($eqLogic, $_eqLogic);
             $eqLogic->setId('');
-			$eqLogic->setObject_id('');
+			   $eqLogic->setObject_id('');
             if (isset($_eqLogic['object_name']) && $_eqLogic['object_name'] != '') {
                $object = jeeObject::byName($_eqLogic['object_name']);
                if (is_object($object)) {
                   $eqLogic->setObject_id($object->getId());
                }
             }
+            $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
          }
          $eqLogic->setEqType_name('mqtt2');
          $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
