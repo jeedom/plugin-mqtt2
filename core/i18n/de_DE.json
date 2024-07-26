@@ -83,6 +83,7 @@
         "Configuration": "Aufbau",
         "Désactiver auto-découverte": "Deaktivieren Sie die automatische Erkennung",
         "Activer auto-découverte": "Aktivieren Sie die automatische Erkennung",
+        "Envoyer la découverte": "Entdeckung einreichen",
         "Mes MQTT": "Mein MQTT",
         "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "Keine MQTT-Ausrüstung gefunden. Klicken Sie auf „Hinzufügen“, um zu beginnen",
         "Rechercher": "Forschen",
@@ -120,6 +121,7 @@
         "Actions": "Anteile"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Envoi de la découverte réussi": "Discovery-Übermittlung erfolgreich",
         "Template commande MQTT": "Vorlagen-MQTT-Befehl",
         "Découverte commande MQTT": "Erkennung von MQTT-Befehlen",
         "Nom de la commande": "Bestellname",
@@ -186,8 +188,7 @@
         "Le \"Topic racine Jeedom\" ne peut etre dans \"Topic des Jeedom liée": "Das „Jeedom-Stammthema“ darf nicht im „Verknüpften Jeedom-Thema“ enthalten sein",
         "La configuration d\\'un template doit être un tableau": "Die Vorlagenkonfiguration muss ein Array sein",
         "Aucun nom de template trouvé": "Kein Vorlagenname gefunden",
-        "Template introuvable": "Vorlage nicht gefunden",
-        "Aucune commande trouvée dans le template": "In der Vorlage wurden keine Befehle gefunden"
+        "Template introuvable": "Vorlage nicht gefunden"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin als Basis für Plugins mit MQTT"

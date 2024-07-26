@@ -83,6 +83,7 @@
         "Configuration": "Configuration",
         "Désactiver auto-découverte": "Disable auto-discovery",
         "Activer auto-découverte": "Enable auto-discovery",
+        "Envoyer la découverte": "Submit discovery",
         "Mes MQTT": "My MQTT",
         "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "No MQTT equipment found, click \"Add\" to get started",
         "Rechercher": "Search",
@@ -120,6 +121,7 @@
         "Actions": "Actions"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Envoi de la découverte réussi": "Discovery submission successful",
         "Template commande MQTT": "Template MQTT command",
         "Découverte commande MQTT": "MQTT command discovery",
         "Nom de la commande": "Command name",
@@ -186,8 +188,7 @@
         "Le \"Topic racine Jeedom\" ne peut etre dans \"Topic des Jeedom liée": "The \"Jeedom root topic\" cannot be in \"Linked Jeedom topic",
         "La configuration d\\'un template doit être un tableau": "Template configuration must be an array",
         "Aucun nom de template trouvé": "No template name found",
-        "Template introuvable": "Template not found",
-        "Aucune commande trouvée dans le template": "No commands found in the template"
+        "Template introuvable": "Template not found"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plugin serving as a basis for plugins using MQTT"

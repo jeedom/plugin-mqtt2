@@ -46,7 +46,7 @@
         "Paramètres Mosquitto": "Configurações do Mosquitto",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Salve e reinicie a instalação do mosquitto para levar em consideração as modificações deste campo de configuração",
         "Port(s)": "Porta (s)",
-        "Envoi de la découverte réussi": "Envio de descoberta bem-sucedido",
+        "Envoi de la découverte réussi": "Envio da descoberta bem-sucedido",
         "Redémarrage réussi": "Reinicialização bem-sucedida",
         "Arrêt réussi": "Desligamento bem-sucedido",
         "Installation réussie": "Instalação bem sucedida",
@@ -83,6 +83,7 @@
         "Configuration": "Configuração",
         "Désactiver auto-découverte": "Desativar descoberta automática",
         "Activer auto-découverte": "Ativar descoberta automática",
+        "Envoyer la découverte": "Enviar descoberta",
         "Mes MQTT": "Meu MQTT",
         "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "Nenhum equipamento MQTT encontrado, clique em \"Adicionar\" para começar",
         "Rechercher": "Pesquisar",
@@ -120,6 +121,7 @@
         "Actions": "Ações"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Envoi de la découverte réussi": "Envio da descoberta bem-sucedido",
         "Template commande MQTT": "Comando MQTT de modelo",
         "Découverte commande MQTT": "Descoberta de comando MQTT",
         "Nom de la commande": "Nome do pedido",
@@ -186,8 +188,7 @@
         "Le \"Topic racine Jeedom\" ne peut etre dans \"Topic des Jeedom liée": "O \"tópico raiz Jeedom\" não pode estar em \"tópico Linked Jeedom",
         "La configuration d\\'un template doit être un tableau": "A configuração do modelo deve ser uma matriz",
         "Aucun nom de template trouvé": "Nenhum nome de modelo encontrado",
-        "Template introuvable": "Modelo não encontrado",
-        "Aucune commande trouvée dans le template": "Nenhum comando encontrado no modelo"
+        "Template introuvable": "Modelo não encontrado"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Plug-in servindo como base para plug-ins usando MQTT"

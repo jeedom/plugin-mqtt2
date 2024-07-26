@@ -83,6 +83,7 @@
         "Configuration": "Configuración",
         "Désactiver auto-découverte": "Deshabilitar el descubrimiento automático",
         "Activer auto-découverte": "Habilitar el descubrimiento automático",
+        "Envoyer la découverte": "Enviar descubrimiento",
         "Mes MQTT": "Mi MQTT",
         "Aucun équipement MQTT trouvé, cliquez sur \"Ajouter\" pour commencer": "No se encontró ningún equipo MQTT, haga clic en \"Agregar\" para comenzar",
         "Rechercher": "Buscar",
@@ -120,6 +121,7 @@
         "Actions": "Comparte"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
+        "Envoi de la découverte réussi": "Envío de descubrimiento exitoso",
         "Template commande MQTT": "Comando MQTT de plantilla",
         "Découverte commande MQTT": "Descubrimiento de comandos MQTT",
         "Nom de la commande": "Nombre de la orden",
@@ -186,8 +188,7 @@
         "Le \"Topic racine Jeedom\" ne peut etre dans \"Topic des Jeedom liée": "El \"tema raíz de Jeedom\" no puede estar en el \"tema vinculado de Jeedom\"",
         "La configuration d\\'un template doit être un tableau": "La configuración de la plantilla debe ser una matriz",
         "Aucun nom de template trouvé": "No se encontró el nombre de la plantilla",
-        "Template introuvable": "Plantilla no encontrada",
-        "Aucune commande trouvée dans le template": "No se encontraron comandos en la plantilla"
+        "Template introuvable": "Plantilla no encontrada"
     },
     "info.json": {
         "Plugin servant de base pour les plugins utilisant MQTT": "Complemento que sirve como base para complementos que utilizan MQTT"
