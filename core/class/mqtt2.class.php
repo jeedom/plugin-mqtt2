@@ -1017,8 +1017,12 @@ class mqtt2 extends eqLogic {
             }
             $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
          }
+         $eqLogic->setConfiguration('real_qType_namee',$eqLogic->getEqType_name());
          $eqLogic->setEqType_name('mqtt2');
          $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
+         $eqLogic->setConfiguration('manufacturer','jeedom');
+         $eqLogic->setConfiguration('device','mqtt');
+         
          $eqLogic->setLogicalId($_topic.'/cmd');
          try {
 				$eqLogic->save();
@@ -1115,7 +1119,7 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Template introuvable', __FILE__));
       }
       if (!isset($template['commands']) || count($template['commands']) < 1) {
-         throw new Exception(__('Aucune commande trouvée dans le template', __FILE__));
+         return;
       }
       $this->setConfiguration('device', $_config['template']);
       $config = array();
