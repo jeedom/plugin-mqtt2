@@ -123,7 +123,7 @@ if (!isConnect()) {
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
             <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre}}"></i></sup>
           </label>
-          <a class="btn btn-xs btn-success" id="bt_mqtt2SendDiscovery"><i class="fas fa-play"></i> {{Envoyer la découverte}}</a>
+          <a class="btn btn-xs btn-success" id="bt_mqtt2SendDiscovery"><i class="far fa-paper-plane"></i> {{Envoyer la découverte}}</a>
         </div>
       </div>
       <div class="form-group">

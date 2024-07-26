@@ -58,6 +58,11 @@ foreach ($manufacturers as &$array) {
 					<span>{{Activer auto-découverte}}</span>
 				</div>
 			<?php } ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_mqtt2SendDiscovery">
+					<i class="far fa-paper-plane"></i>
+					<br>
+					<span>{{Envoyer la découverte}}</span>
+				</div>
 		</div>
 		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
 		<?php
