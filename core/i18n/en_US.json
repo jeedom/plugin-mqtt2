@@ -46,6 +46,8 @@
         "Paramètres Mosquitto": "Mosquitto settings",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Save and restart the installation of mosquitto to take into account the modifications of this configuration field",
         "Port(s)": "Port(s)",
+        "Confirmez-vous suppression de l\\'abonnement : ": "Do you confirm deletion of the subscription:",
+        "Suppression réussie": "Deletion successful",
         "Envoi de la découverte réussi": "Discovery submission successful",
         "Redémarrage réussi": "Successful restart",
         "Arrêt réussi": "Successful shutdown",
