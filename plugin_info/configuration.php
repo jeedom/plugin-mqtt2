@@ -160,7 +160,7 @@ if (!isConnect()) {
         </label>
         <div class="subscribed col-md-7">
           <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
-            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>)</span>
+            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>) <i class="fas fa-times bt_removePluginTopic" data-topic="<?= $subscribed ?>"></i></span>
           <?php } ?>
         </div>
       </div>
@@ -190,6 +190,32 @@ if (!isConnect()) {
   $('.configKey[data-l1key=mode]').off('change').on('change', function() {
     $('.mqtt2Mode').hide()
     $('.mqtt2Mode.' + $(this).value()).show()
+  })
+
+  $('#bt_rremovePluginTopic').off('click').on('click', function() {
+    let topic = $(this).attr('data-topic')
+    bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
+      $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "removePluginTopic",
+        topic: topic
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
+        $(this).parent().remove();
+      }
+    })
+    })
   })
 
   $('#bt_mqtt2SendDiscovery').off('click').on('click', function() {

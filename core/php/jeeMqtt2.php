@@ -32,7 +32,7 @@ if(is_array($results)){
         if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
             $plugin::handleMqttMessage(array($key => $value));
         } else {
-            mqtt2::removePluginTopic($key);
+            mqtt2::removePluginTopicByPlugin($plugin);
         }
         if ($key == config::byKey('root_topic', 'mqtt2')) {
             mqtt2::handleMqttMessage(array($key => $value));

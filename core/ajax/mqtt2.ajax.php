@@ -41,6 +41,11 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'removePluginTopic') {
+    mqtt2::removePluginTopic(init('topic'));
+    ajax::success();
+  }
+
   if (init('action') == 'stopMosquitto') {
     mqtt2::stopMosquitto();
     ajax::success();
