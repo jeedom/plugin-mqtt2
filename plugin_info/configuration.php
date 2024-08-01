@@ -160,7 +160,7 @@ if (!isConnect()) {
         </label>
         <div class="subscribed col-md-7">
           <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
-            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>) <i class="fas fa-times bt_removePluginTopic" data-topic="<?= $subscribed ?>"></i></span>
+            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>) <i class="fas fa-times cursor bt_removePluginTopic" data-topic="<?= $subscribed ?>"></i></span>
           <?php } ?>
         </div>
       </div>
@@ -192,8 +192,9 @@ if (!isConnect()) {
     $('.mqtt2Mode.' + $(this).value()).show()
   })
 
-  $('#bt_rremovePluginTopic').off('click').on('click', function() {
+  $('.bt_removePluginTopic').off('click').on('click', function() {
     let topic = $(this).attr('data-topic')
+    let span = $(this).parent();
     bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
       $.ajax({
       type: "POST",
@@ -212,7 +213,7 @@ if (!isConnect()) {
           return
         }
         $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
-        $(this).parent().remove();
+        span.remove();
       }
     })
     })
