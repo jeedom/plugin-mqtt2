@@ -68,7 +68,7 @@ global $JEEDOM_INTERNAL_CONFIG;
 </table>
 
 <script>
-    initTableSorter()
+    jeedomUtils.initTableSorter()
     $('#bt_saveDiscover').off('click').on('click', function() {
         let discovers = $('#table_mqttDiscover tbody .discover').getValues('.discoverAttr')
         $.ajax({
