@@ -1205,6 +1205,12 @@ class mqtt2 extends eqLogic {
    /*     * *********************Méthodes d'instance************************* */
 
    public function getImage() {
+      if(method_exists($this,'getCustomImage')){
+         $customImage = $this->getCustomImage();
+         if($customImage !== null){
+            return $customImage;
+         }
+      }
       $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
       if (!file_exists(__DIR__ . '/../../../../' . $file)) {
          return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';
