@@ -22,9 +22,29 @@ function mqtt2_install() {
   if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
     config::save('mode', "none", 'mqtt2');
   }
+  $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
+  if (!is_object($listener)) {
+    $listener = new listener();
+  }
+  $listener->setClass('mqtt2');
+  $listener->setFunction('handleEvent');
+  $listener->emptyEvent();
+  $listener->addEvent('*');
+  $listener->setOption(array('background' => false));
+  $listener->save();
 }
 
 function mqtt2_update() {
+  $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
+  if (!is_object($listener)) {
+    $listener = new listener();
+  }
+  $listener->setClass('mqtt2');
+  $listener->setFunction('handleEvent');
+  $listener->emptyEvent();
+  $listener->addEvent('*');
+  $listener->setOption(array('background' => false));
+  $listener->save();
   shell_exec(system::getCmdSudo().' rm -rf '.__DIR__.'/../resources/mqtt2d/node_modules');
   if (config::byKey('mode', 'mqtt2', '') == 'remote') {
     if (strpos(config::byKey('remote::ip', 'mqtt2', ''), ':') !== false) {

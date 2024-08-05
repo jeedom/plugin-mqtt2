@@ -58,6 +58,11 @@ foreach ($manufacturers as &$array) {
 					<span>{{Activer auto-découverte}}</span>
 				</div>
 			<?php } ?>
+				<div class="cursor eqLogicAction logoSecondary" id="bt_mqtt2SendDiscovery">
+					<i class="far fa-paper-plane"></i>
+					<br>
+					<span>{{Envoyer la découverte}}</span>
+				</div>
 		</div>
 		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
 		<?php
@@ -188,7 +193,7 @@ foreach ($manufacturers as &$array) {
 										<option value="">{{Aucun}}</option>
 										<?php
 										foreach ($manufacturers as $manufacturer => $devices) {
-											echo '<option value="' . $manufacturer . '">' . $manufacturer . '</option>';
+											echo '<option value="' . $manufacturer . '">' . ucfirst($manufacturer) . '</option>';
 										}
 										?>
 									</select>
@@ -207,7 +212,6 @@ foreach ($manufacturers as &$array) {
 											if (!is_array($devices) || count($devices) == 0) {
 												continue;
 											}
-
 											foreach ($devices as $id => $info) {
 												if (!isset($info['name'])) {
 													continue;

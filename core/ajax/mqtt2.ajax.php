@@ -26,6 +26,11 @@ try {
 
   ajax::init();
 
+  if (init('action') == 'sendDiscovery') {
+    mqtt2::sendDiscovery();
+    ajax::success();
+  }
+
   if (init('action') == 'installMosquitto') {
     mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
     ajax::success();
@@ -33,6 +38,11 @@ try {
 
   if (init('action') == 'restartMosquitto') {
     mqtt2::restartMosquitto();
+    ajax::success();
+  }
+
+  if (init('action') == 'removePluginTopic') {
+    mqtt2::removePluginTopic(init('topic'));
     ajax::success();
   }
 

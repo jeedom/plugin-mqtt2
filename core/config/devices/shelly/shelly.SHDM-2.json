@@ -104,6 +104,6 @@
                 "dashboard":"core::light",
                 "mobile":"core::light"
             }
-        },
+        }
     ]
 }

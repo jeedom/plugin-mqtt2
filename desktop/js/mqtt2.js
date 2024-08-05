@@ -50,6 +50,30 @@ $('#bt_enableAutoDiscovery').off('click').on('click',function(){
   });
 })
 
+
+$('#bt_mqtt2SendDiscovery').off('click').on('click',function(){
+  $.ajax({
+    type: "POST",
+    url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+    data: {
+      action: "sendDiscovery"
+    },
+    dataType: 'json',
+    error: function(error) {
+      $.fn.showAlert({message: error.message,level: 'danger'})
+    },
+    success: function(data) {
+      if (data.state != 'ok') {
+        $.fn.showAlert({message: data.result,level: 'danger'})
+        return
+      }
+      $.fn.showAlert({message: '{{Envoi de la découverte réussi}}',level: 'success',emptyBefore: true})
+    }
+  })
+})
+
+
+
 $('.cmdAction[data-action=importFromTemplate]').on('click',function(){
   $('#md_modal').dialog({title: "{{Template commande MQTT}}"});
   $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=cmd.template&eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');

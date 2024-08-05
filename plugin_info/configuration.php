@@ -44,10 +44,10 @@ if (!isConnect()) {
           <sup><i class="fas fa-question-circle tooltips" title="{{Installer, désinstaller ou télécharger le certificat client du broker Mosquitto}}"></i></sup>
         </label>
         <div class="col-md-7">
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer Mosquitto}}</a>
-          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter Mosquitto}}</a>
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer Mosquitto}}</a>
-          <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller Mosquitto}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer}}</a>
+          <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer}}</a>
+          <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller}}</a>
           <a class="btn btn-sm btn-primary pull-right" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
       </div>
@@ -121,8 +121,9 @@ if (!isConnect()) {
         <div class="col-md-7 form-inline">
           <input class="configKey form-control" data-l1key="root_topic">
           <label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les évènements}}
-            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT}}"></i></sup>
+            <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre}}"></i></sup>
           </label>
+          <a class="btn btn-xs btn-success" id="bt_mqtt2SendDiscovery"><i class="far fa-paper-plane"></i> {{Envoyer la découverte}}</a>
         </div>
       </div>
       <div class="form-group">
@@ -146,12 +147,20 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-4 control-label">{{Topic des Jeedoms liés}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Topic des autres jeedom qu'il faut écouter (séparé par des ,)}}"></i></sup>
+        </label>
+        <div class="col-md-7">
+          <input class="configKey form-control" data-l1key="jeedom::link">
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
         </label>
         <div class="subscribed col-md-7">
           <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
-            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>)</span>
+            <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>) <i class="fas fa-times cursor bt_removePluginTopic" data-topic="<?= $subscribed ?>"></i></span>
           <?php } ?>
         </div>
       </div>
@@ -183,6 +192,54 @@ if (!isConnect()) {
     $('.mqtt2Mode.' + $(this).value()).show()
   })
 
+  $('.bt_removePluginTopic').off('click').on('click', function() {
+    let topic = $(this).attr('data-topic')
+    let span = $(this).parent();
+    bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
+      $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "removePluginTopic",
+        topic: topic
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
+        span.remove();
+      }
+    })
+    })
+  })
+
+  $('#bt_mqtt2SendDiscovery').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "sendDiscovery"
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $.fn.showAlert({message: '{{Envoi de la découverte réussi}}',level: 'success',emptyBefore: true})
+      }
+    })
+  })
+
   $('#bt_mqtt2RestartMosquitto').off('click').on('click', function() {
     $.ajax({
       type: "POST",
@@ -192,26 +249,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Redémarrage réussi}}',
-            level: 'success',
-            emptyBefore: true
-          })
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Redémarrage réussi}}',level: 'success', emptyBefore: true})
       }
     })
   })
@@ -225,26 +271,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Arrêt réussi}}',
-            level: 'success',
-            emptyBefore: true
-          })
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Arrêt réussi}}',level: 'success',emptyBefore: true})
       }
     })
   })
@@ -258,27 +293,15 @@ if (!isConnect()) {
       },
       dataType: 'json',
       error: function(error) {
-        $.fn.showAlert({
-          message: error.message,
-          level: 'danger'
-        })
+        $.fn.showAlert({message: error.message,level: 'danger'})
       },
       success: function(data) {
         if (data.state != 'ok') {
-          $.fn.showAlert({
-            message: data.result,
-            level: 'danger'
-          })
+          $.fn.showAlert({message: data.result,level: 'danger'})
           return
-        } else {
-          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-          $.fn.showAlert({
-            message: '{{Installation réussie}}',
-            level: 'success',
-            emptyBefore: true
-          })
-
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Installation réussie}}',level: 'success',emptyBefore: true})
       }
     })
   })
@@ -294,26 +317,14 @@ if (!isConnect()) {
           },
           dataType: 'json',
           error: function(error) {
-            $.fn.showAlert({
-              message: error.message,
-              level: 'danger'
-            })
+            $.fn.showAlert({message: error.message,level: 'danger'})
           },
           success: function(data) {
             if (data.state != 'ok') {
-              $.fn.showAlert({
-                message: data.result,
-                level: 'danger'
-              })
+              $.fn.showAlert({message: data.result,level: 'danger'})
               return
-            } else {
-              $.fn.showAlert({
-                message: '{{Désinstallation réussie}}',
-                level: 'success',
-                emptyBefore: true
-              })
-
             }
+            $.fn.showAlert({message: '{{Désinstallation réussie}}',level: 'success',emptyBefore: true})
           }
         })
       }

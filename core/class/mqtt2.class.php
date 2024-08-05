@@ -290,9 +290,9 @@ class mqtt2 extends eqLogic {
    public static function uninstallMosquitto() {
       if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
          event::add('jeedom::alert', array(
-         'level' => 'warning',
-         'page' => 'plugin',
-         'message' => __('Désinstallation du broker Mosquitto en cours', __FILE__),
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Désinstallation du broker Mosquitto en cours', __FILE__),
          ));
          self::stopMosquitto();
          shell_exec(system::getCmdSudo() . ' apt remove -y mosquitto');
@@ -379,7 +379,7 @@ class mqtt2 extends eqLogic {
             }
             break;
          default:
-                $return['launchable'] = 'ok';
+            $return['launchable'] = 'ok';
             break;
       }
 
@@ -397,12 +397,12 @@ class mqtt2 extends eqLogic {
    }
 
    public static function deamon_start() {
-       log::remove(__CLASS__ . '_update');
-       if (config::byKey('mode', __CLASS__, 'local') == 'local') {
-          if(shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0){
-             log::add(__CLASS__, 'warning', __('Service mosquitto non lancé, je lance une installation', __FILE__));
-             self::installMosquitto(config::byKey('mode', __CLASS__, 'local'));
-          }
+      log::remove(__CLASS__ . '_update');
+      if (config::byKey('mode', __CLASS__, 'local') == 'local') {
+         if (shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0) {
+            log::add(__CLASS__, 'warning', __('Service mosquitto non lancé, je lance une installation', __FILE__));
+            self::installMosquitto(config::byKey('mode', __CLASS__, 'local'));
+         }
       }
       self::deamon_stop();
       $deamon_info = self::deamon_info();
@@ -411,7 +411,7 @@ class mqtt2 extends eqLogic {
       }
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
-         if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0 ) {
+         if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
             self::generateClientCert();
             shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
             shell_exec(system::getCmdSudo() . ' rm -rf ' . jeedom::getTmpFolder(__CLASS__) . '/ssl');
@@ -432,8 +432,8 @@ class mqtt2 extends eqLogic {
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
       }
-      $cmd .= ' --username "' . $authentifications[0].'"';
-      $cmd .= ' --password "' . $authentifications[1].'"';
+      $cmd .= ' --username "' . $authentifications[0] . '"';
+      $cmd .= ' --password "' . $authentifications[1] . '"';
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
@@ -487,10 +487,10 @@ class mqtt2 extends eqLogic {
       config::save('mapping', $mapping, __CLASS__);
    }
 
-    public static function removePluginTopicByPlugin($_plugin) {
+   public static function removePluginTopicByPlugin($_plugin) {
       $mapping = config::byKey('mapping', __CLASS__, array());
-      foreach($mapping as $topic => $plugin){
-         if($plugin == $_plugin){
+      foreach ($mapping as $topic => $plugin) {
+         if ($plugin == $_plugin) {
             unset($mapping[$topic]);
          }
       }
@@ -511,9 +511,11 @@ class mqtt2 extends eqLogic {
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $infos['ip'] = '127.0.0.1';
          $infos['port'] = '1883';
+         $infos['protocol'] = 'mqtt';
       } else {
          $infos['ip'] = config::byKey('remote::ip', __CLASS__);
          $infos['port'] = config::byKey('remote::port', __CLASS__);
+         $infos['protocol'] = config::byKey('remote::protocol', __CLASS__);
       }
       $infos['user'] = $authentifications[0];
       $infos['password'] = $authentifications[1];
@@ -528,7 +530,7 @@ class mqtt2 extends eqLogic {
                if (isset($message['cmd']['get'])) {
                   foreach ($message['cmd']['get'] as $cmd_id => $options) {
                      $cmd = cmd::byId($cmd_id);
-                     if (!is_object($cmd) && $cmd->getType() == 'info') {
+                     if (!is_object($cmd) || $cmd->getType() != 'info') {
                         continue;
                      }
                      self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/value/' . $cmd_id, (string) $cmd->execCmd());
@@ -622,6 +624,10 @@ class mqtt2 extends eqLogic {
 
    public static function announce($_topic, $_message) {
       log::add(__CLASS__, 'debug', 'Découverte sur : ' . $_topic);
+      if (in_array($_topic,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+        self::jeedom_discovery($_topic,$_message['discovery']);
+        return;
+      }
       switch ($_topic) {
          case 'shellies':
             if (!isset($_message['announce'])) {
@@ -887,7 +893,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function publish($_topic, $_message = '', $_options = array()) {
-      if(!isset($_options['qos'])){
+      if (!isset($_options['qos'])) {
          $_options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
       }
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
@@ -898,7 +904,12 @@ class mqtt2 extends eqLogic {
          $_message = json_encode($_message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
       }
       $request_http->setPost(json_encode(array('topic' => $_topic, 'message' => $_message, 'options' => $_options)));
-      $result = json_decode($request_http->exec(30), true);
+      try{
+         $result = json_decode($request_http->exec(60,3), true);
+      }catch(Exception $e) {
+         sleep(10);
+         $result = json_decode($request_http->exec(60,3), true);
+      }
       if ($result['state'] != 'ok') {
          throw new Exception(json_encode($result));
       }
@@ -921,6 +932,9 @@ class mqtt2 extends eqLogic {
 
    public static function handleEvent($_option) {
       $cmd = cmd::byId($_option['event_id']);
+      if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $cmd->getEqLogic()->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+         return;
+      }
       if (trim(config::byKey('publish_template', 'mqtt2', '')) != '') {
          $replace = array('#value#' => $_option['value']);
          if (is_object($cmd)) {
@@ -931,7 +945,7 @@ class mqtt2 extends eqLogic {
             $replace['#type#'] = $cmd->getType();
             $replace['#subtype#'] = $cmd->getSubType();
          }
-         $message = str_replace(array_keys($replace),$replace,config::byKey('publish_template', 'mqtt2', ''));
+         $message = str_replace(array_keys($replace), $replace, config::byKey('publish_template', 'mqtt2', ''));
       } else {
          $message = array('value' => $_option['value']);
          if (is_object($cmd)) {
@@ -945,23 +959,134 @@ class mqtt2 extends eqLogic {
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
 
-   public static function postConfig_sendEvent($_value) {
-      if ($_value == 0) {
-         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
-         if (is_object($listener)) {
-            $listener->remove();
+   public static function sendDiscovery(){
+      if (in_array(config::byKey('root_topic', __CLASS__) ,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+         throw new Exception(__('Le "Topic racine Jeedom" ne peut etre dans "Topic des Jeedom liée"',__FILE__));
+      }
+      foreach (eqLogic::all() as $eqLogic) {
+         if($eqLogic->getEqType_name() == 'mqtt2'){
+            continue;
          }
-      } else {
-         $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
-         if (!is_object($listener)) {
-            $listener = new listener();
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+           continue;
          }
-         $listener->setClass(__CLASS__);
-         $listener->setFunction('handleEvent');
-         $listener->emptyEvent();
-         $listener->addEvent('*');
-         $listener->setOption(array('background' => false));
-         $listener->save();
+         log::add('mqtt2', 'debug', '[Discovery] Send : '.$eqLogic->getName().' - '.$eqLogic->getId());
+         $toSend = utils::o2a($eqLogic);
+         $toSend['object_name'] = '';
+         $object = $eqLogic->getObject();
+         if (is_object($object)) {
+            $toSend['object_name'] = $object->getName();
+         }
+         unset($toSend['html']);
+         unset($toSend['cache']);
+         $toSend['cmds'] = array();
+         foreach ($eqLogic->getCmd() as $cmd) {
+            $toSend['cmds'][$cmd->getId()] = utils::o2a($cmd);
+         }
+         self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
+      }
+   }
+
+   public static function jeedom_discovery($_topic,$_discovery) {
+      if(!isset($_discovery['eqLogic']) || !is_array($_discovery['eqLogic']) || count($_discovery['eqLogic']) == 0){
+         return;
+      }
+      $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+      foreach ($_discovery['eqLogic'] as $id => &$_eqLogic) {
+         log::add('mqtt2', 'debug', '[Discovery] Received eqLogic : '.json_encode($_eqLogic));
+         $eqLogic = null;
+         if(is_array($eqLogics)){
+           foreach ($eqLogics as $__eqLogic) {
+              if($__eqLogic->getConfiguration('link::eqLogic::id') != $id){
+                 continue;
+              }
+              $eqLogic = $__eqLogic;
+           }
+         }
+         if(!is_object($eqLogic)){
+            log::add('mqtt2', 'debug', '[Discovery] EqLogic not exist create it');
+            $eqLogic = new self();
+            utils::a2o($eqLogic, $_eqLogic);
+            $eqLogic->setId('');
+			   $eqLogic->setObject_id('');
+            if (isset($_eqLogic['object_name']) && $_eqLogic['object_name'] != '') {
+               $object = jeeObject::byName($_eqLogic['object_name']);
+               if (is_object($object)) {
+                  $eqLogic->setObject_id($object->getId());
+               }
+            }
+            $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
+         }
+         $eqLogic->setConfiguration('real_qType_namee',$eqLogic->getEqType_name());
+         $eqLogic->setEqType_name('mqtt2');
+         $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
+         $eqLogic->setConfiguration('manufacturer','jeedom');
+         $eqLogic->setConfiguration('device','mqtt');
+         
+         $eqLogic->setLogicalId($_topic.'/cmd');
+         try {
+				$eqLogic->save();
+			} catch (Exception $e) {
+				$eqLogic->setName($eqLogic->getName() . ' remote ' . rand(0, 9999));
+				$eqLogic->save();
+			}
+			log::add('mqtt2', 'debug', 'EqLogic save, create cmd');
+         foreach ($_eqLogic['cmds'] as &$_cmd) {
+				if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
+					unset($_cmd['configuration']['calculValueOffset']);
+				}
+            if($_cmd['type'] == 'action'){
+               $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
+            }else{
+               $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id'].'/value');
+            }
+				if (!is_object($cmd)) {
+					$cmd = new mqtt2Cmd();
+					utils::a2o($cmd, $_cmd);
+					$cmd->setId('');
+					$cmd->setValue('');
+				}
+				$cmd->setEqType('mqtt2');
+				$cmd->setEqLogic_id($eqLogic->getId());
+            if($_cmd['type'] == 'action'){
+               $cmd->setLogicalId('set/' . $_cmd['id']);
+            }else{
+               $cmd->setLogicalId('event/' . $_cmd['id'].'/value');
+            }
+            if($_cmd['type'] == 'action'){
+               switch ($_cmd['subType']) {
+                  case 'slider':
+                     $cmd->setConfiguration('message','json::{"slider":"#slider#"}');
+                     break;
+                  case 'message':
+                     $cmd->setConfiguration('message','json::{"title":"#title#","message":"#message#"}');
+                     break;
+                  case 'select':
+                     $cmd->setConfiguration('message','json::{"select":"#select#"}');
+                     break;
+               }
+            }
+				try {
+					$cmd->save();
+				} catch (Exception $e) {
+					$cmd->setName($cmd->getName() . ' remote ' . rand(0, 9999));
+					$cmd->save();
+				}
+				$map_id[$_cmd['id']] = $cmd->getId();
+			}
+
+			foreach ($_eqLogic['cmds'] as $_cmd) {
+				if (!isset($_cmd['value']) || !isset($map_id[$_cmd['value']]) || !isset($map_id[$_cmd['id']])) {
+					continue;
+				}
+				$cmd = cmd::byId($map_id[$_cmd['id']]);
+				if (!is_object($cmd)) {
+					continue;
+				}
+				$cmd->setValue($map_id[$_cmd['value']]);
+				$cmd->save();
+			}
+         
       }
    }
 
@@ -994,7 +1119,7 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Template introuvable', __FILE__));
       }
       if (!isset($template['commands']) || count($template['commands']) < 1) {
-         throw new Exception(__('Aucune commande trouvée dans le template', __FILE__));
+         return;
       }
       $this->setConfiguration('device', $_config['template']);
       $config = array();
@@ -1138,10 +1263,13 @@ class mqtt2Cmd extends cmd {
             break;
       }
       $value = jeedom::evaluateExpression($value);
-      $prefix = 'json::';
-      if (substr($value, 0, strlen($prefix)) == $prefix) {
-         $value = substr($value, strlen($prefix));
+      if (is_string($value)) {
+         $prefix = 'json::';
+         if (substr($value, 0, strlen($prefix)) == $prefix) {
+            $value = substr($value, strlen($prefix));
+         }
       }
+
       $options = array();
       if ($this->getConfiguration('retain') == 1) {
          $options['retain'] = 1;
