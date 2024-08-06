@@ -1086,6 +1086,7 @@ class mqtt2 extends eqLogic {
 				}
 				$cmd->setEqType('mqtt2');
 				$cmd->setEqLogic_id($eqLogic->getId());
+				$cmd->setConfiguration('isRefreshCmd', ($_cmd['logicalId'] == 'refresh'));
             if($_cmd['type'] == 'action'){
                $cmd->setLogicalId('set/' . $_cmd['id']);
             }else{
