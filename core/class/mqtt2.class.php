@@ -1006,6 +1006,7 @@ class mqtt2 extends eqLogic {
          }
          log::add('mqtt2', 'debug', '[Discovery] Send : '.$eqLogic->getName().' - '.$eqLogic->getId());
          $toSend = utils::o2a($eqLogic);
+         $toSend['configuration']['real_eqType'] = $eqLogic->getEqType_name();
          $toSend['object_name'] = '';
          $object = $eqLogic->getObject();
          if (is_object($object)) {
@@ -1013,9 +1014,12 @@ class mqtt2 extends eqLogic {
          }
          unset($toSend['html']);
          unset($toSend['cache']);
+         
          $toSend['cmds'] = array();
          foreach ($eqLogic->getCmd() as $cmd) {
             $toSend['cmds'][$cmd->getId()] = utils::o2a($cmd);
+            $toSend['cmds'][$cmd->getId()]['configuration']['real_eqType'] = $cmd->getEqType_name();
+				$toSend['cmds'][$cmd->getId()]['configuration']['real_logicalId'] = $cmd->getLogicalId();
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
       }
