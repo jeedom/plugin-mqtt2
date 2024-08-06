@@ -584,6 +584,20 @@ class mqtt2 extends eqLogic {
                self::handleMqttSubMessage($eqlogics, $value);
             }
          }
+
+         if (isset($message['eqLogic']) && isset($message['eqLogic']['battery'])) {
+            $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+            foreach ($message['eqLogic']['battery'] as $id => $value) {
+               if(is_array($eqLogics)){
+                  foreach ($eqLogics as $eqLogic) {
+                     if($eqLogic->getConfiguration('link::eqLogic::id') != $id){
+                        continue;
+                     }
+                     $eqLogic->batteryStatus($value['battery'], $value['datetime']);
+                  }
+               }
+            }
+         }
       }
    }
 
@@ -971,7 +985,7 @@ class mqtt2 extends eqLogic {
          if ($eqLogic->getStatus('battery', -2) == -2) {
             continue;
          }
-         self::publish(config::byKey('root_topic', __CLASS__) . '/eqLogic/' . $eqLogic->getId().'/battery', array(
+         self::publish(config::byKey('root_topic', __CLASS__) . '/eqLogic/battery/' . $eqLogic->getId(), array(
             'battery' => $eqLogic->getStatus('battery', -2),
             'datetime' => $eqLogic->getStatus('batteryDatetime', date('Y-m-d H:i:s')),
             'id' => $eqLogic->getId()

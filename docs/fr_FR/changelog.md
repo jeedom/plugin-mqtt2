@@ -5,6 +5,7 @@
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 - Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie
+- Le plugin pour gerer le niveau de batterie transmis entre Jeedom
 
 # 05/08/2024
 
