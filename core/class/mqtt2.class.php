@@ -21,6 +21,10 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function cronDaily(){
+      self::sendBattery();
+   }
+
    public static function devicesParameters($_device = '') {
       $return = array();
       foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
@@ -958,6 +962,22 @@ class mqtt2 extends eqLogic {
       }
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
+
+   public function sendBattery() {
+      foreach (eqLogic::all() as $eqLogic) {
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+            continue;
+         }
+         if ($eqLogic->getStatus('battery', -2) == -2) {
+            continue;
+         }
+         self::publish(config::byKey('root_topic', __CLASS__) . '/eqLogic/' . $eqLogic->getId().'/battery', array(
+            'battery' => $eqLogic->getStatus('battery', -2),
+            'datetime' => $eqLogic->getStatus('batteryDatetime', date('Y-m-d H:i:s')),
+            'id' => $eqLogic->getId()
+         ));
+      }
+	}
 
    public static function sendDiscovery(){
       if (in_array(config::byKey('root_topic', __CLASS__) ,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
