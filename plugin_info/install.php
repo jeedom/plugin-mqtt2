@@ -45,17 +45,6 @@ function mqtt2_update() {
   $listener->addEvent('*');
   $listener->setOption(array('background' => false));
   $listener->save();
-  shell_exec(system::getCmdSudo().' rm -rf '.__DIR__.'/../resources/mqtt2d/node_modules');
-  if (config::byKey('mode', 'mqtt2', '') == 'remote') {
-    if (strpos(config::byKey('remote::ip', 'mqtt2', ''), ':') !== false) {
-      $remoteAddr = explode(":", config::byKey('remote::ip', 'mqtt2'));
-      if (count($remoteAddr) == 3) {
-        config::save('remote::protocol', $remoteAddr[0], 'mqtt2');
-        config::save('remote::ip', str_replace('//', '', $remoteAddr[1]), 'mqtt2');
-        config::save('remote::port', $remoteAddr[2], 'mqtt2');
-      }
-    }
-  }
 }
 
 function mqtt2_remove() {
