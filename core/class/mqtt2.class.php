@@ -997,7 +997,8 @@ class mqtt2 extends eqLogic {
       if (in_array(config::byKey('root_topic', __CLASS__) ,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
          throw new Exception(__('Le "Topic racine Jeedom" ne peut etre dans "Topic des Jeedom liée"',__FILE__));
       }
-      foreach (eqLogic::all() as $eqLogic) {
+      $eqLogics = eqLogic::all();
+      foreach ($eqLogics as $eqLogic) {
          if($eqLogic->getEqType_name() == 'mqtt2'){
             continue;
          }
@@ -1022,6 +1023,20 @@ class mqtt2 extends eqLogic {
 				$toSend['cmds'][$cmd->getId()]['configuration']['real_logicalId'] = $cmd->getLogicalId();
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
+      }
+      foreach ($eqLogics as $eqLogic) {
+         if($eqLogic->getEqType_name() == 'mqtt2'){
+            continue;
+         }
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+           continue;
+         }
+         foreach ($eqLogic->getCmd('info') as $cmd) {
+            self::handleEvent(array(
+               'event_id' => $cmd->getId(),
+               'value' => $this->execCmd()
+            ));
+         }
       }
    }
 
