@@ -126,7 +126,7 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{Transmission des équipements}}</label>
         <div class="col-md-7 form-inline">
           <a class="btn btn-success" id="bt_mqtt2SendDiscovery"><i class="far fa-paper-plane"></i> {{Envoyer la découverte}}</a>
-          <a class="btn btn-primary" id="bt_mqtt2DisplayTransmitDevice"><i class="fas fa-cog"></i> {{Gérer les équipements tranmis}}</a>
+          <a class="btn btn-primary" id="bt_mqtt2DisplayTransmitDevice"><i class="fas fa-cog"></i> {{Gérer les équipements transmis}}</a>
           <label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les équipements}}
             <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre}}"></i></sup>
           </label>
@@ -196,7 +196,7 @@ if (!isConnect()) {
 <script>
             
   $('#bt_mqtt2DisplayTransmitDevice').off('click').on('click', function() {
-	  $('#md_modal').dialog({title: "{{Equipement MQTT tranmis}}"});
+	  $('#md_modal').dialog({title: "{{Equipement MQTT transmis}}"});
   	  $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=eqLogic.transmit').dialog('open');
   });
 
@@ -217,26 +217,28 @@ if (!isConnect()) {
     let topic = $(this).attr('data-topic')
     let span = $(this).parent();
     bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
-      $.ajax({
-      type: "POST",
-      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
-      data: {
-        action: "removePluginTopic",
-        topic: topic
-      },
-      dataType: 'json',
-      error: function(error) {
-        $.fn.showAlert({message: error.message,level: 'danger'})
-      },
-      success: function(data) {
-        if (data.state != 'ok') {
-          $.fn.showAlert({message: data.result,level: 'danger'})
-          return
-        }
-        $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
-        span.remove();
+      if (result) {
+          $.ajax({
+          type: "POST",
+          url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+          data: {
+            action: "removePluginTopic",
+            topic: topic
+          },
+          dataType: 'json',
+          error: function(error) {
+            $.fn.showAlert({message: error.message,level: 'danger'})
+          },
+          success: function(data) {
+            if (data.state != 'ok') {
+              $.fn.showAlert({message: data.result,level: 'danger'})
+              return
+            }
+            $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
+            span.remove();
+          }
+        })
       }
-    })
     })
   })
 
