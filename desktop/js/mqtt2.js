@@ -50,7 +50,6 @@ $('#bt_enableAutoDiscovery').off('click').on('click',function(){
   });
 })
 
-
 $('#bt_mqtt2SendDiscovery').off('click').on('click',function(){
   $.ajax({
     type: "POST",
@@ -71,8 +70,6 @@ $('#bt_mqtt2SendDiscovery').off('click').on('click',function(){
     }
   })
 })
-
-
 
 $('.cmdAction[data-action=importFromTemplate]').on('click',function(){
   $('#md_modal').dialog({title: "{{Template commande MQTT}}"});
