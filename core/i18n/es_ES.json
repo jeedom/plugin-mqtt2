@@ -30,9 +30,11 @@
         "Fréquence de rafraichissement en secondes": "Frecuencia de actualización en segundos",
         "Topic racine Jeedom": "Tema raíz de Jeedom",
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Tema raíz para impulsar Jeedom y sobre el que envía sus eventos",
-        "Transmettre tous les évènements": "Transmitir todos los eventos",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Marque la casilla para que todos los eventos de comando se transmitan al broker MQTT, también puede hacerlo por equipo (para no transmitir todo) en la configuración avanzada del equipo que desea transmitir",
+        "Transmission des équipements": "Transmisión de equipos",
         "Envoyer la découverte": "Enviar descubrimiento",
+        "Gérer les équipements tranmis": "Gestionar equipos transmitidos",
+        "Transmettre tous les équipements": "Transmitir todo el equipo",
+        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Marque la casilla para que todos los eventos de comando se transmitan al broker MQTT, también puede hacerlo por equipo (para no transmitir todo) en la configuración avanzada del equipo que desea transmitir",
         "Template de publication": "Plantilla de publicación",
         "Template de publication des événements Jeedom": "Plantilla de publicación de eventos Jeedom",
         "Le message est envoyé une seule fois": "El mensaje se envía solo una vez",
@@ -46,6 +48,7 @@
         "Paramètres Mosquitto": "Configuración de Mosquitto",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Guarda y reinicia la instalación de mosquitto para tener en cuenta las modificaciones de este campo de configuración",
         "Port(s)": "Puerto (s)",
+        "Equipement MQTT tranmis": "Equipo MQTT transmitido",
         "Confirmez-vous suppression de l\\'abonnement : ": "¿Confirma la eliminación de la suscripción?",
         "Suppression réussie": "Eliminación exitosa",
         "Envoi de la découverte réussi": "Envío de descubrimiento exitoso",
@@ -76,6 +79,14 @@
         "Appliquer": "Aplicar",
         "Vous devez choisir un template": "Debes elegir una plantilla",
         "Création réussie": "Creación exitosa"
+    },
+    "plugins\/mqtt2\/desktop\/modal\/eqLogic.transmit.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Valider": "Validar",
+        "Nom": "Apellido",
+        "Plugin": "Enchufar",
+        "Transmis": "Transmitido",
+        "Configuration enregistrée": "Configuración guardada"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "Aucun": "No",

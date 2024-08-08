@@ -30,9 +30,11 @@
         "Fréquence de rafraichissement en secondes": "Aktualisierungsrate in Sekunden",
         "Topic racine Jeedom": "Jeedom-Wurzelthema",
         "Topic racine pour piloter Jeedom et sur lequel il envoie ses évènements": "Stammthema, das Jeedom antreibt und an das es seine Ereignisse sendet",
-        "Transmettre tous les évènements": "Übertragen Sie alle Ereignisse",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Aktivieren Sie das Kontrollkästchen, damit alle Befehlsereignisse an den MQTT-Broker übertragen werden. Sie können dies auch geräteweise tun (um nicht alles zu übertragen) in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten",
+        "Transmission des équipements": "Übertragung von Geräten",
         "Envoyer la découverte": "Entdeckung einreichen",
+        "Gérer les équipements tranmis": "Übertragene Geräte verwalten",
+        "Transmettre tous les équipements": "Übertragen Sie die gesamte Ausrüstung",
+        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Aktivieren Sie das Kontrollkästchen, damit alle Befehlsereignisse an den MQTT-Broker übertragen werden. Sie können dies auch geräteweise tun (um nicht alles zu übertragen) in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten",
         "Template de publication": "Beitragsvorlage",
         "Template de publication des événements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
         "Le message est envoyé une seule fois": "Die Nachricht wird nur einmal gesendet",
@@ -46,6 +48,7 @@
         "Paramètres Mosquitto": "Moskito-Einstellungen",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Speichern Sie die Installation von mosquitto und starten Sie sie erneut, um die Änderungen in diesem Konfigurationsfeld zu berücksichtigen",
         "Port(s)": "Häfen)",
+        "Equipement MQTT tranmis": "Übertragenes MQTT-Gerät",
         "Confirmez-vous suppression de l\\'abonnement : ": "Bestätigen Sie die Löschung des Abonnements:",
         "Suppression réussie": "Löschung erfolgreich",
         "Envoi de la découverte réussi": "Discovery-Übermittlung erfolgreich",
@@ -63,7 +66,7 @@
         "Sauvegarder": "Zu schützen",
         "Topic": "Thema",
         "Valeur": "Wert",
-        "Nom": "Familienname, Nachname",
+        "Nom": "Name",
         "Sous type": "Untertyp",
         "Création réussie": "Gelungene Kreation"
     },
@@ -77,9 +80,17 @@
         "Vous devez choisir un template": "Sie müssen eine Vorlage auswählen",
         "Création réussie": "Erfolgreiche Kreation"
     },
+    "plugins\/mqtt2\/desktop\/modal\/eqLogic.transmit.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Valider": "Bestätigen",
+        "Nom": "Name",
+        "Plugin": "Plugin",
+        "Transmis": "Übermittelt",
+        "Configuration enregistrée": "Gespeicherte Konfiguration"
+    },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "Aucun": "Nein",
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -151,7 +162,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Aucune méthode correspondante à": "Keine Matching-Methode",
         "Equipement introuvable": "Gerät nicht gefunden",
         "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"
