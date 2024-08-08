@@ -38,7 +38,7 @@ try {
       if(!is_object($eqLogic)){
         continue;
       }
-      $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit',$_eqLogic['plugin::mqtt2::mqttTranmit']);
+      $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit',$_eqLogic['configuration']['plugin::mqtt2::mqttTranmit']);
       $eqLogic->save(true);
     }
     ajax::success();
