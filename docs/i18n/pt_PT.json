@@ -2,8 +2,13 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "08\/08\/2024": "08\/08\/2024",
         "Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie": "Para equipamentos transmitidos no Mqtt o plugin agora envia o nível da bateria todas as noites",
         "Le plugin pour gerer le niveau de batterie transmis entre Jeedom": "O plugin para gerenciar o nível de bateria transmitido entre Jeedom",
+        "Gestion correcte des commandes de rafraichissement sur les widgets sur les équipements transmis entre Jeedom": "Gerenciamento correto de comandos de atualização em widgets em equipamentos transmitidos entre Jeedom",
+        "Lors de l'envoi de la découverte entre Jeedom les valeurs des commandes sont aussi transmisent (plus besoin d'attendre une mise à jour de la valeur pour l'avoir sur la cible": "Ao enviar a descoberta entre Jeedom os valores dos comandos também são transmitidos (não é necessário esperar uma atualização do valor para tê-lo no alvo",
+        "Nécessite de renvoyer la découverte": "Requer reenvio de descoberta",
+        "Lors la transmission d'équipement entre Jeedom le plugin gere maintenant le type réel de l'équipement pour etre compatible avec les applications mobile": "Ao transmitir equipamentos entre Jeedom o plugin agora gerencia o tipo real de equipamento para ser compatível com aplicações mobile",
         "05\/08\/2024": "05\/08\/2024",
         "Avec Jeedom 4.4": "Com Jeedom 4.4",
         "8 ou plus possibilité de ne plus envoyer tous les équipements sur le brocker MQTT mais seulement certain (à configurer dans la configuration avancée de l'équipement a transmettre": "8 ou mais possibilidade de não enviar mais todos os equipamentos do brocker MQTT mas apenas alguns (a configurar na configuração avançada do equipamento a transmitir",
