@@ -31,6 +31,20 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'eqLogicTransmitConfiguration') {
+    $eqLogics = json_decode(init('eqLogics'),true);
+    foreach ($eqLogics as $_eqLogic) {
+      $eqLogic = eqLogic::byId($_eqLogic['id']);
+      if(!is_object($eqLogic)){
+        continue;
+      }
+      $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit',$_eqLogic['configuration']['plugin::mqtt2::mqttTranmit']);
+      $eqLogic->save(true);
+    }
+    ajax::success();
+  }
+  
+
   if (init('action') == 'installMosquitto') {
     mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
     ajax::success();

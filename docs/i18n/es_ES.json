@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "Ajout d'une fenetre de configuration globalement pour la transmission d'équipement entre Jeedom": "Se agregó una ventana de configuración global para la transmisión de equipos entre Jeedom",
         "08\/08\/2024": "08\/08\/2024",
         "Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie": "Para los equipos transmitidos en Mqtt, el complemento ahora envía el nivel de la batería todas las noches",
         "Le plugin pour gerer le niveau de batterie transmis entre Jeedom": "El complemento para gestionar el nivel de batería transmitido entre Jeedom",
