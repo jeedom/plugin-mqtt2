@@ -4,7 +4,12 @@
 >
 >Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto.
 
-- Con Jeedom 4.4.8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir)
+- Para los equipos transmitidos en Mqtt, el complemento ahora envía el nivel de la batería todas las noches
+- El complemento para gestionar el nivel de batería transmitido entre Jeedom
+
+# 08/05/2024
+
+- Con Jeedom 4.4.8 o más posibilidades de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir))
 - Corrección de errores (especialmente para compatibilidad con php8))
 - Descubrimiento entre Jeedom (para hacer que 2 jeedoms se comuniquen entre sí mediante mqtt)
 - Posibilidad desde la página de configuración del complemento de eliminar la suscripción de un complemento

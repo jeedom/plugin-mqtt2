@@ -21,6 +21,10 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function cronDaily(){
+      self::sendBattery();
+   }
+
    public static function devicesParameters($_device = '') {
       $return = array();
       foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
@@ -580,6 +584,20 @@ class mqtt2 extends eqLogic {
                self::handleMqttSubMessage($eqlogics, $value);
             }
          }
+
+         if (isset($message['eqLogic']) && isset($message['eqLogic']['battery'])) {
+            $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+            foreach ($message['eqLogic']['battery'] as $id => $value) {
+               if(is_array($eqLogics)){
+                  foreach ($eqLogics as $eqLogic) {
+                     if($eqLogic->getConfiguration('link::eqLogic::id') != $id){
+                        continue;
+                     }
+                     $eqLogic->batteryStatus($value['battery'], $value['datetime']);
+                  }
+               }
+            }
+         }
       }
    }
 
@@ -959,11 +977,28 @@ class mqtt2 extends eqLogic {
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
 
+   public function sendBattery() {
+      foreach (eqLogic::all() as $eqLogic) {
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+            continue;
+         }
+         if ($eqLogic->getStatus('battery', -2) == -2) {
+            continue;
+         }
+         self::publish(config::byKey('root_topic', __CLASS__) . '/eqLogic/battery/' . $eqLogic->getId(), array(
+            'battery' => $eqLogic->getStatus('battery', -2),
+            'datetime' => $eqLogic->getStatus('batteryDatetime', date('Y-m-d H:i:s')),
+            'id' => $eqLogic->getId()
+         ));
+      }
+	}
+
    public static function sendDiscovery(){
       if (in_array(config::byKey('root_topic', __CLASS__) ,explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
          throw new Exception(__('Le "Topic racine Jeedom" ne peut etre dans "Topic des Jeedom liée"',__FILE__));
       }
-      foreach (eqLogic::all() as $eqLogic) {
+      $eqLogics = eqLogic::all();
+      foreach ($eqLogics as $eqLogic) {
          if($eqLogic->getEqType_name() == 'mqtt2'){
             continue;
          }
@@ -972,6 +1007,7 @@ class mqtt2 extends eqLogic {
          }
          log::add('mqtt2', 'debug', '[Discovery] Send : '.$eqLogic->getName().' - '.$eqLogic->getId());
          $toSend = utils::o2a($eqLogic);
+         $toSend['configuration']['real_eqType'] = $eqLogic->getEqType_name();
          $toSend['object_name'] = '';
          $object = $eqLogic->getObject();
          if (is_object($object)) {
@@ -979,11 +1015,28 @@ class mqtt2 extends eqLogic {
          }
          unset($toSend['html']);
          unset($toSend['cache']);
+         
          $toSend['cmds'] = array();
          foreach ($eqLogic->getCmd() as $cmd) {
             $toSend['cmds'][$cmd->getId()] = utils::o2a($cmd);
+            $toSend['cmds'][$cmd->getId()]['configuration']['real_eqType'] = $cmd->getEqType_name();
+				$toSend['cmds'][$cmd->getId()]['configuration']['real_logicalId'] = $cmd->getLogicalId();
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
+      }
+      foreach ($eqLogics as $eqLogic) {
+         if($eqLogic->getEqType_name() == 'mqtt2'){
+            continue;
+         }
+         if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
+           continue;
+         }
+         foreach ($eqLogic->getCmd('info') as $cmd) {
+            self::handleEvent(array(
+               'event_id' => $cmd->getId(),
+               'value' => $this->execCmd()
+            ));
+         }
       }
    }
 
@@ -1048,6 +1101,7 @@ class mqtt2 extends eqLogic {
 				}
 				$cmd->setEqType('mqtt2');
 				$cmd->setEqLogic_id($eqLogic->getId());
+				$cmd->setConfiguration('isRefreshCmd', ($_cmd['logicalId'] == 'refresh'));
             if($_cmd['type'] == 'action'){
                $cmd->setLogicalId('set/' . $_cmd['id']);
             }else{
@@ -1205,6 +1259,12 @@ class mqtt2 extends eqLogic {
    /*     * *********************Méthodes d'instance************************* */
 
    public function getImage() {
+      if(method_exists($this,'getCustomImage')){
+         $customImage = $this->getCustomImage();
+         if($customImage !== null){
+            return $customImage;
+         }
+      }
       $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
       if (!file_exists(__DIR__ . '/../../../../' . $file)) {
          return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';

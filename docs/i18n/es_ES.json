@@ -2,8 +2,11 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie": "Para los equipos transmitidos en Mqtt, el complemento ahora envía el nivel de la batería todas las noches",
+        "Le plugin pour gerer le niveau de batterie transmis entre Jeedom": "El complemento para gestionar el nivel de batería transmitido entre Jeedom",
+        "05\/08\/2024": "08\/05\/2024",
         "Avec Jeedom 4.4": "Con Jeedom 4.4",
-        "8 possibilité de ne plus envoyer tous les équipements sur le brocker MQTT mais seulement certain (à configurer dans la configuration avancée de l'équipement a transmettre": "8 posibilidad de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir",
+        "8 ou plus possibilité de ne plus envoyer tous les équipements sur le brocker MQTT mais seulement certain (à configurer dans la configuration avancée de l'équipement a transmettre": "8 o más posibilidades de ya no enviar todos los equipos del brocker MQTT sino solo algunos (a configurar en la configuración avanzada del equipo a transmitir)",
         "Correction de bugs (notamment pour la compatibilité php8": "Corrección de errores (especialmente para compatibilidad con php8)",
         "Discovery entre Jeedom (pour faire dialoguer 2 jeedoms entre eux par mqtt": "Descubrimiento entre Jeedom (para hacer que 2 jeedoms se comuniquen entre sí mediante mqtt",
         "Possibilité depuis la page de configuration du plugin de supprimer l'abonnement d'un plugin": "Posibilidad desde la página de configuración del complemento de eliminar la suscripción de un complemento",

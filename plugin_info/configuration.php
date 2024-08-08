@@ -159,7 +159,7 @@ if (!isConnect()) {
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
         </label>
         <div class="subscribed col-md-7">
-          <?php foreach (mqtt2::getSubscribed() as $plugin => $subscribed) { ?>
+          <?php foreach (mqtt2::getSubscribed() as $subscribed => $plugin) { ?>
             <span class="label label-success"><?= $plugin ?> (<?= $subscribed ?>) <i class="fas fa-times cursor bt_removePluginTopic" data-topic="<?= $subscribed ?>"></i></span>
           <?php } ?>
         </div>
