@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "09\/08\/2024": "09\/08\/2024",
+        "Amélioration de l'affichage de la fenetre de configuration pour les équipements transmis": "Melhorada a exibição da janela de configuração dos equipamentos transmitidos",
+        "Correction d'un bug sur les commandes orpheline lors de la transmission a travers mqtt": "Corrigido um bug em comandos órfãos quando transmitidos através do mqtt",
         "08\/08\/2024": "08\/08\/2024",
         "Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie": "Para equipamentos transmitidos no Mqtt o plugin agora envia o nível da bateria todas as noites",
         "Le plugin pour gerer le niveau de batterie transmis entre Jeedom": "O plugin para gerenciar o nível de bateria transmitido entre Jeedom",
@@ -110,7 +113,7 @@
         "Il est possible de créer des équipements MQTT directement dans le plugin": "É possível criar equipamentos MQTT diretamente no plugin",
         "`test` par exemple": "`teste` por exemplo",
         "Il faut indiquer le topic racine de l'équipement": "Você deve indicar o tópico raiz do equipamento",
-        "ensuite selon le type de commandes": "então de acordo com o tipo de comandos",
+        "attention le topic racine ne peux pas avoir plus de 2 niveaux (exe `niveau1\/niveau2`) ensuite selon le type de commandes": "tenha cuidado, o tópico raiz não pode ter mais de 2 níveis (exe `level1\/level2`), dependendo do tipo de comandos",
         "Commandes info": "Comandos de informações",
         "il suffit d'indiquer le topic complet": "basta indicar o tópico completo",
         "Pour exemple, si vous mettez `toto\/1`, tous les messages sur le topic `test\/toto\/1` seront automatiquement écrits sur la commande en question": "Por exemplo, se você colocar `toto\/1`, todas as mensagens do tópico `test\/toto\/1` serão escritas automaticamente no comando em questão",

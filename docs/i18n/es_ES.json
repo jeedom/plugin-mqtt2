@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "09\/08\/2024": "09\/08\/2024",
+        "Amélioration de l'affichage de la fenetre de configuration pour les équipements transmis": "Se mejoró la visualización de la ventana de configuración para equipos transmitidos",
+        "Correction d'un bug sur les commandes orpheline lors de la transmission a travers mqtt": "Se corrigió un error en los comandos huérfanos cuando se transmitían a través de mqtt",
         "08\/08\/2024": "08\/08\/2024",
         "Pour les équipements transmis sur Mqtt le plugin envoi maintenant toute les nuits le niveau de batterie": "Para los equipos transmitidos en Mqtt, el complemento ahora envía el nivel de la batería todas las noches",
         "Le plugin pour gerer le niveau de batterie transmis entre Jeedom": "El complemento para gestionar el nivel de batería transmitido entre Jeedom",
@@ -110,7 +113,7 @@
         "Il est possible de créer des équipements MQTT directement dans le plugin": "Es posible crear equipos MQTT directamente en el complemento",
         "`test` par exemple": "`prueba` por ejemplo",
         "Il faut indiquer le topic racine de l'équipement": "Debe indicar el tema raíz del equipo",
-        "ensuite selon le type de commandes": "entonces de acuerdo al tipo de comandos",
+        "attention le topic racine ne peux pas avoir plus de 2 niveaux (exe `niveau1\/niveau2`) ensuite selon le type de commandes": "tenga cuidado, el tema raíz no puede tener más de 2 niveles (exe `nivel1\/nivel2`), dependiendo del tipo de comandos",
         "Commandes info": "Comandos de información",
         "il suffit d'indiquer le topic complet": "solo indica el tema completo",
         "Pour exemple, si vous mettez `toto\/1`, tous les messages sur le topic `test\/toto\/1` seront automatiquement écrits sur la commande en question": "Por ejemplo, si pones `toto\/1`, todos los mensajes sobre el tema `test\/toto\/1` se escribirán automáticamente en el comando en cuestión",

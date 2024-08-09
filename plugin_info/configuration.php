@@ -196,8 +196,14 @@ if (!isConnect()) {
 <script>
             
   $('#bt_mqtt2DisplayTransmitDevice').off('click').on('click', function() {
-	  $('#md_modal').dialog({title: "{{Equipement MQTT transmis}}"});
-  	  $("#md_modal").load('index.php?v=d&plugin=mqtt2&modal=eqLogic.transmit').dialog('open');
+	jeeDialog.dialog({
+		id: 'jee_MqttModal',
+		title: '{{Equipement MQTT transmis}}',
+		width: '85vw',
+		height: '51vw',
+		top: '8vh',
+		contentUrl: 'index.php?v=d&plugin=mqtt2&modal=eqLogic.transmit'
+	}) 
   });
 
   $('.configKey[data-l1key=sendEvent]').off('click').on('click', function() {
