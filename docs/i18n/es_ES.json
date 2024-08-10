@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "10\/08\/2024": "10\/08\/2024",
+        "Correction d'un bug sur l'envoi des batterie (methode non static call": "Se corrigió un error al enviar baterías (método de llamada no estática)",
         "09\/08\/2024": "09\/08\/2024",
         "Amélioration de l'affichage de la fenetre de configuration pour les équipements transmis": "Se mejoró la visualización de la ventana de configuración para equipos transmitidos",
         "Correction d'un bug sur les commandes orpheline lors de la transmission a travers mqtt": "Se corrigió un error en los comandos huérfanos cuando se transmitían a través de mqtt",

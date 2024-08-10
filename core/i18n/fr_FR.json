@@ -34,7 +34,7 @@
         "Envoyer la découverte": "Envoyer la découverte",
         "Gérer les équipements transmis": "Gérer les équipements transmis",
         "Transmettre tous les équipements": "Transmettre tous les équipements",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis",
         "Template de publication": "Template de publication",
         "Template de publication des événements Jeedom": "Template de publication des événements Jeedom",
         "Le message est envoyé une seule fois": "Le message est envoyé une seule fois",

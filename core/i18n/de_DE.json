@@ -34,7 +34,7 @@
         "Envoyer la découverte": "Entdeckung einreichen",
         "Gérer les équipements transmis": "Übertragene Geräte verwalten",
         "Transmettre tous les équipements": "Übertragen Sie die gesamte Ausrüstung",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Aktivieren Sie das Kontrollkästchen, damit alle Befehlsereignisse an den MQTT-Broker übertragen werden. Sie können dies auch geräteweise tun (um nicht alles zu übertragen) in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Aktivieren Sie das Kontrollkästchen, um alle Ereignisse an den MQTT-Broker zu übertragen. Sie können dies auch nach Geräten tun (um nicht alles zu übertragen), in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten, oder über die Schaltfläche „Übertragene Geräte verwalten“",
         "Template de publication": "Beitragsvorlage",
         "Template de publication des événements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
         "Le message est envoyé une seule fois": "Die Nachricht wird nur einmal gesendet",

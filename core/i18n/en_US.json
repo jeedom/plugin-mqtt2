@@ -34,7 +34,7 @@
         "Envoyer la découverte": "Submit discovery",
         "Gérer les équipements transmis": "Manage transmitted equipment",
         "Transmettre tous les équipements": "Transmit all equipment",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Check the box so that all command events are transmitted to the MQTT broker, you can also do this by equipment (so as not to transmit everything) in the advanced configuration of the equipment you want to transmit",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Check the box to forward all events to the MQTT broker. You can also do this per device (to not forward everything) in the advanced configuration of the device you want to forward or by the Manage forwarded devices button",
         "Template de publication": "Post template",
         "Template de publication des événements Jeedom": "Jeedom event publication template",
         "Le message est envoyé une seule fois": "The message is sent only once",

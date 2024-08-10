@@ -34,7 +34,7 @@
         "Envoyer la découverte": "Enviar descoberta",
         "Gérer les équipements transmis": "Gerenciar equipamentos transmitidos",
         "Transmettre tous les équipements": "Transmitir todos os equipamentos",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Marque a caixa para que todos os eventos de comando sejam transmitidos para o broker MQTT, você também pode fazer isso por equipamento (para não transmitir tudo) na configuração avançada do equipamento que deseja transmitir",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Marque a caixa para transmitir todos os eventos ao corretor MQTT. Também pode fazê-lo por equipamento (para não transmitir tudo) na configuração avançada do equipamento que pretende transmitir ou pelo botão Gerir equipamentos transmitidos",
         "Template de publication": "Modelo de postagem",
         "Template de publication des événements Jeedom": "Modelo de publicação de evento Jeedom",
         "Le message est envoyé une seule fois": "A mensagem é enviada apenas uma vez",
