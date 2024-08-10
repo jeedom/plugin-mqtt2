@@ -977,7 +977,7 @@ class mqtt2 extends eqLogic {
       self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
    }
 
-   public function sendBattery() {
+   public static function sendBattery() {
       foreach (eqLogic::all() as $eqLogic) {
          if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $eqLogic->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
             continue;
