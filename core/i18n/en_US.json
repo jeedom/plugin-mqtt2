@@ -12,6 +12,7 @@
         "Arrêter": "Stop",
         "(Ré)Installer": "(Re)Install",
         "Désinstaller": "Uninstall",
+        "Log": "Log",
         "Télécharger le certificat client": "Download client certificate",
         "Etat Broker Mosquitto": "State Broker Mosquitto",
         "NOK": "NO OK",
@@ -49,6 +50,7 @@
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Save and restart the installation of mosquitto to take into account the modifications of this configuration field",
         "Port(s)": "Port(s)",
         "Equipement MQTT transmis": "MQTT equipment transmitted",
+        "Log mosquitto": "Log mosquito",
         "Confirmez-vous suppression de l\\'abonnement : ": "Do you confirm deletion of the subscription:",
         "Suppression réussie": "Deletion successful",
         "Envoi de la découverte réussi": "Discovery submission successful",
@@ -69,6 +71,10 @@
         "Nom": "Last name",
         "Sous type": "Subtype",
         "Création réussie": "Successful Creation"
+    },
+    "plugins\/mqtt2\/desktop\/modal\/mosquitto.log.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Log mosquitto": "Log mosquito"
     },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
