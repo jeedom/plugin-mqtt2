@@ -2,8 +2,10 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "12\/08\/2024": "12\/08\/2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Fixed a bug when sending equipment from the configuration window",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Added a button to see mosquitto logs (if it is in local broker mode)",
+        "Mise à jour de la documentation pour mieux expliquer comment synchroniser des topics entre deux mosquitto": "Updated the documentation to better explain how to synchronize topics between two mosquitto",
         "10\/08\/2024": "10\/08\/2024",
         "Correction d'un bug sur l'envoi des batterie (methode non static call": "Fixed a bug on sending batteries (non-static method call)",
         "09\/08\/2024": "09\/08\/2024",
