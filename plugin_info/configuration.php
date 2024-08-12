@@ -48,6 +48,7 @@ if (!isConnect()) {
           <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller}}</a>
+          <a class="btn btn-xs btn-primary" id="bt_mqtt2LogMosquitto"><i class="far fa-file"></i> {{Log}}</a>
           <a class="btn btn-xs btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
       </div>
@@ -125,7 +126,7 @@ if (!isConnect()) {
       <div class="form-group">
         <label class="col-md-4 control-label">{{Transmission des équipements}}</label>
         <div class="col-md-7 form-inline">
-          <a class="btn btn-success" id="bt_mqtt2SendDiscovery"><i class="far fa-paper-plane"></i> {{Envoyer la découverte}}</a>
+          <a class="btn btn-success" id="bt_mqtt2SendDiscoveryConfiguration"><i class="far fa-paper-plane"></i> {{Envoyer la découverte}}</a>
           <a class="btn btn-primary" id="bt_mqtt2DisplayTransmitDevice"><i class="fas fa-cog"></i> {{Gérer les équipements transmis}}</a>
           <label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="sendEvent">{{Transmettre tous les équipements}}
             <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis}}"></i></sup>
@@ -196,14 +197,25 @@ if (!isConnect()) {
 <script>
             
   $('#bt_mqtt2DisplayTransmitDevice').off('click').on('click', function() {
-	jeeDialog.dialog({
-		id: 'jee_MqttModal',
-		title: '{{Equipement MQTT transmis}}',
-		width: '85vw',
-		height: '51vw',
-		top: '8vh',
-		contentUrl: 'index.php?v=d&plugin=mqtt2&modal=eqLogic.transmit'
-	}) 
+    jeeDialog.dialog({
+      id: 'jee_MqttModal',
+      title: '{{Equipement MQTT transmis}}',
+      width: '85vw',
+      height: '51vw',
+      top: '8vh',
+      contentUrl: 'index.php?v=d&plugin=mqtt2&modal=eqLogic.transmit'
+    }) 
+  });
+
+  $('#bt_mqtt2LogMosquitto').off('click').on('click', function() {
+    jeeDialog.dialog({
+      id: 'jee_MqttModal',
+      title: '{{Log mosquitto}}',
+      width: '85vw',
+      height: '51vw',
+      top: '8vh',
+      contentUrl: 'index.php?v=d&plugin=mqtt2&modal=mosquitto.log'
+    }) 
   });
 
   $('.configKey[data-l1key=sendEvent]').off('click').on('click', function() {
@@ -248,7 +260,7 @@ if (!isConnect()) {
     })
   })
 
-  $('#bt_mqtt2SendDiscovery').off('click').on('click', function() {
+  $('#bt_mqtt2SendDiscoveryConfiguration').off('click').on('click', function() {
     $.ajax({
       type: "POST",
       url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",

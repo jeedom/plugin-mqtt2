@@ -12,6 +12,7 @@
         "Arrêter": "Arrêter",
         "(Ré)Installer": "(Ré)Installer",
         "Désinstaller": "Désinstaller",
+        "Log": "Log",
         "Télécharger le certificat client": "Télécharger le certificat client",
         "Etat Broker Mosquitto": "Etat Broker Mosquitto",
         "NOK": "NOK",
@@ -34,7 +35,7 @@
         "Envoyer la découverte": "Envoyer la découverte",
         "Gérer les équipements transmis": "Gérer les équipements transmis",
         "Transmettre tous les équipements": "Transmettre tous les équipements",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis",
         "Template de publication": "Template de publication",
         "Template de publication des événements Jeedom": "Template de publication des événements Jeedom",
         "Le message est envoyé une seule fois": "Le message est envoyé une seule fois",
@@ -49,6 +50,7 @@
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration",
         "Port(s)": "Port(s)",
         "Equipement MQTT transmis": "Equipement MQTT transmis",
+        "Log mosquitto": "Log mosquitto",
         "Confirmez-vous suppression de l\\'abonnement : ": "Confirmez-vous suppression de l\\'abonnement : ",
         "Suppression réussie": "Suppression réussie",
         "Envoi de la découverte réussi": "Envoi de la découverte réussi",
@@ -69,6 +71,10 @@
         "Nom": "Nom",
         "Sous type": "Sous type",
         "Création réussie": "Création réussie"
+    },
+    "plugins\/mqtt2\/desktop\/modal\/mosquitto.log.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Log mosquitto": "Log mosquitto"
     },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",

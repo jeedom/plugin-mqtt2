@@ -12,6 +12,7 @@
         "Arrêter": "Stoppen",
         "(Ré)Installer": "(Neu)Installieren",
         "Désinstaller": "Deinstallieren",
+        "Log": "Protokoll",
         "Télécharger le certificat client": "Laden Sie das Client-Zertifikat herunter",
         "Etat Broker Mosquitto": "Staatsmakler Mosquito",
         "NOK": "NEIN",
@@ -34,7 +35,7 @@
         "Envoyer la découverte": "Entdeckung einreichen",
         "Gérer les équipements transmis": "Übertragene Geräte verwalten",
         "Transmettre tous les équipements": "Übertragen Sie die gesamte Ausrüstung",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Aktivieren Sie das Kontrollkästchen, damit alle Befehlsereignisse an den MQTT-Broker übertragen werden. Sie können dies auch geräteweise tun (um nicht alles zu übertragen) in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Aktivieren Sie das Kontrollkästchen, um alle Ereignisse an den MQTT-Broker zu übertragen. Sie können dies auch nach Geräten tun (um nicht alles zu übertragen), in der erweiterten Konfiguration des Geräts, das Sie übertragen möchten, oder über die Schaltfläche „Übertragene Geräte verwalten“",
         "Template de publication": "Beitragsvorlage",
         "Template de publication des événements Jeedom": "Vorlage für die Veröffentlichung von Jeedom-Ereignissen",
         "Le message est envoyé une seule fois": "Die Nachricht wird nur einmal gesendet",
@@ -49,6 +50,7 @@
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Speichern Sie die Installation von mosquitto und starten Sie sie erneut, um die Änderungen in diesem Konfigurationsfeld zu berücksichtigen",
         "Port(s)": "Häfen)",
         "Equipement MQTT transmis": "MQTT-Gerät übertragen",
+        "Log mosquitto": "Mücken protokollieren",
         "Confirmez-vous suppression de l\\'abonnement : ": "Bestätigen Sie die Löschung des Abonnements:",
         "Suppression réussie": "Löschung erfolgreich",
         "Envoi de la découverte réussi": "Discovery-Übermittlung erfolgreich",
@@ -70,6 +72,10 @@
         "Sous type": "Untertyp",
         "Création réussie": "Gelungene Kreation"
     },
+    "plugins\/mqtt2\/desktop\/modal\/mosquitto.log.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Log mosquitto": "Mücken protokollieren"
+    },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Equipement introuvable": "Gerät nicht gefunden",
@@ -90,7 +96,7 @@
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "Aucun": "Nein",
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -162,7 +168,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Aucune méthode correspondante à": "Keine Matching-Methode",
         "Equipement introuvable": "Gerät nicht gefunden",
         "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"

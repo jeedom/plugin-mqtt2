@@ -12,6 +12,7 @@
         "Arrêter": "Stop",
         "(Ré)Installer": "(Re)Install",
         "Désinstaller": "Uninstall",
+        "Log": "Log",
         "Télécharger le certificat client": "Download client certificate",
         "Etat Broker Mosquitto": "State Broker Mosquitto",
         "NOK": "NO OK",
@@ -34,7 +35,7 @@
         "Envoyer la découverte": "Submit discovery",
         "Gérer les équipements transmis": "Manage transmitted equipment",
         "Transmettre tous les équipements": "Transmit all equipment",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Check the box so that all command events are transmitted to the MQTT broker, you can also do this by equipment (so as not to transmit everything) in the advanced configuration of the equipment you want to transmit",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Check the box to forward all events to the MQTT broker. You can also do this per device (to not forward everything) in the advanced configuration of the device you want to forward or by the Manage forwarded devices button",
         "Template de publication": "Post template",
         "Template de publication des événements Jeedom": "Jeedom event publication template",
         "Le message est envoyé une seule fois": "The message is sent only once",
@@ -49,6 +50,7 @@
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Save and restart the installation of mosquitto to take into account the modifications of this configuration field",
         "Port(s)": "Port(s)",
         "Equipement MQTT transmis": "MQTT equipment transmitted",
+        "Log mosquitto": "Log mosquito",
         "Confirmez-vous suppression de l\\'abonnement : ": "Do you confirm deletion of the subscription:",
         "Suppression réussie": "Deletion successful",
         "Envoi de la découverte réussi": "Discovery submission successful",
@@ -69,6 +71,10 @@
         "Nom": "Last name",
         "Sous type": "Subtype",
         "Création réussie": "Successful Creation"
+    },
+    "plugins\/mqtt2\/desktop\/modal\/mosquitto.log.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Log mosquitto": "Log mosquito"
     },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",

@@ -12,6 +12,7 @@
         "Arrêter": "Parar",
         "(Ré)Installer": "(Reinstalar",
         "Désinstaller": "Desinstalar",
+        "Log": "Registro",
         "Télécharger le certificat client": "Descargar certificado de cliente",
         "Etat Broker Mosquitto": "Corredor Estatal Mosquitto",
         "NOK": "NO OK",
@@ -34,7 +35,7 @@
         "Envoyer la découverte": "Enviar descubrimiento",
         "Gérer les équipements transmis": "Gestionar equipos transmitidos",
         "Transmettre tous les équipements": "Transmitir todo el equipo",
-        "Cocher la case pour que tous les événements des commandes soient transmis au broker MQTT, vous pouvez aussi le faire par équipements (pour ne pas tout transmettre) dans la configuration avancée de l'quipement que vous voulez transmettre": "Marque la casilla para que todos los eventos de comando se transmitan al broker MQTT, también puede hacerlo por equipo (para no transmitir todo) en la configuración avanzada del equipo que desea transmitir",
+        "Cocher la case pour transmettre tous les événements au broker MQTT. Vous pouvez également le faire par équipement (pour ne pas tout transmettre) dans la configuration avancée de l’équipement que vous voulez transmettre ou par le bouton Gérer les équipements transmis": "Marque la casilla para transmitir todos los eventos al corredor MQTT. También puedes hacerlo por equipos (para no transmitir todo) en la configuración avanzada del equipo que deseas transmitir o mediante el botón Administrar equipos transmitidos",
         "Template de publication": "Plantilla de publicación",
         "Template de publication des événements Jeedom": "Plantilla de publicación de eventos Jeedom",
         "Le message est envoyé une seule fois": "El mensaje se envía solo una vez",
@@ -49,6 +50,7 @@
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Guarda y reinicia la instalación de mosquitto para tener en cuenta las modificaciones de este campo de configuración",
         "Port(s)": "Puerto (s)",
         "Equipement MQTT transmis": "Equipo MQTT transmitido",
+        "Log mosquitto": "Mosquito de tronco",
         "Confirmez-vous suppression de l\\'abonnement : ": "¿Confirma la eliminación de la suscripción?",
         "Suppression réussie": "Eliminación exitosa",
         "Envoi de la découverte réussi": "Envío de descubrimiento exitoso",
@@ -69,6 +71,10 @@
         "Nom": "Apellido",
         "Sous type": "Subtipo",
         "Création réussie": "Creación exitosa"
+    },
+    "plugins\/mqtt2\/desktop\/modal\/mosquitto.log.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Log mosquitto": "Mosquito de tronco"
     },
     "plugins\/mqtt2\/desktop\/modal\/cmd.template.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
