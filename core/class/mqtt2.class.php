@@ -441,6 +441,7 @@ class mqtt2 extends eqLogic {
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
+      $cmd .= ' --root_topic '.config::byKey('root_topic', __CLASS__);
       $cmd .= ' --pid ' . jeedom::getTmpFolder(__CLASS__) . '/deamon.pid';
       log::add(__CLASS__, 'info', __('Démarrage du démon MQTT Manager', __FILE__) . ' : ' . $cmd);
       exec($cmd . ' >> ' . log::getPathToLog('mqtt2d') . ' 2>&1 &');
@@ -1079,7 +1080,7 @@ class mqtt2 extends eqLogic {
             }
             $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
          }
-         $eqLogic->setConfiguration('real_qType_namee',$eqLogic->getEqType_name());
+         $eqLogic->setConfiguration('real_eqType_name',$eqLogic->getEqType_name());
          $eqLogic->setEqType_name('mqtt2');
          $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
          $eqLogic->setConfiguration('manufacturer','jeedom');
@@ -1137,6 +1138,23 @@ class mqtt2 extends eqLogic {
 				}
 				$map_id[$_cmd['id']] = $cmd->getId();
 			}
+
+         if($eqLogic->getConfiguration('real_eqType_name')  == 'virtual' && $_eqLogic['logicalId'] == 'jeedom::monitor'){
+            $cmd = $eqLogic->getCmd('info', 'state');
+            if (!is_object($cmd)) {
+					$cmd = new mqtt2Cmd();
+               $cmd->setName('Etat');
+               $cmd->setType('info');
+               $cmd->setSubType('string');
+				}
+            $cmd->setEqType('mqtt2');
+				$cmd->setEqLogic_id($eqLogic->getId());
+            try {
+					$cmd->save();
+				} catch (Exception $e) {
+					$cmd->setName($cmd->getName() . ' remote ' . rand(0, 9999));
+            }
+         }
 
 			foreach ($_eqLogic['cmds'] as $_cmd) {
 				if (!isset($_cmd['value']) || !isset($map_id[$_cmd['value']]) || !isset($map_id[$_cmd['id']])) {
