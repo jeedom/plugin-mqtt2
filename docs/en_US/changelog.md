@@ -7,6 +7,7 @@
 - Added an online and offline message when starting and stopping (wanted or not) the daemon in topic_racine/state
 - If you have jeedom equipment::monitor from the virtual plugin the plugin will automatically add the state command (online or offline), if you already have this equipment you must restart the discovery
 - Fixed a bug on the transmission of the real type of equipment (when transmitting equipment between jeedom)
+- Fixed bug on duplication of event listening task
 
 # 12/08/2024
 

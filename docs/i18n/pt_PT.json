@@ -6,6 +6,7 @@
         "Si vous avez un équipement jeedom": "Se você tiver equipamento jeedom",
         "monitor depuis le plugin virtuel le plugin va automatiquement ajouter la commande state (online ou offline), si vous avez deja cet équipement il faut relancer la decouverte": "monitor a partir do plugin virtual o plugin adicionará automaticamente o comando state (online ou offline), caso você já possua este equipamento deverá reiniciar o Discovery",
         "Correction d'un bug sur la transmission du type réel de l'équipement (lors de la transmission d'équipement entre jeedom": "Corrigido bug na transmissão do tipo real de equipamento (ao transmitir equipamento entre jeedom",
+        "Correction d'un bug sur la duplication de la tache d'écoute des évenements": "Corrigido um bug na duplicação da tarefa de escuta de eventos",
         "12\/08\/2024": "12\/08\/2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Corrigido um bug ao enviar equipamentos da janela de configuração",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Adicionado um botão para ver os registros do mosquito (se estiver no modo brocker local",

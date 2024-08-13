@@ -7,6 +7,7 @@
 - Hinzufügen einer Online- und Offline-Meldung beim Starten und Stoppen (gewollt oder nicht) des Daemons in topic_racine/state
 - Wenn Sie Jeedom-Ausrüstung haben::Wenn Sie über das virtuelle Plugin überwachen, fügt das Plugin automatisch den Statusbefehl hinzu (online oder offline). Wenn Sie dieses Gerät bereits haben, müssen Sie die Erkennung neu starten
 - Es wurde ein Fehler bei der Übertragung des echten Ausrüstungstyps behoben (bei der Übertragung von Ausrüstung zwischen Jeedom))
+- Ein Fehler bei der Duplizierung der Ereignisüberwachungsaufgabe wurde behoben
 
 # 12.08.2024
 

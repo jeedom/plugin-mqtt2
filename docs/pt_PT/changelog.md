@@ -7,6 +7,7 @@
 - Adição de uma mensagem online e offline ao iniciar e parar (desejado ou não) o daemon em topic_racine/state
 - Se você tiver equipamento jeedom::monitor a partir do plugin virtual o plugin adicionará automaticamente o comando state (online ou offline), caso você já possua este equipamento deverá reiniciar o Discovery
 - Corrigido bug na transmissão do tipo real de equipamento (ao transmitir equipamento entre jeedom)
+- Corrigido um bug na duplicação da tarefa de escuta de eventos
 
 # 12/08/2024
 
