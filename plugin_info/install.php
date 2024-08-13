@@ -35,6 +35,12 @@ function mqtt2_install() {
 }
 
 function mqtt2_update() {
+  $listeners = listener::searchClassFunctionOption('mqtt2', 'handleEvent');
+  if(count($listeners) > 1){
+    foreach($listeners as $listener){
+        $listener->remove();
+      }
+  }
   $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
   if (!is_object($listener)) {
     $listener = new listener();
