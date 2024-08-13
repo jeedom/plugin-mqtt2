@@ -1291,6 +1291,12 @@ class mqtt2 extends eqLogic {
             return $customImage;
          }
       }
+      if($this->getConfiguration('real_eqType_name') != ''){
+         $file = 'plugins/'.$this->getConfiguration('real_eqType_name').'/plugin_info/' . $this->getConfiguration('real_eqType_name').'_icon.png';
+         if (!file_exists(__DIR__ . '/../../../../' . $file)) {
+            return $file;
+         }
+      }
       $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
       if (!file_exists(__DIR__ . '/../../../../' . $file)) {
          return 'plugins/mqtt2/plugin_info/mqtt2_icon.png';
