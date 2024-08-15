@@ -1174,7 +1174,6 @@ class mqtt2 extends eqLogic {
 				$cmd->setValue($map_id[$_cmd['value']]);
 				$cmd->save();
 			}
-         
       }
    }
 
