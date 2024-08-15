@@ -974,7 +974,11 @@ class mqtt2 extends eqLogic {
             $message['subtype'] = $cmd->getSubType();
          }
       }
-      self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
+      try {
+         self::publish(config::byKey('root_topic', __CLASS__) . '/cmd/event/' . $_option['event_id'], $message);
+      } catch (\Throwable $th) {
+         
+      }
    }
 
    public static function sendBattery() {
