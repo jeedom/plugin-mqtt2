@@ -1034,6 +1034,9 @@ class mqtt2 extends eqLogic {
             if(isset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd'])){
                unset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd']);
             }
+            if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
+					unset($_cmd['configuration']['calculValueOffset']);
+				}
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
       }
@@ -1098,9 +1101,6 @@ class mqtt2 extends eqLogic {
 			}
 			log::add('mqtt2', 'debug', 'EqLogic save, create cmd');
          foreach ($_eqLogic['cmds'] as &$_cmd) {
-				if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
-					unset($_cmd['configuration']['calculValueOffset']);
-				}
             if($_cmd['type'] == 'action'){
                $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
             }else{
@@ -1108,7 +1108,7 @@ class mqtt2 extends eqLogic {
             }
 				if (!is_object($cmd)) {
 					$cmd = new mqtt2Cmd();
-					utils::a2o($cmd, $_cmd);
+               utils::a2o($cmd, $_cmd);
 					$cmd->setId('');
 					$cmd->setValue('');
 				}
