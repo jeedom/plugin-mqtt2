@@ -1146,7 +1146,7 @@ class mqtt2 extends eqLogic {
 				$map_id[$_cmd['id']] = $cmd->getId();
 			}
 
-         if($eqLogic->getConfiguration('real_eqType')  == 'virtual' && $_eqLogic['logicalId'] == 'jeedom::monitor'){
+         if($_eqLogic['configuration']['real_eqType'] == 'virtual' && $_eqLogic['logicalId'] == 'jeedom::monitor'){
             $cmd = $eqLogic->getCmd('info', 'state');
             if (!is_object($cmd)) {
 					$cmd = new mqtt2Cmd();
