@@ -1060,7 +1060,7 @@ class mqtt2 extends eqLogic {
       if(!isset($_discovery['eqLogic']) || !is_array($_discovery['eqLogic']) || count($_discovery['eqLogic']) == 0){
          return;
       }
-      $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+      $eqLogics = array_merge(self::byLogicalId($_topic.'/cmd','mqtt2',true),self::byLogicalId($_topic,'mqtt2',true));
       foreach ($_discovery['eqLogic'] as $id => &$_eqLogic) {
          log::add('mqtt2', 'debug', '[Discovery] Received eqLogic : '.json_encode($_eqLogic));
          $eqLogic = null;
@@ -1084,15 +1084,13 @@ class mqtt2 extends eqLogic {
                   $eqLogic->setObject_id($object->getId());
                }
             }
-            $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
          }
-         $eqLogic->setConfiguration('real_eqType_name',$eqLogic->getEqType_name());
+         $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit', 0);
          $eqLogic->setEqType_name('mqtt2');
          $eqLogic->setConfiguration('link::eqLogic::id', $_eqLogic['id']);
          $eqLogic->setConfiguration('manufacturer','jeedom');
          $eqLogic->setConfiguration('device','mqtt');
-         
-         $eqLogic->setLogicalId($_topic.'/cmd');
+         $eqLogic->setLogicalId($_topic);
          try {
 				$eqLogic->save();
 			} catch (Exception $e) {
@@ -1102,9 +1100,15 @@ class mqtt2 extends eqLogic {
 			log::add('mqtt2', 'debug', 'EqLogic save, create cmd');
          foreach ($_eqLogic['cmds'] as &$_cmd) {
             if($_cmd['type'] == 'action'){
-               $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
+               $cmd = $eqLogic->getCmd(null, 'cmd/set/' . $_cmd['id']);
+               if(!is_object($cmd)){
+                  $cmd = $eqLogic->getCmd(null, 'set/' . $_cmd['id']);
+               }
             }else{
-               $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id'].'/value');
+               $cmd = $eqLogic->getCmd(null, 'cmd/event/' . $_cmd['id'].'/value');
+               if(!is_object($cmd)){
+                  $cmd = $eqLogic->getCmd(null, 'event/' . $_cmd['id']);
+               }
             }
 				if (!is_object($cmd)) {
 					$cmd = new mqtt2Cmd();
@@ -1116,9 +1120,9 @@ class mqtt2 extends eqLogic {
 				$cmd->setEqLogic_id($eqLogic->getId());
 				$cmd->setConfiguration('isRefreshCmd', ($_cmd['logicalId'] == 'refresh'));
             if($_cmd['type'] == 'action'){
-               $cmd->setLogicalId('set/' . $_cmd['id']);
+               $cmd->setLogicalId('cmd/set/' . $_cmd['id']);
             }else{
-               $cmd->setLogicalId('event/' . $_cmd['id'].'/value');
+               $cmd->setLogicalId('cmd/event/' . $_cmd['id'].'/value');
             }
             if($_cmd['type'] == 'action'){
                switch ($_cmd['subType']) {
@@ -1142,7 +1146,7 @@ class mqtt2 extends eqLogic {
 				$map_id[$_cmd['id']] = $cmd->getId();
 			}
 
-         if($eqLogic->getConfiguration('real_eqType_name')  == 'virtual' && $_eqLogic['logicalId'] == 'jeedom::monitor'){
+         if($eqLogic->getConfiguration('real_eqType')  == 'virtual' && $_eqLogic['logicalId'] == 'jeedom::monitor'){
             $cmd = $eqLogic->getCmd('info', 'state');
             if (!is_object($cmd)) {
 					$cmd = new mqtt2Cmd();
@@ -1295,8 +1299,8 @@ class mqtt2 extends eqLogic {
             return $customImage;
          }
       }
-      if($this->getConfiguration('real_eqType_name') != ''){
-         $file = 'plugins/'.$this->getConfiguration('real_eqType_name').'/plugin_info/' . $this->getConfiguration('real_eqType_name').'_icon.png';
+      if($this->getConfiguration('real_eqType') != ''){
+         $file = 'plugins/'.$this->getConfiguration('real_eqType').'/plugin_info/' . $this->getConfiguration('real_eqType').'_icon.png';
          if (file_exists(__DIR__ . '/../../../../' . $file)) {
             return $file;
          }
