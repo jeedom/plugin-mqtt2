@@ -8,6 +8,7 @@
         "Correction d'un bug sur la transmission du type réel de l'équipement (lors de la transmission d'équipement entre jeedom": "Es wurde ein Fehler bei der Übertragung des echten Ausrüstungstyps behoben (bei der Übertragung von Ausrüstung zwischen Jeedom)",
         "Correction d'un bug sur la duplication de la tache d'écoute des évenements": "Ein Fehler bei der Duplizierung der Ereignisüberwachungsaufgabe wurde behoben",
         "Sur les équipements exportés si le plugin source existe sur le jeedom cible alors jeedom affichera l'icone du plugin": "Wenn auf exportierten Geräten das Quell-Plugin auf dem Ziel-Jeedom vorhanden ist, zeigt Jeedom das Plugin-Symbol an",
+        "Pas d'erreur dans les logs lors de la transmission de commande (evite de casser jeedom si le demon est coupé": "Kein Fehler in den Protokollen während der Befehlsübertragung (vermeidet die Zerstörung von Jeedom, wenn der Daemon unterbrochen wird)",
         "12\/08\/2024": "12.08.2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Ein Fehler beim Senden von Ausrüstung aus dem Konfigurationsfenster wurde behoben",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Es wurde eine Schaltfläche zum Anzeigen von Mückenprotokollen hinzugefügt (sofern es sich im lokalen Brocker-Modus befindet)",
