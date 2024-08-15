@@ -1300,7 +1300,7 @@ class mqtt2 extends eqLogic {
          if (file_exists(__DIR__ . '/../../../../' . $file)) {
             return $file;
          }
-         return 'plugins/mqtt2/core/config/devices/jeedom/mqtt2.png';
+         return 'plugins/mqtt2/core/config/devices/jeedom/mqtt.png';
       }
       $file = 'plugins/mqtt2/core/config/devices/' . self::getImgFilePath($this->getConfiguration('device'));
       if (!file_exists(__DIR__ . '/../../../../' . $file)) {
