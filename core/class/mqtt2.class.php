@@ -25,6 +25,10 @@ class mqtt2 extends eqLogic {
       self::sendBattery();
    }
 
+   public static function deadCmd() {
+      return array();
+	}
+
    public static function devicesParameters($_device = '') {
       $return = array();
       foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
