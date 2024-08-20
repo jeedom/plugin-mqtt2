@@ -9,6 +9,7 @@
         "Correction d'un bug sur la duplication de la tache d'écoute des évenements": "Fixed bug on duplication of event listening task",
         "Sur les équipements exportés si le plugin source existe sur le jeedom cible alors jeedom affichera l'icone du plugin": "On exported equipment if the source plugin exists on the target jeedom then jeedom will display the plugin icon",
         "Pas d'erreur dans les logs lors de la transmission de commande (evite de casser jeedom si le demon est coupé": "No error in the logs when transmitting the command (avoids breaking jeedom if the daemon is cut off",
+        "Meilleurs gestion des commandes orphelines": "Better orphan order management",
         "12\/08\/2024": "12\/08\/2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Fixed a bug when sending equipment from the configuration window",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Added a button to see mosquitto logs (if it is in local broker mode)",
