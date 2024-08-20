@@ -553,7 +553,7 @@ class mqtt2 extends eqLogic {
                      }
                      $options = is_json($options, $options);
                      if ($cmd->getType() == 'action') {
-                        $cmd->execCmd(json_decode($options, true));
+                        $cmd->execCmd($options);
                      } else {
                         if (!is_array($options)) {
                            $cmd->event($options);
