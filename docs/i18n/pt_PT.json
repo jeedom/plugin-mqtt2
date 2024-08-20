@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "Mise en place d'optimisation sur la gestion des équipements tranmis avec jeedom 4.5": "Implementação de otimização na gestão de equipamentos transmitidos com jeedom 4.5",
         "20\/08\/2024": "20\/08\/2024",
         "Ajout d'un message online et offline lors de du lancement et de l'arret (voulu ou non) du démon dans topic_racine\/state": "Adição de uma mensagem online e offline ao iniciar e parar (desejado ou não) o daemon em topic_racine\/state",
         "Si vous avez un équipement jeedom": "Se você tiver equipamento jeedom",
