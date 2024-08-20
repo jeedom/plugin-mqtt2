@@ -22,7 +22,7 @@ function mqtt2_install() {
   if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
     config::save('mode', "none", 'mqtt2');
   }
-  $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
+  $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
   if (!is_object($listener)) {
     $listener = new listener();
   }
@@ -35,7 +35,13 @@ function mqtt2_install() {
 }
 
 function mqtt2_update() {
-  $listener = listener::byClassAndFunction(__CLASS__, 'handleEvent');
+  $listeners = listener::searchClassFunctionOption('mqtt2', 'handleEvent');
+  if(count($listeners) > 1){
+    foreach($listeners as $listener){
+        $listener->remove();
+      }
+  }
+  $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
   if (!is_object($listener)) {
     $listener = new listener();
   }

@@ -96,7 +96,7 @@
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "Aucun": "Nein",
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -168,7 +168,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
         "Aucune méthode correspondante à": "Keine Matching-Methode",
         "Equipement introuvable": "Gerät nicht gefunden",
         "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"

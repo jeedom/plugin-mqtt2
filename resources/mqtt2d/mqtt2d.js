@@ -29,6 +29,7 @@ Jeedom.log.info('Socket port : ' + args.socketport)
 Jeedom.log.info('MQTT : ' + args.mqtt_server)
 Jeedom.log.info('Username : ' + args.username)
 Jeedom.log.info('Password : ' + args.password)
+Jeedom.log.info('Root topic : ' + args.root_topic)
 Jeedom.log.info('PID file : ' + args.pid)
 Jeedom.log.info('Apikey : ' + args.apikey)
 Jeedom.log.info('Callback : ' + args.callback)
@@ -45,19 +46,35 @@ Jeedom.com.test()
 var mqtt = require('mqtt')
 if (args.ca) {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substring(0, 8),
     rejectUnauthorized: false,
     key: fs.readFileSync(args.client_key),
     cert: fs.readFileSync(args.client_crt),
     username: args.username,
-    password: args.password
+    password: args.password,
+    will:{
+      topic : args.root_topic+'/state',
+      payload: 'offline',
+      retain : true,
+      properties : {
+        willDelayInterval : 30
+      }
+    }
   })
 } else {
   var client = mqtt.connect(args.mqtt_server, {
-    clientId: "mqtt-jeedom_"+Math.random().toString(16).substr(2, 8),
+    clientId: "mqtt-jeedom_"+Math.random().toString(16).substring(0, 8),
     rejectUnauthorized: false,
     username: args.username,
-    password: args.password
+    password: args.password,
+    will:{
+      topic : args.root_topic+'/state',
+      payload: 'offline',
+      retain : true,
+      properties : {
+        willDelayInterval : 30
+      }
+    }
   })
 }
 
@@ -76,6 +93,7 @@ client.on('reconnect', function() {
 client.on('connect', function() {
   Jeedom.log.info('Connection to mqtt server successfull')
   Jeedom.log.info('Subscription to all topics')
+  client.publish(args.root_topic+'/state','online',{retain : true})
   client.subscribe('#', function(err) {
     if (err) {
       Jeedom.log.error('Error on Subscription : ' + err)
