@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não há informação sobre a atualização é porque se trata apenas de atualização de documentação, tradução ou texto",
+        "20\/08\/2024": "20\/08\/2024",
         "Ajout d'un message online et offline lors de du lancement et de l'arret (voulu ou non) du démon dans topic_racine\/state": "Adição de uma mensagem online e offline ao iniciar e parar (desejado ou não) o daemon em topic_racine\/state",
         "Si vous avez un équipement jeedom": "Se você tiver equipamento jeedom",
         "monitor depuis le plugin virtuel le plugin va automatiquement ajouter la commande state (online ou offline), si vous avez deja cet équipement il faut relancer la decouverte": "monitor a partir do plugin virtual o plugin adicionará automaticamente o comando state (online ou offline), caso você já possua este equipamento deverá reiniciar o Discovery",
@@ -10,6 +11,7 @@
         "Sur les équipements exportés si le plugin source existe sur le jeedom cible alors jeedom affichera l'icone du plugin": "Em equipamentos exportados, se o plugin de origem existir no jeedom alvo, então o jeedom exibirá o ícone do plugin",
         "Pas d'erreur dans les logs lors de la transmission de commande (evite de casser jeedom si le demon est coupé": "Nenhum erro nos logs durante a transmissão do comando (evita quebrar o jeedom se o daemon for cortado",
         "Meilleurs gestion des commandes orphelines": "Melhor gerenciamento de pedidos órfãos",
+        "Correction d'un bug sur l'éxecution des commandes type message": "Corrigido um bug ao executar comandos de tipo de mensagem",
         "12\/08\/2024": "12\/08\/2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Corrigido um bug ao enviar equipamentos da janela de configuração",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Adicionado um botão para ver os registros do mosquito (se estiver no modo brocker local",

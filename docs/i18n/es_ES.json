@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización es porque se trata solo de la actualización de documentación, traducción o texto",
+        "20\/08\/2024": "20\/08\/2024",
         "Ajout d'un message online et offline lors de du lancement et de l'arret (voulu ou non) du démon dans topic_racine\/state": "Adición de un mensaje en línea y fuera de línea al iniciar y detener (se desee o no) el demonio en topic_racine\/state",
         "Si vous avez un équipement jeedom": "Si tienes equipo jeedom",
         "monitor depuis le plugin virtuel le plugin va automatiquement ajouter la commande state (online ou offline), si vous avez deja cet équipement il faut relancer la decouverte": "monitorear desde el complemento virtual el complemento agregará automáticamente el comando de estado (en línea o fuera de línea), si ya tiene este equipo debe reiniciar el descubrimiento",
@@ -10,6 +11,7 @@
         "Sur les équipements exportés si le plugin source existe sur le jeedom cible alors jeedom affichera l'icone du plugin": "En el equipo exportado, si el complemento de origen existe en el jeedom de destino, jeedom mostrará el ícono del complemento",
         "Pas d'erreur dans les logs lors de la transmission de commande (evite de casser jeedom si le demon est coupé": "No hay errores en los registros durante la transmisión de comandos (evita romper el jeedom si se corta el demonio)",
         "Meilleurs gestion des commandes orphelines": "Mejor gestión de pedidos huérfanos",
+        "Correction d'un bug sur l'éxecution des commandes type message": "Se corrigió un error al ejecutar comandos de tipo mensaje",
         "12\/08\/2024": "12\/08\/2024",
         "Correction d'un bug sur l'envoi des équipements depuis la fenetre de configuration": "Se corrigió un error al enviar equipos desde la ventana de configuración",
         "Ajout d'un bouton pour voir les logs de mosquitto (si celui est en mode brocker local": "Se agregó un botón para ver los registros de mosquitos (si está en modo de administrador local)",
