@@ -953,7 +953,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function handleEvent($_option) {
-      $cmd = cmd::byId($_option['event_id']);
+      $cmd = (isset($_option['object']) && is_object($_option['object'])) ? $_option['object'] : cmd::byId($_option['event_id']);
       if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $cmd->getEqLogic()->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
          return;
       }
