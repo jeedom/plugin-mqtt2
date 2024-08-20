@@ -11,6 +11,7 @@
 - Sur les équipements exportés si le plugin source existe sur le jeedom cible alors jeedom affichera l'icone du plugin
 - Pas d'erreur dans les logs lors de la transmission de commande (evite de casser jeedom si le demon est coupé)
 - Meilleurs gestion des commandes orphelines
+- Correction d'un bug sur l'éxecution des commandes type message
 
 # 12/08/2024
 
