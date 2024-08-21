@@ -1054,7 +1054,8 @@ class mqtt2 extends eqLogic {
          foreach ($eqLogic->getCmd('info') as $cmd) {
             self::handleEvent(array(
                'event_id' => $cmd->getId(),
-               'value' => $cmd->execCmd()
+               'value' => $cmd->execCmd(),
+               'object' => $cmd
             ));
          }
       }
