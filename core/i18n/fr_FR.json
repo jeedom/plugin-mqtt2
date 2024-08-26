@@ -193,6 +193,7 @@
         "Veuillez installer Mosquitto": "Veuillez installer Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Veuillez d\\'abord installer Mosquitto",
         "Veuillez renseigner l'adresse complète du broker": "Veuillez renseigner l'adresse complète du broker",
+        "Le topic racine n\\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.": "Le topic racine n\\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.",
         "Service mosquitto non lancé, je lance une installation": "Service mosquitto non lancé, je lance une installation",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration",
         "Démarrage du démon MQTT Manager": "Démarrage du démon MQTT Manager",

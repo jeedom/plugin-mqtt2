@@ -193,6 +193,7 @@
         "Veuillez installer Mosquitto": "Instale Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Instale Mosquitto primero",
         "Veuillez renseigner l'adresse complète du broker": "Por favor complete la dirección completa del corredor",
+        "Le topic racine n\\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.": "El tema raíz no es válido. El tema raíz no puede ser idéntico a un tema al que esté suscrito un complemento",
         "Service mosquitto non lancé, je lance une installation": "Servicio Mosquitto no iniciado, inicio una instalación",
         "Veuillez vérifier la configuration": "Por favor revise la configuración",
         "Démarrage du démon MQTT Manager": "Iniciar el demonio del administrador de MQTT",
