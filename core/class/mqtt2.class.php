@@ -405,6 +405,9 @@ class mqtt2 extends eqLogic {
    }
 
    public static function deamon_start() {
+      if(mqtt2::getPluginForTopic(config::byKey('root_topic', __CLASS__)) != __CLASS__){
+         throw new Exception(__('Le topic racine n\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.', __FILE__));
+      }  
       log::remove(__CLASS__ . '_update');
       if (config::byKey('mode', __CLASS__, 'local') == 'local') {
          if (shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0) {
