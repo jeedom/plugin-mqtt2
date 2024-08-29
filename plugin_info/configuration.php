@@ -236,7 +236,7 @@ if (!isConnect()) {
           type: "POST",
           url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
           data: {
-            action: "receivedFromJeedomCloud"
+            action: "receivedFromJeedomCloud",
             local_topic : result,
             remote_topic : result
           },
