@@ -33,7 +33,7 @@ class mqtt2 extends eqLogic {
       $conf .= "cleansession true\n";
       $conf .= "notifications false\n";
       $conf .= "remote_clientid cloud-jeedom-".config::genKey(8)."\n";
-      $conf .= "remote_username ".mb_strtolower(config::byKey('market::username')."\n";
+      $conf .= "remote_username ".mb_strtolower(config::byKey('market::username'))."\n";
       $conf .= "remote_password ".config::byKey('market::password')."\n";
       $conf .= "local_username ".$local_authentifications[0]."\n";
       $conf .= "local_password ".$local_authentifications[1]."\n";

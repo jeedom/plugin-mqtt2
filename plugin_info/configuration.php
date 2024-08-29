@@ -171,7 +171,7 @@ if (!isConnect()) {
           <a class="btn btn-xs btn-warning" id="bt_mqtt2ReceivedFromJeedom"><i class="fas fa-file-import"></i> {{Recevoir un Jeedom}}</a>
         </div>
         <div class="col-md-4">
-            <?php echo '<span class="label label-danger">{{Identifiant Jeedom cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
+            <?php echo '<span class="label label-info">{{Identifiant Jeedom cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
         </div>
       </div>
       <div class="form-group">
