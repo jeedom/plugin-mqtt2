@@ -40,7 +40,6 @@ class mqtt2 extends eqLogic {
       $conf .= "local_username ".$local_authentifications[0]."\n";
       $conf .= "local_password ".$local_authentifications[1]."\n";
       $conf .= "start_type automatic\n";
-      $conf .= "bridge_insecure true\n";
       $conf .= "bridge_cafile ".__DIR__."/../config/ca_jeedom_cloud.crt\n";
       $conf .= "# End autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
       $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' -> '.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' -> '.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
