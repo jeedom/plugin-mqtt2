@@ -295,11 +295,15 @@ class mqtt2 extends eqLogic {
             '/data/ssl/' => '/data/config/ssl/',
          );
       }
-      $replace['#cloud_username#'] = mb_strtolower(config::byKey('market::username'));
-      $replace['#cloud_password#'] = config::byKey('market::password');
+     
       config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
+      $replace = array(
+         "\r\n" => "\n",
+         '#cloud_username#' => mb_strtolower(config::byKey('market::username')),
+         '#cloud_password#' => config::byKey('market::password'),
+      );
       //shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
-      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
+      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
       } elseif (jeedom::getHardwareName() == 'docker') {
