@@ -29,7 +29,7 @@ class mqtt2 extends eqLogic {
       $conf = "--- Begin autogenerate for ".$_local_topic." -> ".$_remote_topic." ---\n";
       $conf .= "connection jeedom-".config::genKey(8)."\n";
       $conf .= "address mqtt.jeedom.com:8883\n";
-      $conf .= "topic # both 0 ".$_local_topic."/ ".mb_strtolower(config::byKey('market::username')."/".$_remote_topic."/\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ ".mb_strtolower(config::byKey('market::username'))."/".$_remote_topic."/\n";
       $conf .= "cleansession true\n";
       $conf .= "notifications false\n";
       $conf .= "remote_clientid cloud-jeedom-".config::genKey(8)."\n";
