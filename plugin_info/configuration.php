@@ -163,6 +163,18 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
+        <label class="col-md-4 control-label">{{Jeedom cloud (non disponible pour le moment)}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
+        </label>
+        <div class="col-md-4">
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToJeedomCloud"><i class="fas fa-file-export"></i>> {{Envoyer ce Jeedom}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2ReceivedFromJeedom"><i class="fas fa-file-import"></i> {{Recevoir un Jeedom}}</a>
+        </div>
+        <div class="col-md-4">
+            <?php echo '<span class="label label-danger">{{Identifiant Jeedom cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
         </label>
@@ -195,6 +207,55 @@ if (!isConnect()) {
   </fieldset>
 </form>
 <script>
+
+  $('#bt_mqtt2SendToJeedomCloud').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "sendToJeedomCloud"
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $.fn.showAlert({message: '{{Envoi des informations de ce Jeedom dans le cloud réussie}}',level: 'success',emptyBefore: true})
+      }
+    })
+  });
+
+  $('#bt_mqtt2ReceivedFromJeedom').off('click').on('click', function() {
+    jeeDialog.prompt("{{Identifiant cloud du Jeedom distant}} ?", function(result) {
+      if (result !== null) {
+        $.ajax({
+          type: "POST",
+          url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+          data: {
+            action: "receivedFromJeedomCloud"
+            local_topic : result,
+            remote_topic : result
+          },
+          dataType: 'json',
+          error: function(error) {
+            $.fn.showAlert({message: error.message,level: 'danger'})
+          },
+          success: function(data) {
+            if (data.state != 'ok') {
+              $.fn.showAlert({message: data.result,level: 'danger'})
+              return
+            }
+            $.fn.showAlert({message: '{{Ajout de la reception du Jeedom :}} '+result+' {{réussie}}',level: 'success',emptyBefore: true})
+          }
+        })
+      }
+    })
+
+  });
             
   $('#bt_mqtt2DisplayTransmitDevice').off('click').on('click', function() {
     jeeDialog.dialog({
@@ -236,7 +297,7 @@ if (!isConnect()) {
     let span = $(this).parent();
     bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
       if (result) {
-          $.ajax({
+        $.ajax({
           type: "POST",
           url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
           data: {

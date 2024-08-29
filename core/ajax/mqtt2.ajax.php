@@ -43,6 +43,20 @@ try {
     }
     ajax::success();
   }
+
+  if (init('action') == 'sendToJeedomCloud') {
+    mqtt2::syncTopicToJeedomCloud(config::byKey('root_topic', 'mqtt2'),config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10));
+    ajax::success();
+  }
+
+  if (init('action') == 'receivedFromJeedomCloud') {
+    mqtt2::syncTopicToJeedomCloud(init('local_topic'),init('remote_topic'));
+    if (!in_array(init('local_topic'),explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+      config::save('jeedom::link',trim(config::byKey('jeedom::link', 'mqtt2').','.init('local_topic'),','),'mqtt2');
+      return;
+    }
+    ajax::success();
+  }
   
 
   if (init('action') == 'installMosquitto') {

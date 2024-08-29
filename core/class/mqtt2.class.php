@@ -21,22 +21,29 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
-   public static function sendToJeedomCloud($_local_topic,$_remote_topic){
+   public static function syncTopicToJeedomCloud($_local_topic = '',$_remote_topic = ''){
+      if($_local_topic == '' || $_remote_topic == ''){
+         throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
+      }
       $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      $conf = 'connection jeedom-'.config::genKey(8).'
-               address mqtt.jeedom.com:8883
-               topic # both 0 '.$_local_topic.'/ '.mb_strtolower(config::byKey('market::username').'/'.$_remote_topic.'/
-               cleansession true
-               notifications false
-               remote_clientid cloud-jeedom-'.config::genKey(8).'
-               remote_username '.mb_strtolower(config::byKey('market::username').'
-               remote_password '.config::byKey('market::password').'
-               local_username '.$local_authentifications[0].'
-               local_password '.$local_authentifications[1].'
-               start_type automatic
-               bridge_insecure true
-               bridge_cafile /tmp/ca.crt';
-
+      $conf = "--- Begin autogenerate for ".$_local_topic." -> ".$_remote_topic." ---\n";
+      $conf .= "connection jeedom-".config::genKey(8)."\n";
+      $conf .= "address mqtt.jeedom.com:8883\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ ".mb_strtolower(config::byKey('market::username')."/".$_remote_topic."/\n";
+      $conf .= "cleansession true\n";
+      $conf .= "notifications false\n";
+      $conf .= "remote_clientid cloud-jeedom-".config::genKey(8)."\n";
+      $conf .= "remote_username ".mb_strtolower(config::byKey('market::username')."\n";
+      $conf .= "remote_password ".config::byKey('market::password')."\n";
+      $conf .= "local_username ".$local_authentifications[0]."\n";
+      $conf .= "local_password ".$local_authentifications[1]."\n";
+      $conf .= "start_type automatic\n";
+      $conf .= "bridge_insecure true\n";
+      $conf .= "bridge_cafile ".__DIR__."/../config/ca_jeedom_cloud.crt\n";
+      $conf .= "--- End autogenerate for ".$_local_topic." -> ".$_remote_topic." ---\n";
+      $current_conf = preg_replace('/(--- Begin autogenerate for '.$_local_topic.' -> '.$_remote_topic.' ---)((.|\n)*)(--- End autogenerate for '.$_local_topic.' -> '.$_remote_topic.' ---)/m', "", config::byKey('mosquitto::parameters', __CLASS__));
+      config::save('mosquitto::parameters', $current_conf."\n\n".$conf, __CLASS__);
+      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
    }
 
    public static function cronDaily(){
