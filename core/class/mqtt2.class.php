@@ -1194,6 +1194,7 @@ class mqtt2 extends eqLogic {
                $cmd->setType('info');
                $cmd->setSubType('string');
 				}
+            $cmd->setLogicalId('state');
             $cmd->setEqType('mqtt2');
 				$cmd->setEqLogic_id($eqLogic->getId());
             try {
