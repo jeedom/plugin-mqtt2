@@ -42,7 +42,7 @@ class mqtt2 extends eqLogic {
       $conf .= "bridge_cafile ".__DIR__."/../config/ca_jeedom_cloud.crt\n";
       $conf .= "# End autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
       $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' -> '.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' -> '.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
-      config::save('mosquitto::parameters', $current_conf."\n\n".$conf, __CLASS__);
+      config::save('mosquitto::parameters', trim($current_conf)."\n\n".trim($conf), __CLASS__);
       mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
    }
 
