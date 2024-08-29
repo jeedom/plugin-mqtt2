@@ -224,6 +224,7 @@ if (!isConnect()) {
           $.fn.showAlert({message: data.result,level: 'danger'})
           return
         }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
         $.fn.showAlert({message: '{{Envoi des informations de ce Jeedom dans le cloud réussie}}',level: 'success',emptyBefore: true})
       }
     })
