@@ -67,6 +67,7 @@ if (args.ca) {
     rejectUnauthorized: false,
     username: args.username,
     password: args.password,
+    clean: false,
     will:{
       topic : args.root_topic+'/state',
       payload: 'offline',
