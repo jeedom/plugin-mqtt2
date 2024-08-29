@@ -21,6 +21,24 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function sendToJeedomCloud($_local_topic,$_remote_topic){
+      $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      $conf = 'connection jeedom-'.config::genKey(8).'
+               address mqtt.jeedom.com:8883
+               topic # both 0 '.$_local_topic.'/ '.mb_strtolower(config::byKey('market::username').'/'.$_remote_topic.'/
+               cleansession true
+               notifications false
+               remote_clientid cloud-jeedom-'.config::genKey(8).'
+               remote_username '.mb_strtolower(config::byKey('market::username').'
+               remote_password '.config::byKey('market::password').'
+               local_username '.$local_authentifications[0].'
+               local_password '.$local_authentifications[1].'
+               start_type automatic
+               bridge_insecure true
+               bridge_cafile /tmp/ca.crt';
+
+   }
+
    public static function cronDaily(){
       self::sendBattery();
    }
