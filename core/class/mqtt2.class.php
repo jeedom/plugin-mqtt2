@@ -29,12 +29,12 @@ class mqtt2 extends eqLogic {
       $conf = "# Begin autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
       $conf .= "connection jeedom-".config::genKey(8)."\n";
       $conf .= "address mqtt.jeedom.com:8883\n";
-      $conf .= "topic # both 0 ".$_local_topic."/ ".mb_strtolower(config::byKey('market::username'))."/".$_remote_topic."/\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ #cloud_username#/".$_remote_topic."/\n";
       $conf .= "cleansession true\n";
       $conf .= "notifications false\n";
       $conf .= "remote_clientid cloud-jeedom-".config::genKey(8)."\n";
-      $conf .= "remote_username ".mb_strtolower(config::byKey('market::username'))."\n";
-      $conf .= "remote_password ".config::byKey('market::password')."\n";
+      $conf .= "remote_username #cloud_username#\n";
+      $conf .= "remote_password #cloud_password#\n";
       $conf .= "local_username ".$local_authentifications[0]."\n";
       $conf .= "local_password ".$local_authentifications[1]."\n";
       $conf .= "start_type automatic\n";
@@ -295,6 +295,8 @@ class mqtt2 extends eqLogic {
             '/data/ssl/' => '/data/config/ssl/',
          );
       }
+      $replace['#cloud_username#'] = mb_strtolower(config::byKey('market::username'));
+      $replace['#cloud_password#'] = config::byKey('market::password');
       config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
       //shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
