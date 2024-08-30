@@ -29,12 +29,12 @@ class mqtt2 extends eqLogic {
       $_remote_topic = trim($_remote_topic);
       $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
       $conf = "# Begin autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
-      $conf .= "connection jeedom-".config::genKey(8)."\n";
+      $conf .= "connection #cloud_username#-jeedom-".config::genKey(8)."\n";
       $conf .= "address mqtt.jeedom.com:8883\n";
       $conf .= "topic # both 0 ".$_local_topic."/ #cloud_username#/".$_remote_topic."/\n";
       $conf .= "cleansession true\n";
       $conf .= "notifications false\n";
-      $conf .= "remote_clientid cloud-jeedom-".config::genKey(8)."\n";
+      $conf .= "remote_clientid cloud-#cloud_username#-jeedom-".config::genKey(8)."\n";
       $conf .= "remote_username #cloud_username#\n";
       $conf .= "remote_password #cloud_password#\n";
       $conf .= "local_username ".$local_authentifications[0]."\n";
@@ -303,7 +303,7 @@ class mqtt2 extends eqLogic {
          '#cloud_username#' => mb_strtolower(config::byKey('market::username')),
          '#cloud_password#' => config::byKey('market::password'),
       );
-      //shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
+      shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
