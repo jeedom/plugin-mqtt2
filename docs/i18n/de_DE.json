@@ -6,6 +6,7 @@
         "Ajout d'une sécurité pour eviter de mettre en topic racine un topic utilisé par un plugin": "Es wurde Sicherheit hinzugefügt, um zu verhindern, dass ein von einem Plugin verwendetes Thema als Stammthema festgelegt wird",
         "Ajout de la possibilité d'envoyer les informations au cloud Jeedom pour faire communiquer deux jeedoms à travers internet (non ouvert aux utilisateurs pour le moment": "Es wurde die Möglichkeit hinzugefügt, Informationen an die Jeedom-Cloud zu senden, um zwischen zwei Jeedoms über das Internet zu kommunizieren (derzeit für Benutzer nicht verfügbar)",
         "Activation de la découverte auto par defaut (désactivable depuis Plugin -> Programmation -> Mqtt manager": "Standardmäßige Aktivierung der automatischen Erkennung (kann über Plugin -> Programmierung -> Mqtt-Manager deaktiviert werden)",
+        "Correction d'un bug sur la création de la commande indicant l'état d'un jeedom distant (a travers l'équipement Jeeodm monitor du plugin virtuel": "Es wurde ein Fehler beim Erstellen des Befehls behoben, der den Status eines Remote-Jeedoms anzeigt (über die Jeeodm-Monitorausrüstung des virtuellen Plugins)",
         "20\/08\/2024": "20.08.2024",
         "Ajout d'un message online et offline lors de du lancement et de l'arret (voulu ou non) du démon dans topic_racine\/state": "Hinzufügen einer Online- und Offline-Meldung beim Starten und Stoppen (gewollt oder nicht) des Daemons in topic_racine\/state",
         "Si vous avez un équipement jeedom": "Wenn Sie Jeedom-Ausrüstung haben",
