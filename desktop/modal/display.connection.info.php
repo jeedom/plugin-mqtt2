@@ -30,4 +30,4 @@ if($connection_info['ip'] == null){
     throw new Exception(__("L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration",__FILE__));
 }
 ?>
-<pre><?php echo json_encode($connection_info); ?></pre>
+<pre><?php echo json_encode($connection_info, JSON_PRETTY_PRINT); ?></pre>
