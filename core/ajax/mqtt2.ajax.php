@@ -30,6 +30,19 @@ try {
     mqtt2::sendDiscovery();
     ajax::success();
   }
+  
+  if (init('action') == 'sendToLocalMqtt') {
+    $configuration = json_decode(init('configuration'));
+    mqtt2::syncTopicToLocalMqtt(
+      $configuration['topic'],
+      $configuration['topic'].'-'.$configuration['id'],
+      $configuration['username'],
+      $configuration['password'],
+      $configuration['ip'],
+      $configuration['port']
+    )
+    ajax::success($return);
+  }
 
   if (init('action') == 'eqLogicTransmitConfiguration') {
     $eqLogics = json_decode(init('eqLogics'),true);

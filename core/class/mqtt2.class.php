@@ -47,6 +47,31 @@ class mqtt2 extends eqLogic {
       mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
    }
 
+   public static function syncTopicToLocalMqtt($_local_topic,$_remote_topic,$_username,$_password,$_ip,$_port = 1883){
+      if($_local_topic == '' || $_remote_topic == ''){
+         throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
+      }
+      $_local_topic = trim($_local_topic);
+      $_remote_topic = trim($_remote_topic);
+      $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      $conf = "# Begin autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
+      $conf .= "connection jeedom-".config::genKey(8)."\n";
+      $conf .= "address ".$_ip.":".$_port."\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ ".$_remote_topic."/\n";
+      $conf .= "cleansession true\n";
+      $conf .= "notifications false\n";
+      $conf .= "remote_clientid jeedom-".config::genKey(8)."\n";
+      $conf .= "remote_username ".$_username."\n";
+      $conf .= "remote_password ".$_password."\n";
+      $conf .= "local_username ".$local_authentifications[0]."\n";
+      $conf .= "local_password ".$local_authentifications[1]."\n";
+      $conf .= "start_type automatic\n";
+      $conf .= "# End autogenerate for ".$_local_topic." -> ".$_remote_topic."\n";
+      $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' -> '.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' -> '.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
+      config::save('mosquitto::parameters', trim($current_conf)."\n\n".trim($conf), __CLASS__);
+      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+   }
+
    public static function cronDaily(){
       self::sendBattery();
    }
