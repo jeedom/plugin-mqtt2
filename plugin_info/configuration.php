@@ -166,23 +166,20 @@ if (!isConnect()) {
         <label class="col-md-4 control-label">{{Mqtt local}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
         </label>
-        <div class="col-md-4">
+        <div class="col-md-8"> 
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-file-export"></i>> {{Informations MQTT}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-export"></i>> {{Envoyer ce Jeedom}}</a>
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-file-export"></i>> {{Copier les informations MQTT}}</a>
-        </div>
-        <div class="col-md-4">
-            <?php echo '<span class="label label-info">{{Identifiant Jeedom cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
-        </div>
+         </div>
       </div>
       <div class="form-group mqtt2Mode docker local">
         <label class="col-md-4 control-label">{{Mqtt Jeedom cloud service (non disponible pour le moment)}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
         </label>
-        <div class="col-md-4">
+        <div class="col-md-5">
           <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToJeedomCloud"><i class="fas fa-file-export"></i>> {{Envoyer ce Jeedom}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2ReceivedFromJeedom"><i class="fas fa-file-import"></i> {{Recevoir un Jeedom}}</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?php echo '<span class="label label-info">{{Identifiant Jeedom cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
         </div>
       </div>
