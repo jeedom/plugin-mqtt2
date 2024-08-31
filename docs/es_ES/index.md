@@ -131,6 +131,8 @@ Luego solo tienes que regresar al jeedom aún en la configuración del complemen
 
 ## Con asistente
 
+En el Jeedom de destino (el principal) debes ir a la configuración del complemento y hacer clic en “Información MQTT” y luego copiar lo que se muestra en la ventana que aparece. 
+En la fuente Jeedom (la que envía la información) debes hacer clic en “Enviar este Jeedom” y pegar la información copiada justo antes.
 
 ## Manuellement
 

@@ -131,6 +131,8 @@ Depois é só retornar ao jeedom ainda na configuração do plugin e fazer "Envi
 
 ## Com assistente
 
+No alvo Jeedom (o principal) você deve ir até a configuração do plugin e clicar em “Informações MQTT” e depois copiar o que é exibido na janela que aparece. 
+Na fonte Jeedom (aquele que envia as informações) você deve clicar em “Enviar este Jeedom” e colar as informações copiadas logo antes.
 
 ## Manuellement
 

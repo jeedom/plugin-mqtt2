@@ -207,6 +207,8 @@
         "Si vous changé la valeur du champs \"Template de publication\" (vide par défaut) alors l'auto découverte ne créera pas les bonnes commandes, c'est a vous d'adapter la configuration dans ce cas": "Se você alterar o valor do campo \"Modelo de publicação\" (vazio por padrão), a descoberta automática não criará os pedidos corretos, cabe a você adaptar a configuração neste caso",
         "Liée deux mosquitto différent": "Vinculou dois mosquitos diferentes",
         "Avec assistant": "Com assistente",
+        "Sur le Jeedom cible (le principale) il faut aller dans la configuration du plugin et cliquer sur \"Informations MQTT\" puis copier ce qui s'affiche dans la fenetre qui apparait": "No alvo Jeedom (o principal) você deve ir até a configuração do plugin e clicar em “Informações MQTT” e depois copiar o que é exibido na janela que aparece",
+        "Sur le Jeedom source (celui qui envoie les informations) il faut cliquer sur \"Envoyer ce Jeedom\" et coller les informations copiées juste avant": "Na fonte Jeedom (aquele que envia as informações) você deve clicar em “Enviar este Jeedom” e colar as informações copiadas logo antes",
         "Il est possible de lier des topics entre plusieurs mosquitto, voilà la configuration a ajouter dans mosquitto": "É possível vincular tópicos entre vários mosquitos, aqui está a configuração para adicionar no mosquito",
         "La configuration n'est a faire que sur un des brocker mosquitto": "A configuração só precisa ser feita em um dos brocker mosquitto",
         "Exemple vous voulez envoyer depuis jeedom_2 des équipements dans jeedom_1 en ayant": "Exemplo, você deseja enviar equipamento de jeedom_2 para jeedom_1 tendo",

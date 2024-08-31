@@ -207,6 +207,8 @@
         "Si vous changé la valeur du champs \"Template de publication\" (vide par défaut) alors l'auto découverte ne créera pas les bonnes commandes, c'est a vous d'adapter la configuration dans ce cas": "If you change the value of the \"Publication template\" field (empty by default) then auto discovery will not create the correct orders, it is up to you to adapt the configuration in this case",
         "Liée deux mosquitto différent": "Linked two different mosquitto",
         "Avec assistant": "With assistant",
+        "Sur le Jeedom cible (le principale) il faut aller dans la configuration du plugin et cliquer sur \"Informations MQTT\" puis copier ce qui s'affiche dans la fenetre qui apparait": "On the target Jeedom (the main one) you have to go to the plugin configuration and click on \"MQTT Information\" then copy what is displayed in the window that appears",
+        "Sur le Jeedom source (celui qui envoie les informations) il faut cliquer sur \"Envoyer ce Jeedom\" et coller les informations copiées juste avant": "On the source Jeedom (the one that sends the information) you must click on \"Send this Jeedom\" and paste the information copied just before",
         "Il est possible de lier des topics entre plusieurs mosquitto, voilà la configuration a ajouter dans mosquitto": "It is possible to link topics between several mosquitto, here is the configuration to add in mosquitto",
         "La configuration n'est a faire que sur un des brocker mosquitto": "The configuration only needs to be done on one of the brocker mosquitto",
         "Exemple vous voulez envoyer depuis jeedom_2 des équipements dans jeedom_1 en ayant": "Example you want to send equipment from jeedom_2 to jeedom_1 by having",

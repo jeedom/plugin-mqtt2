@@ -131,6 +131,8 @@ Dann müssen Sie nur noch in der Plugin-Konfiguration zum Jeedom zurückkehren u
 
 ## Mit Assistent
 
+Auf dem Ziel-Jeedom (dem Haupt-Jeedom) müssen Sie zur Plugin-Konfiguration gehen und auf „MQTT-Informationen“ klicken und dann kopieren, was im angezeigten Fenster angezeigt wird. 
+Auf dem Quell-Jeedom (demjenigen, der die Informationen sendet) müssen Sie auf „Diesen Jeedom senden“ klicken und die zuvor kopierten Informationen einfügen.
 
 ## Manuellement
 

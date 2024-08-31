@@ -131,6 +131,8 @@ Then you just have to return to the jeedom still on the plugin configuration and
 
 ## With assistant
 
+On the target Jeedom (the main one) you have to go to the plugin configuration and click on "MQTT Information" then copy what is displayed in the window that appears. 
+On the source Jeedom (the one that sends the information) you must click on "Send this Jeedom" and paste the information copied just before.
 
 ## Manuellement
 
