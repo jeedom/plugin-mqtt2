@@ -131,8 +131,8 @@ Depois é só retornar ao jeedom ainda na configuração do plugin e fazer "Envi
 
 ## Com assistente
 
-No alvo Jeedom (o principal) você deve ir até a configuração do plugin e clicar em “Informações MQTT” e depois copiar o que é exibido na janela que aparece. 
-Na fonte Jeedom (aquele que envia as informações) você deve clicar em “Enviar este Jeedom” e colar as informações copiadas logo antes.
+No alvo Jeedom (o principal) você deve ir até a configuração do plugin e clicar em "Informações MQTT" no nível de "Transmissão local Mqtt" e depois copiar o que é exibido na janela que aparece. 
+Na fonte Jeedom (aquela que envia as informações) você deve clicar em "Enviar" no nível de "Transmissão local Mqtt" e colar as informações copiadas logo antes.
 
 ## Manuellement
 
@@ -207,7 +207,7 @@ Para vincular o Jeedom pela internet existem várias possibilidades: você pode 
 >
 > O serviço de nuvem Jeedom não está aberto aos usuários, mas primeiro precisamos ter certeza de que todos os testes de carga e confiabilidade estão ok
 
-Para utilizar o serviço de nuvem Jeedom é muito simples, na fonte Jeedom (aquela que envia as informações) basta ir até a configuração do plugin e clicar em "Enviar este Jeedom" no nível de "Nuvem Jeedom", então você precisa observar “Identificador de nuvem Jeedom". Em seguida vá até o Jeedom alvo (aquele que recebe as informações) e na configuração do plugin clique em “Receber um Jeedom” e indique “Jeedom cloud identificador” da fonte (recuperado no passo anterior).
+Para utilizar o serviço de nuvem Jeedom é muito simples, na fonte Jeedom (aquela que envia as informações) basta ir até a configuração do plugin e clicar em "Enviar" no nível de "nuvem Jeedom", então você precisa observe “Identificador de nuvem Jeedom". Em seguida vá até o Jeedom alvo (aquele que recebe as informações) e na configuração do plugin clique em “Receber” e indique “Cloud ID” da fonte (recuperada no passo anterior).
 
 É isso, basta verificar o equipamento a ser transmitido na fonte Jeedom e depois clicar em “Enviar descoberta” na configuração do plugin fonte Jeedom.
 
