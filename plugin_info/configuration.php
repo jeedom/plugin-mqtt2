@@ -167,7 +167,7 @@ if (!isConnect()) {
           <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
         </label>
         <div class="col-md-8"> 
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-file-export"></i>> {{Informations MQTT}}</a>
+          <a class="btn btn-xs btn-info" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-info-circle"></i> {{Informations MQTT}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-export"></i>> {{Envoyer}}</a>
          </div>
       </div>
