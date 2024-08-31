@@ -168,7 +168,7 @@ if (!isConnect()) {
         </label>
         <div class="col-md-8"> 
           <a class="btn btn-xs btn-info" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-info-circle"></i> {{Informations MQTT}}</a>
-          <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-export"></i>> {{Envoyer}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-export"></i>> {{Recevoir}}</a>
          </div>
       </div>
       <div class="form-group mqtt2Mode docker local">

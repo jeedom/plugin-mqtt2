@@ -34,14 +34,18 @@ try {
   if (init('action') == 'sendToLocalMqtt') {
     $configuration = json_decode(init('configuration'),true);
     mqtt2::syncTopicToLocalMqtt(
-      $configuration['topic'],
       $configuration['topic'].'-'.$configuration['id'],
+      $configuration['topic'],
       $configuration['username'],
       $configuration['password'],
       $configuration['ip'],
       $configuration['port']
     );
-    ajax::success($return);
+    if (!in_array($configuration['topic'].'-'.$configuration['id'],explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+      config::save('jeedom::link',trim(config::byKey('jeedom::link', 'mqtt2').','.$configuration['topic'].'-'.$configuration['id'],','),'mqtt2');
+      return;
+    }
+    ajax::success();
   }
 
   if (init('action') == 'eqLogicTransmitConfiguration') {
