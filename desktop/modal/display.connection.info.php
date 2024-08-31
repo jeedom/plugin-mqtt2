@@ -27,7 +27,7 @@ $connection_info = array(
   'password' => $local_authentifications[1]
 );
 if($connection_info['ip'] == null){
-    throw new Exception(__("L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration"),__FILE__));
+    throw new Exception(__("L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration",__FILE__));
 }
 ?>
 <pre><?php echo json_encode($connection_info); ?></pre>
