@@ -250,6 +250,7 @@ if (!isConnect()) {
               $.fn.showAlert({message: data.result,level: 'danger'})
               return
             }
+            $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
             $.fn.showAlert({message: '{{Ajout de la reception du Jeedom :}} '+result+' {{réussie}}',level: 'success',emptyBefore: true})
           }
         })
