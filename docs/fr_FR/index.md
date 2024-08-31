@@ -129,6 +129,11 @@ Ensuite vous avez juste à retourner sur le jeedom toujours sur la configuration
 
 # Liée deux mosquitto différent 
 
+## Avec assistant
+
+
+## Manuellement
+
 Il est possible de lier des topics entre plusieurs mosquitto, voilà la configuration a ajouter dans mosquitto. La configuration n'est a faire que sur un des brocker mosquitto :
 
 ````
