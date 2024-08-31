@@ -129,6 +129,11 @@ Luego solo tienes que regresar al jeedom aún en la configuración del complemen
 
 # Vinculados dos mosquitos diferentes 
 
+## Con asistente
+
+
+## Manuellement
+
 Es posible vincular temas entre varios mosquitto, aquí está la configuración para agregar en mosquitto. La configuración sólo debe realizarse en uno de los brocker mosquitto :
 
 ''''''''

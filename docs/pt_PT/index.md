@@ -129,6 +129,11 @@ Depois é só retornar ao jeedom ainda na configuração do plugin e fazer "Envi
 
 # Vinculou dois mosquitos diferentes 
 
+## Com assistente
+
+
+## Manuellement
+
 É possível vincular tópicos entre vários mosquitos, aqui está a configuração para adicionar no mosquito. A configuração só precisa ser feita em um dos brocker mosquitto :
 
 ````````

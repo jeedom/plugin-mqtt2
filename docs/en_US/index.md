@@ -129,6 +129,11 @@ Then you just have to return to the jeedom still on the plugin configuration and
 
 # Linked two different mosquitto 
 
+## With assistant
+
+
+## Manuellement
+
 It is possible to link topics between several mosquitto, here is the configuration to add in mosquitto. The configuration only needs to be done on one of the brocker mosquitto :
 
 ````````

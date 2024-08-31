@@ -129,6 +129,11 @@ Dann müssen Sie nur noch in der Plugin-Konfiguration zum Jeedom zurückkehren u
 
 # Verknüpft zwei verschiedene Mücken 
 
+## Mit Assistent
+
+
+## Manuellement
+
 Es ist möglich, Themen zwischen mehreren Moskitos zu verknüpfen. Hier ist die Konfiguration zum Hinzufügen in Moskitos. Die Konfiguration muss nur an einem der Brocker-Mücken vorgenommen werden :
 
 ````````
