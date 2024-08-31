@@ -17,7 +17,7 @@
 if (!isConnect('admin')) {
   throw new Exception('{{401 - Accès non autorisé}}');
 }
-$local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+$local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', 'mqtt2'))[0]);
 $connection_info = array(
   'topic' => config::byKey('root_topic', 'mqtt2'),
   'id' => substr(jeedom::getHardwareKey(),0,10),
@@ -26,5 +26,8 @@ $connection_info = array(
   'username' => $local_authentifications[0],
   'password' => $local_authentifications[1]
 );
+if($connection_info['ip'] == null){
+    throw new Exception(__("L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration"),__FILE__));
+}
 ?>
 <pre><?php echo json_encode($connection_info); ?></pre>
