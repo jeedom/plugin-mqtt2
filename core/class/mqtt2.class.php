@@ -51,6 +51,12 @@ class mqtt2 extends eqLogic {
       if($_local_topic == '' || $_remote_topic == ''){
          throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
       }
+      if($_username == '' || $_password == ''){
+         throw new Exception(__('Le nom d\'utilisateur et le mot de passe ne peuvent etre vide',__FILE__));
+      }
+      if($_username == '' || $_password == ''){
+         throw new Exception(__('L\'ip ne peut etre vide',__FILE__));
+      }
       $_local_topic = trim($_local_topic);
       $_remote_topic = trim($_remote_topic);
       $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
