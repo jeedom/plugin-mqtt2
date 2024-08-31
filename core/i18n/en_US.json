@@ -109,6 +109,7 @@
         "Configuration enregistrée": "Saved configuration"
     },
     "plugins\/mqtt2\/desktop\/modal\/display.connection.info.php": {
+        "L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration\")": "The local IP is invalid, check the local network configuration in Settings -> System -> Configuration\")",
         "401 - Accès non autorisé": "401 - Unauthorized Access"
     },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
