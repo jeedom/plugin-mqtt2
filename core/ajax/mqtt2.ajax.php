@@ -30,7 +30,7 @@ try {
     mqtt2::sendDiscovery();
     ajax::success();
   }
-  
+
   if (init('action') == 'sendToLocalMqtt') {
     $configuration = json_decode(init('configuration'));
     mqtt2::syncTopicToLocalMqtt(
@@ -40,7 +40,7 @@ try {
       $configuration['password'],
       $configuration['ip'],
       $configuration['port']
-    )
+    );
     ajax::success($return);
   }
 
