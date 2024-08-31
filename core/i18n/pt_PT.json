@@ -193,6 +193,8 @@
     },
     "plugins\/mqtt2\/core\/class\/mqtt2.class.php": {
         "Le local topic et le remonte ne peuvent etre vide": "O tópico local e o link não podem ficar vazios",
+        "Le nom d\\'utilisateur et le mot de passe ne peuvent etre vide": "Nome de usuário e senha não podem ficar em branco",
+        "L\\'ip ne peut etre vide": "O IP não pode estar vazio",
         "Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS\/DB) puis cliquez sur le bouton Installer Mosquitto": "Nenhuma pasta SSL encontrada, restaure os direitos para pastas e arquivos da configuração do Jeedom (guia OS\/DB) e clique no botão Instalar Mosquitto",
         "Installation locale du broker Mosquitto en cours": "Instalação local do corretor Mosquitto em andamento",
         "Installation du plugin Docker Management": "Instalando o plug-in de gerenciamento do Docker",
