@@ -44,16 +44,21 @@
         "par défaut": "standardmäßig",
         "Topic des Jeedoms liés": "Verwandtes Jeedoms-Thema",
         "Topic des autres jeedom qu'il faut écouter (séparé par des ,)": "Thema anderer Themen, die Sie sich anhören sollten (getrennt durch ,)",
-        "Jeedom cloud (non disponible pour le moment)": "Jeedom Cloud (derzeit nicht verfügbar)",
+        "Mqtt local": "Lokales MQTT",
         "Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)": "Jeedom Cloud ist ein Jeedom MQTT-Dienst, der es Ihnen ermöglicht, Daten an einen Cloud-Brocker zu senden und zu empfangen. Es wird verwendet, um zwei Jeedoms über das Internet (WAN) zu chatten",
         "Envoyer ce Jeedom": "Senden Sie dieses Jeedom",
-        "Recevoir un Jeedom": "Erhalten Sie ein Jeedom",
+        "Copier les informations MQTT": "MQTT-Informationen kopieren",
         "Identifiant Jeedom cloud : ": "Jeedom-Cloud-ID:",
+        "Mqtt Jeedom cloud service (non disponible pour le moment)": "Mqtt Jeedom Cloud-Dienst (derzeit nicht verfügbar)",
+        "Recevoir un Jeedom": "Erhalten Sie ein Jeedom",
         "Plugins abonnés": "Abonnenten-Plugins",
         "Liste des plugins Jeedom abonnés au plugin": "Liste der Jeedom-Plugins, die das Plugin abonniert haben",
         "Paramètres Mosquitto": "Moskito-Einstellungen",
         "Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration": "Speichern Sie die Installation von mosquitto und starten Sie sie erneut, um die Änderungen in diesem Konfigurationsfeld zu berücksichtigen",
         "Port(s)": "Häfen)",
+        "Information Connection MQTT": "MQTT-Verbindungsinformationen",
+        "Json de configuration du jeedom distant": "Remote-Jeedom-Konfiguration JSON",
+        "Envoi des informations sur le Jeedom local réussi": "Senden von Informationen über lokales Jeedom erfolgreich",
         "Envoi des informations de ce Jeedom dans le cloud réussie": "Erfolgreiches Senden von Informationen von diesem Jeedom an die Cloud",
         "Identifiant cloud du Jeedom distant": "Cloud-ID des Remote-Jeedoms",
         "Ajout de la reception du Jeedom :": "Hinzufügung des Jeedom-Empfangs:",
@@ -103,9 +108,12 @@
         "Transmis": "Übermittelt",
         "Configuration enregistrée": "Gespeicherte Konfiguration"
     },
+    "plugins\/mqtt2\/desktop\/modal\/display.connection.info.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
+    },
     "plugins\/mqtt2\/desktop\/php\/mqtt2.php": {
         "Aucun": "Nein",
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Gestion": "Verwaltung",
         "Ajouter": "Hinzufügen",
         "Configuration": "Aufbau",
@@ -177,7 +185,7 @@
         "Accès non autorisé": "Unautorisierter Zugriff"
     },
     "plugins\/mqtt2\/core\/ajax\/mqtt2.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Aucune méthode correspondante à": "Keine Matching-Methode",
         "Equipement introuvable": "Gerät nicht gefunden",
         "Equipement pas de type MQTT": "Geräte, die nicht vom MQTT-Typ sind"
