@@ -32,7 +32,7 @@ try {
   }
 
   if (init('action') == 'sendToLocalMqtt') {
-    $configuration = json_decode(init('configuration'));
+    $configuration = json_decode(init('configuration'),true);
     mqtt2::syncTopicToLocalMqtt(
       $configuration['topic'],
       $configuration['topic'].'-'.$configuration['id'],
