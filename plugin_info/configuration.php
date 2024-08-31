@@ -237,7 +237,7 @@ if (!isConnect()) {
         url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
         data: {
           action: "sendToLocalMqtt",
-          configuration:result
+          configuration:JSON.stringify(result)
         },
         dataType: 'json',
         error: function(error) {
