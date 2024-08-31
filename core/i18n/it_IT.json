@@ -50,7 +50,7 @@
         "Envoyer ce Jeedom": "Envoyer ce Jeedom",
         "Mqtt Jeedom cloud service (non disponible pour le moment)": "Mqtt Jeedom cloud service (non disponible pour le moment)",
         "Recevoir un Jeedom": "Recevoir un Jeedom",
-        "Identifiant Jeedom cloud : ": "Identifiant Jeedom cloud :",
+        "Id cloud : ": "Id cloud :",
         "Plugins abonnés": "Plugins abonnés",
         "Liste des plugins Jeedom abonnés au plugin": "Liste des plugins Jeedom abonnés au plugin",
         "Paramètres Mosquitto": "Parametres Mosquitto",
