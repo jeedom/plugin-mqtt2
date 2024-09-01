@@ -37,8 +37,10 @@ class mqtt2 extends eqLogic {
       $conf .= "remote_clientid cloud-#cloud_username#-jeedom-".config::genKey(8)."\n";
       $conf .= "remote_username #cloud_username#\n";
       $conf .= "remote_password #cloud_password#\n";
-      $conf .= "local_username ".$local_authentifications[0]."\n";
-      $conf .= "local_password ".$local_authentifications[1]."\n";
+      if(count($local_authentifications) == 2){
+         $conf .= "local_username ".$local_authentifications[0]."\n";
+         $conf .= "local_password ".$local_authentifications[1]."\n";
+      }
       $conf .= "start_type automatic\n";
       $conf .= "bridge_cafile ".__DIR__."/../config/ca_jeedom_cloud.crt\n";
       $conf .= "# End autogenerate for ".$_local_topic." <-> cloud-".$_remote_topic."\n";
@@ -54,7 +56,7 @@ class mqtt2 extends eqLogic {
       if($_username == '' || $_password == ''){
          throw new Exception(__('Le nom d\'utilisateur et le mot de passe ne peuvent etre vide',__FILE__));
       }
-      if($_username == '' || $_password == ''){
+      if($_ip == ''){
          throw new Exception(__('L\'ip ne peut etre vide',__FILE__));
       }
       $_local_topic = trim($_local_topic);
@@ -67,10 +69,14 @@ class mqtt2 extends eqLogic {
       $conf .= "cleansession true\n";
       $conf .= "notifications false\n";
       $conf .= "remote_clientid jeedom-".config::genKey(8)."\n";
-      $conf .= "remote_username ".$_username."\n";
-      $conf .= "remote_password ".$_password."\n";
-      $conf .= "local_username ".$local_authentifications[0]."\n";
-      $conf .= "local_password ".$local_authentifications[1]."\n";
+      if($_username != '' && $_password != ''){
+         $conf .= "remote_username ".$_username."\n";
+          $conf .= "remote_password ".$_password."\n";
+      }
+      if(count($local_authentifications) == 2){
+         $conf .= "local_username ".$local_authentifications[0]."\n";
+         $conf .= "local_password ".$local_authentifications[1]."\n";
+      }
       $conf .= "start_type automatic\n";
       $conf .= "# End autogenerate for ".$_local_topic." <-> ".$_remote_topic."\n";
       $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' <-> '.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' <-> '.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
@@ -495,9 +501,6 @@ class mqtt2 extends eqLogic {
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      if (count($authentifications) != 2) {
-         throw new Exception(__('Aucune autentification trouvée, impossible de lancer le démon', __FILE__));
-      }
       $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
       $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__);
@@ -509,8 +512,13 @@ class mqtt2 extends eqLogic {
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
       }
-      $cmd .= ' --username "' . $authentifications[0] . '"';
-      $cmd .= ' --password "' . $authentifications[1] . '"';
+      if (count($authentifications) != 2) {
+         $cmd .= ' --username ""';
+         $cmd .= ' --password ""';
+      }else {
+         $cmd .= ' --username "' . $authentifications[0] . '"';
+         $cmd .= ' --password "' . $authentifications[1] . '"';
+      }
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);

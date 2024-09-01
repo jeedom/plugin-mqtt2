@@ -22,10 +22,13 @@ $connection_info = array(
   'topic' => config::byKey('root_topic', 'mqtt2'),
   'id' => substr(jeedom::getHardwareKey(),0,10),
   'ip' => network::getNetworkAccess('internal','ip'),
-  'port' => 1833,
-  'username' => $local_authentifications[0],
-  'password' => $local_authentifications[1]
+  'port' => 1833
 );
+
+if(count($local_authentifications) == 2){
+  $connection_info['username'] = $local_authentifications[0];
+  $connection_info['password'] = $local_authentifications[1];
+}
 if($connection_info['ip'] == null){
     throw new Exception(__("L'ip local est invalide, verifié la configuration réseaux local dans Réglage -> Systeme -> Configuration",__FILE__));
 }
