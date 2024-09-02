@@ -22,7 +22,7 @@ $connection_info = array(
   'topic' => config::byKey('root_topic', 'mqtt2'),
   'id' => substr(jeedom::getHardwareKey(),0,10),
   'ip' => network::getNetworkAccess('internal','ip'),
-  'port' => 1833,
+  'port' => 1883,
   'username' => '',
   'password' => ''
 );
