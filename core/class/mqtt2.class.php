@@ -1292,10 +1292,14 @@ class mqtt2 extends eqLogic {
          return;
       }
       $this->setConfiguration('device', $_config['template']);
+      if (isset($template['logicalId'])) {
+         $this->setLogicalId($template['logicalId']);
+      }
       $config = array();
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
       }
+      $link_cmds = array();
       $cmds_template = json_decode(str_replace(($config), $config, json_encode($template['commands'])), true);
       foreach ($cmds_template as $cmd_template) {
          $cmd = new mqtt2Cmd();
