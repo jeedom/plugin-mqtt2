@@ -102,6 +102,13 @@ client.on('connect', function() {
     }
     Jeedom.log.info('Subscription to all topics succesfull')
   })
+  client.subscribe('$SYS/#', function(err) {
+    if (err) {
+      Jeedom.log.error('Error on Subscription : ' + err)
+      process.exit()
+    }
+    Jeedom.log.info('Subscription to SYS topic')
+  })
 })
 
 client.on('message', function(topic, message) {
