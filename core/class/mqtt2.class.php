@@ -1115,8 +1115,8 @@ class mqtt2 extends eqLogic {
             if(isset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd'])){
                unset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd']);
             }
-            if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
-					unset($_cmd['configuration']['calculValueOffset']);
+            if(isset($toSend['cmds'][$cmd->getId()]['configuration']['calculValueOffset'])){
+               unset($toSend['cmds'][$cmd->getId()]['configuration']['calculValueOffset']);
 				}
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
