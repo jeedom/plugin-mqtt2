@@ -21,6 +21,25 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function createListenner(){
+      $listeners = listener::searchClassFunctionOption('mqtt2', 'handleEvent');
+      if(count($listeners) > 1){
+         foreach($listeners as $listener){
+            $listener->remove();
+            }
+      }
+      $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+      if (!is_object($listener)) {
+         $listener = new listener();
+      }
+      $listener->setClass('mqtt2');
+      $listener->setFunction('handleEvent');
+      $listener->emptyEvent();
+      $listener->addEvent('*');
+      $listener->setOption(array('background' => false));
+      $listener->save();
+   }
+
    public static function syncTopicToJeedomCloud($_local_topic = '',$_remote_topic = ''){
       if($_local_topic == '' || $_remote_topic == ''){
          throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
@@ -489,6 +508,7 @@ class mqtt2 extends eqLogic {
       if ($deamon_info['launchable'] != 'ok') {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
+      self::createListenner();
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
