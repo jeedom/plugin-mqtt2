@@ -11,6 +11,7 @@
         "Ajout du topic SYS (pour avoir les informations interne de MQTT": "Adición del tema SYS (para tener información interna de MQTT",
         "Ajout d'un template mosquitto": "Agregar una plantilla de mosquito",
         "sys permettant de récuperer des informations sur le brocker (message recu\/envoyé total\/1min\/5min\/15min, charge mémoire": "sys que permite recuperar información del brocker (mensaje recibido\/enviado total\/1min\/5min\/15min, carga de memoria",
+        "Verification du listenner à chaque démarrage du demon": "Comprobando el oyente cada vez que se inicia el demonio",
         "20\/08\/2024": "20\/08\/2024",
         "Ajout d'un message online et offline lors de du lancement et de l'arret (voulu ou non) du démon dans topic_racine\/state": "Adición de un mensaje en línea y fuera de línea al iniciar y detener (se desee o no) el demonio en topic_racine\/state",
         "Si vous avez un équipement jeedom": "Si tienes equipo jeedom",
