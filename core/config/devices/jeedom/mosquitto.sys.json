@@ -1,0 +1,86 @@
+{
+    "name" : "Mosquitto SYS",
+    "logicalId" : "$SYS/broker",
+    "commands" : [
+        {
+            "name": "Uptime",
+            "type": "info",
+            "subtype": "string",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "uptime"
+        },
+        {
+            "name": "Message reçu 1min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/received/1min"
+        },
+        {
+            "name": "Message reçu 5min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/received/5min"
+        },
+        {
+            "name": "Message reçu 15min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/received/15min"
+        },
+        {
+            "name": "Message envoyé 1min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/sent/1min"
+        },
+        {
+            "name": "Message envoyé 5min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/sent/5min"
+        },
+        {
+            "name": "Message envoyé 15min",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "load/messages/sent/15min"
+        },
+        {
+            "name": "Mémoire",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "heap/current"
+        },
+        {
+            "name": "Message envoyé",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "messages/sent"
+        },
+        {
+            "name": "Message reçu",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 0,
+            "logicalId" : "messages/received"
+        }
+    ]
+}

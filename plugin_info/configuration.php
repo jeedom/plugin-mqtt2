@@ -162,6 +162,25 @@ if (!isConnect()) {
           <input class="configKey form-control" data-l1key="jeedom::link">
         </div>
       </div>
+      <div class="form-group mqtt2Mode docker local">
+        <label class="col-md-4 control-label">{{Mqtt tranmission local}}</label>
+        <div class="col-md-8"> 
+          <a class="btn btn-xs btn-info" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-info-circle"></i> {{Informations MQTT}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-import"></i> {{Recevoir}}</a>
+         </div>
+      </div>
+      <div class="form-group mqtt2Mode docker local">
+        <label class="col-md-4 control-label">{{Mqtt transmission cloud service (non disponible)}}
+          <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
+        </label>
+        <div class="col-md-4">
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToJeedomCloud"><i class="fas fa-file-export"></i>> {{Envoyer}}</a>
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2ReceivedFromJeedom"><i class="fas fa-file-import"></i> {{Recevoir}}</a>
+        </div>
+        <div class="col-md-4">
+            <?php echo '<span class="label label-info">{{Id cloud : }}'.config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10).'</span>'; ?>
+        </div>
+      </div>
       <div class="form-group">
         <label class="col-md-4 control-label">{{Plugins abonnés}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Liste des plugins Jeedom abonnés au plugin}} MQTT Manager [topic (plugin_id)]"></i></sup>
@@ -195,6 +214,95 @@ if (!isConnect()) {
   </fieldset>
 </form>
 <script>
+  $('#bt_mqtt2GetLocalMqttInformation').off('click').on('click', function() {
+    jeeDialog.dialog({
+      id: 'jee_MqttModal',
+      title: '{{Information Connection MQTT}}',
+      width: '85vw',
+      height: '51vw',
+      top: '8vh',
+      contentUrl: 'index.php?v=d&plugin=mqtt2&modal=display.connection.info'
+    })
+  });
+
+  $('#bt_mqtt2SendToLocalMqtt').off('click').on('click', function() {
+    jeeDialog.prompt("{{Json de configuration du jeedom distant}} ?", function(result) {
+      if (result === null) {
+        return;
+      }
+      $.ajax({
+        type: "POST",
+        url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+        data: {
+          action: "sendToLocalMqtt",
+          configuration:JSON.stringify(result)
+        },
+        dataType: 'json',
+        error: function(error) {
+          $.fn.showAlert({message: error.message,level: 'danger'})
+        },
+        success: function(data) {
+          if (data.state != 'ok') {
+            $.fn.showAlert({message: data.result,level: 'danger'})
+            return
+          }
+          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+          $.fn.showAlert({message: '{{Envoi des informations sur le Jeedom local réussi}}',level: 'success',emptyBefore: true})
+        }
+      })
+    })
+  });
+
+  $('#bt_mqtt2SendToJeedomCloud').off('click').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+      data: {
+        action: "sendToJeedomCloud"
+      },
+      dataType: 'json',
+      error: function(error) {
+        $.fn.showAlert({message: error.message,level: 'danger'})
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $.fn.showAlert({message: data.result,level: 'danger'})
+          return
+        }
+        $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+        $.fn.showAlert({message: '{{Envoi des informations de ce Jeedom dans le cloud réussie}}',level: 'success',emptyBefore: true})
+      }
+    })
+  });
+
+  $('#bt_mqtt2ReceivedFromJeedom').off('click').on('click', function() {
+    jeeDialog.prompt("{{Identifiant cloud du Jeedom distant}} ?", function(result) {
+      if (result === null) {
+        return;
+      }
+      $.ajax({
+        type: "POST",
+        url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+        data: {
+          action: "receivedFromJeedomCloud",
+          local_topic : result,
+          remote_topic : result
+        },
+        dataType: 'json',
+        error: function(error) {
+          $.fn.showAlert({message: error.message,level: 'danger'})
+        },
+        success: function(data) {
+          if (data.state != 'ok') {
+            $.fn.showAlert({message: data.result,level: 'danger'})
+            return
+          }
+          $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+          $.fn.showAlert({message: '{{Ajout de la reception du Jeedom :}} '+result+' {{réussie}}',level: 'success',emptyBefore: true})
+        }
+      })
+    })
+  });
             
   $('#bt_mqtt2DisplayTransmitDevice').off('click').on('click', function() {
     jeeDialog.dialog({
@@ -235,28 +343,29 @@ if (!isConnect()) {
     let topic = $(this).attr('data-topic')
     let span = $(this).parent();
     bootbox.confirm('{{Confirmez-vous suppression de l\'abonnement : }}'+topic+'?', function(result) {
-      if (result) {
-          $.ajax({
-          type: "POST",
-          url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
-          data: {
-            action: "removePluginTopic",
-            topic: topic
-          },
-          dataType: 'json',
-          error: function(error) {
-            $.fn.showAlert({message: error.message,level: 'danger'})
-          },
-          success: function(data) {
-            if (data.state != 'ok') {
-              $.fn.showAlert({message: data.result,level: 'danger'})
-              return
-            }
-            $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
-            span.remove();
-          }
-        })
+      if (result === null) {
+        return;
       }
+      $.ajax({
+        type: "POST",
+        url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+        data: {
+          action: "removePluginTopic",
+          topic: topic
+        },
+        dataType: 'json',
+        error: function(error) {
+          $.fn.showAlert({message: error.message,level: 'danger'})
+        },
+        success: function(data) {
+          if (data.state != 'ok') {
+            $.fn.showAlert({message: data.result,level: 'danger'})
+            return
+          }
+          $.fn.showAlert({message: '{{Suppression réussie}}',level: 'success',emptyBefore: true})
+          span.remove();
+        }
+      })
     })
   })
 
@@ -349,26 +458,27 @@ if (!isConnect()) {
 
   $('#bt_mqtt2UninstallMosquitto').off('click').on('click', function() {
     bootbox.confirm('{{Confirmez-vous la désinstallation du broker Mosquitto local?}}', function(result) {
-      if (result) {
-        $.ajax({
-          type: "POST",
-          url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
-          data: {
-            action: "uninstallMosquitto"
-          },
-          dataType: 'json',
-          error: function(error) {
-            $.fn.showAlert({message: error.message,level: 'danger'})
-          },
-          success: function(data) {
-            if (data.state != 'ok') {
-              $.fn.showAlert({message: data.result,level: 'danger'})
-              return
-            }
-            $.fn.showAlert({message: '{{Désinstallation réussie}}',level: 'success',emptyBefore: true})
-          }
-        })
+      if (result === null) {
+        return;
       }
+      $.ajax({
+        type: "POST",
+        url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
+        data: {
+          action: "uninstallMosquitto"
+        },
+        dataType: 'json',
+        error: function(error) {
+          $.fn.showAlert({message: error.message,level: 'danger'})
+        },
+        success: function(data) {
+          if (data.state != 'ok') {
+            $.fn.showAlert({message: data.result,level: 'danger'})
+            return
+          }
+          $.fn.showAlert({message: '{{Désinstallation réussie}}',level: 'success',emptyBefore: true})
+        }
+      })
     })
   })
 </script>

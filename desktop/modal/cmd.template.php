@@ -52,6 +52,9 @@ $templates = mqtt2::listCmdTemplate();
 foreach ($templates as $id => $config) {
     echo '<form class="form-horizontal templateForm ' . str_replace('.', '-', $id) . '" style="display:none;">';
     echo '<fieldset>';
+    if(!isset($config['parameters'])){
+        continue;
+    }
     foreach ($config['parameters'] as $key => $parameter) {
         echo '<div class="form-group">';
         echo '<label class="col-sm-2 control-label">' . $parameter['name'] . '</label>';

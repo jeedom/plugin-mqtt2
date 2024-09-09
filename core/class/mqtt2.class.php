@@ -21,6 +21,88 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function createListenner(){
+      $listeners = listener::searchClassFunctionOption('mqtt2', 'handleEvent');
+      if(count($listeners) > 1){
+         foreach($listeners as $listener){
+            $listener->remove();
+            }
+      }
+      $listener = listener::byClassAndFunction('mqtt2', 'handleEvent');
+      if (!is_object($listener)) {
+         $listener = new listener();
+      }
+      $listener->setClass('mqtt2');
+      $listener->setFunction('handleEvent');
+      $listener->emptyEvent();
+      $listener->addEvent('*');
+      $listener->setOption(array('background' => false));
+      $listener->save();
+   }
+
+   public static function syncTopicToJeedomCloud($_local_topic = '',$_remote_topic = ''){
+      if($_local_topic == '' || $_remote_topic == ''){
+         throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
+      }
+      $_local_topic = trim($_local_topic);
+      $_remote_topic = trim($_remote_topic);
+      $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      $conf = "# Begin autogenerate for ".$_local_topic." <-> cloud-".$_remote_topic."\n";
+      $conf .= "connection #cloud_username#-jeedom-".config::genKey(8)."\n";
+      $conf .= "address mqtt.jeedom.com:8883\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ #cloud_username#/".$_remote_topic."/\n";
+      $conf .= "cleansession true\n";
+      $conf .= "notifications false\n";
+      $conf .= "remote_clientid cloud-#cloud_username#-jeedom-".config::genKey(8)."\n";
+      $conf .= "remote_username #cloud_username#\n";
+      $conf .= "remote_password #cloud_password#\n";
+      if(count($local_authentifications) == 2){
+         $conf .= "local_username ".$local_authentifications[0]."\n";
+         $conf .= "local_password ".$local_authentifications[1]."\n";
+      }
+      $conf .= "start_type automatic\n";
+      $conf .= "bridge_cafile ".__DIR__."/../config/ca_jeedom_cloud.crt\n";
+      $conf .= "# End autogenerate for ".$_local_topic." <-> cloud-".$_remote_topic."\n";
+      $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' <-> cloud-'.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' <-> cloud-'.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
+      config::save('mosquitto::parameters', trim($current_conf)."\n\n".trim($conf), __CLASS__);
+      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+   }
+
+   public static function syncTopicToLocalMqtt($_local_topic,$_remote_topic,$_username,$_password,$_ip,$_port = 1883){
+      if($_local_topic == '' || $_remote_topic == ''){
+         throw new Exception(__('Le local topic et le remonte ne peuvent etre vide',__FILE__));
+      }
+      if($_username == '' || $_password == ''){
+         throw new Exception(__('Le nom d\'utilisateur et le mot de passe ne peuvent etre vide',__FILE__));
+      }
+      if($_ip == ''){
+         throw new Exception(__('L\'ip ne peut etre vide',__FILE__));
+      }
+      $_local_topic = trim($_local_topic);
+      $_remote_topic = trim($_remote_topic);
+      $local_authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
+      $conf = "# Begin autogenerate for ".$_local_topic." <-> ".$_remote_topic."\n";
+      $conf .= "connection jeedom-".config::genKey(8)."\n";
+      $conf .= "address ".$_ip.":".$_port."\n";
+      $conf .= "topic # both 0 ".$_local_topic."/ ".$_remote_topic."/\n";
+      $conf .= "cleansession true\n";
+      $conf .= "notifications false\n";
+      $conf .= "remote_clientid jeedom-".config::genKey(8)."\n";
+      if($_username != '' && $_password != ''){
+         $conf .= "remote_username ".$_username."\n";
+          $conf .= "remote_password ".$_password."\n";
+      }
+      if(count($local_authentifications) == 2){
+         $conf .= "local_username ".$local_authentifications[0]."\n";
+         $conf .= "local_password ".$local_authentifications[1]."\n";
+      }
+      $conf .= "start_type automatic\n";
+      $conf .= "# End autogenerate for ".$_local_topic." <-> ".$_remote_topic."\n";
+      $current_conf = preg_replace('/(# Begin autogenerate for '.$_local_topic.' <-> '.$_remote_topic.')((.|\n)*)(# End autogenerate for '.$_local_topic.' <-> '.$_remote_topic.')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
+      config::save('mosquitto::parameters', trim($current_conf)."\n\n".trim($conf), __CLASS__);
+      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+   }
+
    public static function cronDaily(){
       self::sendBattery();
    }
@@ -270,9 +352,15 @@ class mqtt2 extends eqLogic {
             '/data/ssl/' => '/data/config/ssl/',
          );
       }
+     
       config::save('mosquitto::parameters', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)), __CLASS__);
-      //shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
-      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace("\r\n", "\n", config::byKey('mosquitto::parameters', __CLASS__)));
+      $replace = array(
+         "\r\n" => "\n",
+         '#cloud_username#' => mb_strtolower(config::byKey('market::username')),
+         '#cloud_password#' => config::byKey('market::password'),
+      );
+      shell_exec(system::getCmdSudo() . ' chmod 777 '.__DIR__ . '/../../data/mosquitto.conf');
+      file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
          $docker->create();
       } elseif (jeedom::getHardwareName() == 'docker') {
@@ -405,6 +493,9 @@ class mqtt2 extends eqLogic {
    }
 
    public static function deamon_start() {
+      if(mqtt2::getPluginForTopic(config::byKey('root_topic', __CLASS__)) != __CLASS__){
+         throw new Exception(__('Le topic racine n\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.', __FILE__));
+      }  
       log::remove(__CLASS__ . '_update');
       if (config::byKey('mode', __CLASS__, 'local') == 'local') {
          if (shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0) {
@@ -417,6 +508,7 @@ class mqtt2 extends eqLogic {
       if ($deamon_info['launchable'] != 'ok') {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
+      self::createListenner();
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
          $path_ssl = realpath(__DIR__ . '/../../data/ssl');
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
@@ -440,8 +532,13 @@ class mqtt2 extends eqLogic {
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
       }
-      $cmd .= ' --username "' . $authentifications[0] . '"';
-      $cmd .= ' --password "' . $authentifications[1] . '"';
+      if (count($authentifications) != 2) {
+         $cmd .= ' --username ""';
+         $cmd .= ' --password ""';
+      }else {
+         $cmd .= ' --username "' . $authentifications[0] . '"';
+         $cmd .= ' --password "' . $authentifications[1] . '"';
+      }
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);
@@ -953,7 +1050,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function handleEvent($_option) {
-      $cmd = cmd::byId($_option['event_id']);
+      $cmd = (isset($_option['object']) && is_object($_option['object'])) ? $_option['object'] : cmd::byId($_option['event_id']);
       if (config::byKey('sendEvent', 'mqtt2', 0) == 0 && $cmd->getEqLogic()->getConfiguration('plugin::mqtt2::mqttTranmit', 0) == 0) {
          return;
       }
@@ -1038,8 +1135,8 @@ class mqtt2 extends eqLogic {
             if(isset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd'])){
                unset($toSend['cmds'][$cmd->getId()]['configuration']['jeedomPreExecCmd']);
             }
-            if (isset($_cmd['configuration']) && isset($_cmd['configuration']['calculValueOffset'])) {
-					unset($_cmd['configuration']['calculValueOffset']);
+            if(isset($toSend['cmds'][$cmd->getId()]['configuration']['calculValueOffset'])){
+               unset($toSend['cmds'][$cmd->getId()]['configuration']['calculValueOffset']);
 				}
          }
          self::publish(config::byKey('root_topic', __CLASS__) . '/discovery/eqLogic/'.$eqLogic->getId(), $toSend);
@@ -1054,7 +1151,8 @@ class mqtt2 extends eqLogic {
          foreach ($eqLogic->getCmd('info') as $cmd) {
             self::handleEvent(array(
                'event_id' => $cmd->getId(),
-               'value' => $cmd->execCmd()
+               'value' => $cmd->execCmd(),
+               'object' => $cmd
             ));
          }
       }
@@ -1158,6 +1256,7 @@ class mqtt2 extends eqLogic {
                $cmd->setType('info');
                $cmd->setSubType('string');
 				}
+            $cmd->setLogicalId('state');
             $cmd->setEqType('mqtt2');
 				$cmd->setEqLogic_id($eqLogic->getId());
             try {
@@ -1213,10 +1312,14 @@ class mqtt2 extends eqLogic {
          return;
       }
       $this->setConfiguration('device', $_config['template']);
+      if (isset($template['logicalId'])) {
+         $this->setLogicalId($template['logicalId']);
+      }
       $config = array();
       foreach ($_config as $key => $value) {
          $config['#' . $key . '#'] = $value;
       }
+      $link_cmds = array();
       $cmds_template = json_decode(str_replace(($config), $config, json_encode($template['commands'])), true);
       foreach ($cmds_template as $cmd_template) {
          $cmd = new mqtt2Cmd();

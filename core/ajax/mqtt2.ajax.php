@@ -31,6 +31,23 @@ try {
     ajax::success();
   }
 
+  if (init('action') == 'sendToLocalMqtt') {
+    $configuration = json_decode(init('configuration'),true);
+    mqtt2::syncTopicToLocalMqtt(
+      $configuration['topic'].'-'.$configuration['id'],
+      $configuration['topic'],
+      $configuration['username'],
+      $configuration['password'],
+      $configuration['ip'],
+      $configuration['port']
+    );
+    if (!in_array($configuration['topic'].'-'.$configuration['id'],explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+      config::save('jeedom::link',trim(config::byKey('jeedom::link', 'mqtt2').','.$configuration['topic'].'-'.$configuration['id'],','),'mqtt2');
+      return;
+    }
+    ajax::success();
+  }
+
   if (init('action') == 'eqLogicTransmitConfiguration') {
     $eqLogics = json_decode(init('eqLogics'),true);
     foreach ($eqLogics as $_eqLogic) {
@@ -40,6 +57,20 @@ try {
       }
       $eqLogic->setConfiguration('plugin::mqtt2::mqttTranmit',$_eqLogic['configuration']['plugin::mqtt2::mqttTranmit']);
       $eqLogic->save(true);
+    }
+    ajax::success();
+  }
+
+  if (init('action') == 'sendToJeedomCloud') {
+    mqtt2::syncTopicToJeedomCloud(config::byKey('root_topic', 'mqtt2'),config::byKey('root_topic', 'mqtt2').'-'.substr(jeedom::getHardwareKey(),0,10));
+    ajax::success();
+  }
+
+  if (init('action') == 'receivedFromJeedomCloud') {
+    mqtt2::syncTopicToJeedomCloud(init('local_topic'),init('remote_topic'));
+    if (!in_array(init('local_topic'),explode(',',config::byKey('jeedom::link', 'mqtt2')))) {
+      config::save('jeedom::link',trim(config::byKey('jeedom::link', 'mqtt2').','.init('local_topic'),','),'mqtt2');
+      return;
     }
     ajax::success();
   }

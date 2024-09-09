@@ -67,6 +67,7 @@ if (args.ca) {
     rejectUnauthorized: false,
     username: args.username,
     password: args.password,
+    clean: false,
     will:{
       topic : args.root_topic+'/state',
       payload: 'offline',
@@ -100,6 +101,13 @@ client.on('connect', function() {
       process.exit()
     }
     Jeedom.log.info('Subscription to all topics succesfull')
+  })
+  client.subscribe('$SYS/#', function(err) {
+    if (err) {
+      Jeedom.log.error('Error on Subscription : ' + err)
+      process.exit()
+    }
+    Jeedom.log.info('Subscription to SYS topic')
   })
 })
 
