@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Änderungsprotokoll MQTT-Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen über die Aktualisierung vorliegen, liegt dies daran, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "09\/09\/2024": "09.09.2024",
         "Mise en place d'optimisation sur la gestion des équipements tranmis avec jeedom 4.5": "Implementierung einer Optimierung der Verwaltung übertragener Geräte mit jeedom 4.5",
         "Ajout d'une sécurité pour eviter de mettre en topic racine un topic utilisé par un plugin": "Es wurde Sicherheit hinzugefügt, um zu verhindern, dass ein von einem Plugin verwendetes Thema als Stammthema festgelegt wird",
         "Ajout d'un assistant pour liée le mosquitto de deux Jeedoms facilement": "Es wurde ein Assistent hinzugefügt, um die Mücke zweier Jeedoms einfach zu verknüpfen",
