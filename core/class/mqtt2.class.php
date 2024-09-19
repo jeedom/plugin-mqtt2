@@ -738,6 +738,9 @@ class mqtt2 extends eqLogic {
                }
                $value = $value[$path];
             }
+            if(($cmd->getSubType() == 'binary' || $cmd->getSubType() == 'numeric') && (is_array($value) || is_object($value))){
+               continue;
+            }
             if (is_array($value) || is_object($value)) {
                $value = json_encode($cmd);
             }
