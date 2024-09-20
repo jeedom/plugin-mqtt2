@@ -4,6 +4,10 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+
+- Correction d'un warning lors du lancement du demon
+- Correction d'un bug avec nodejs 20
+
 # 09/09/2024
 
 - Mise en place d'optimisation sur la gestion des équipements tranmis avec jeedom 4.5
