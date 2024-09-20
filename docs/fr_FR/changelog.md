@@ -7,7 +7,7 @@
 
 - Correction d'un warning lors du lancement du demon
 - Correction d'un bug avec nodejs 20
-- Si une commande est de type binaire ou numerique et que jeedom recoit un array ou objet alors la valeur est ignorée
+- Si une commande est de type binaire ou numerique et que jeedom recoit un array ou objet alors la valeur est ignorée (corrige un soucis avec les Shelly 2.5)
 
 # 09/09/2024
 
