@@ -623,8 +623,13 @@ class mqtt2 extends eqLogic {
          $infos['port'] = config::byKey('remote::port', __CLASS__);
          $infos['protocol'] = config::byKey('remote::protocol', __CLASS__);
       }
-      $infos['user'] = $authentifications[0];
-      $infos['password'] = $authentifications[1];
+      if(count($authentifications) == 2){
+         $infos['user'] = $authentifications[0];
+         $infos['password'] = $authentifications[1];
+      }else{
+         $infos['user'] = "";
+         $infos['password'] = "";
+      }
       return $infos;
    }
 
@@ -688,7 +693,7 @@ class mqtt2 extends eqLogic {
          }
 
          if (isset($message['eqLogic']) && isset($message['eqLogic']['battery'])) {
-            $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+            $eqLogics = self::byLogicalId($topic.'/cmd','mqtt2',true);
             foreach ($message['eqLogic']['battery'] as $id => $value) {
                if(is_array($eqLogics)){
                   foreach ($eqLogics as $eqLogic) {
@@ -732,6 +737,9 @@ class mqtt2 extends eqLogic {
                   continue 2;
                }
                $value = $value[$path];
+            }
+            if(($cmd->getSubType() == 'binary' || $cmd->getSubType() == 'numeric') && (is_array($value) || is_object($value))){
+               continue;
             }
             if (is_array($value) || is_object($value)) {
                $value = json_encode($cmd);

@@ -16,6 +16,9 @@
 
 const axios = require('axios');
 var express = require('express');
+const http = require('http');
+
+axios.defaults.httpAgent = new http.Agent({ keepAlive: false });
 
 var Jeedom = {}
 Jeedom.log = {}
@@ -165,7 +168,7 @@ Jeedom.com.test = function(){
 Jeedom.http.config = function(_port,_apikey){
   Jeedom.http.apikey = _apikey;
   Jeedom.http.app = express();
-  Jeedom.http.app.use(express.urlencoded({limit: '5mb'}));
+  Jeedom.http.app.use(express.urlencoded({limit: '5mb', extended: true }));
   Jeedom.http.app.use(express.json({limit: '5mb'}));
   Jeedom.http.app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
