@@ -64,7 +64,7 @@ foreach ($manufacturers as &$array) {
 					<span>{{Envoyer la découverte}}</span>
 				</div>
 		</div>
-		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTT}}</legend>
+		<legend><i class="fas fa-project-diagram"></i> {{Mes MQTTs}}</legend>
 		<?php
 		if (count($eqLogics) == 0) {
 			echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement MQTT trouvé, cliquez sur "Ajouter" pour commencer}}</div>';
