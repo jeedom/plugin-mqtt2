@@ -693,7 +693,7 @@ class mqtt2 extends eqLogic {
          }
 
          if (isset($message['eqLogic']) && isset($message['eqLogic']['battery'])) {
-            $eqLogics = self::byLogicalId($_topic.'/cmd','mqtt2',true);
+            $eqLogics = self::byLogicalId($topic.'/cmd','mqtt2',true);
             foreach ($message['eqLogic']['battery'] as $id => $value) {
                if(is_array($eqLogics)){
                   foreach ($eqLogics as $eqLogic) {
