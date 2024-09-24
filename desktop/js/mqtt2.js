@@ -98,17 +98,17 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').off('change').on(
   if( manufacturer && manufacturer != 'all' &&$('.eqLogicAttr[data-l1key=configuration][data-l2key=manufacturer]').value() != manufacturer){
     $('.eqLogicAttr[data-l1key=configuration][data-l2key=manufacturer]').value($('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-manufacturer'))
   }
-  if($('.li_eqLogic.active').attr('data-eqlogic_id') != '' && $(this).value() != ''){
-    let img = $('.eqLogicAttr[data-l1key=configuration][data-l2key=device] option:selected').attr('data-img')
-    if(img){
-      $('#img_device').attr("src", 'plugins/mqtt2/core/config/devices/'+img);
-    }else{
-      $('#img_device').attr("src",'plugins/mqtt2/plugin_info/mqtt2_icon.png');
-    }
+});
+
+function printEqLogic(_eqLogic){
+  console.log(_eqLogic);
+  if($('.eqLogicDisplayCard.active img').attr('src') != ''){
+    $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
   }else{
     $('#img_device').attr("src",'plugins/mqtt2/plugin_info/mqtt2_icon.png');
   }
-});
+  return _eqLogic;
+}
 
 $("#table_cmd").sortable({
   axis: "y",
