@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "Correction d'un bug lors de l'application de template": "Fixed bug when applying template",
         "22\/09\/2024": "09\/22\/2024",
         "Correction d'un warning lors du lancement du demon": "Fixed warning when launching the daemon",
         "Correction d'un bug avec nodejs 20": "Fixed bug with nodejs 20",
