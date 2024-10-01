@@ -98,7 +98,7 @@ foreach ($templates as $id => $config) {
             });
             return;
         }
-        var config = $('.templateForm.' + $('.cmdTemplateAttr[data-l1key=templateName]').value().replace('.', '-')).getValues('.cmdTemplateAttr')[0];
+        var config = $('.templateForm.' + $('.cmdTemplateAttr[data-l1key=templateName]').value().replace('.', '-')).getValues('.cmdTemplateAttr')[0] || {};
         config.template = $('.cmdTemplateAttr[data-l1key=templateName]').value();
         $.ajax({
             type: "POST",
