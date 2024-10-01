@@ -2,9 +2,12 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Änderungsprotokoll MQTT-Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen über die Aktualisierung vorliegen, liegt dies daran, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Correction d'un bug lors de l'application de template": "Ein Fehler beim Anwenden der Vorlage wurde behoben",
+        "22\/09\/2024": "22.09.2024",
         "Correction d'un warning lors du lancement du demon": "Eine Warnung beim Starten des Daemons wurde behoben",
         "Correction d'un bug avec nodejs 20": "Ein Fehler mit NodeJS 20 wurde behoben",
         "Si une commande est de type binaire ou numerique et que jeedom recoit un array ou objet alors la valeur est ignorée (corrige un soucis avec les Shelly 2.5": "Wenn ein Befehl vom binären oder numerischen Typ ist und jeedom ein Array oder Objekt empfängt, wird der Wert ignoriert (behebt ein Problem mit Shelly 2.5",
+        "Correction d'un bug sur la gestion de la batteries des équipements liée entre Jeedom": "Ein Fehler bei der Verwaltung der zwischen Jeedom verbundenen Gerätebatterien wurde behoben",
         "09\/09\/2024": "09.09.2024",
         "Mise en place d'optimisation sur la gestion des équipements tranmis avec jeedom 4.5": "Implementierung einer Optimierung der Verwaltung übertragener Geräte mit jeedom 4.5",
         "Ajout d'une sécurité pour eviter de mettre en topic racine un topic utilisé par un plugin": "Es wurde Sicherheit hinzugefügt, um zu verhindern, dass ein von einem Plugin verwendetes Thema als Stammthema festgelegt wird",
