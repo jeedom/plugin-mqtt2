@@ -33,8 +33,5 @@ if(is_array($results)){
         } else {
             mqtt2::removePluginTopicByPlugin($plugin);
         }
-        if ($key == config::byKey('root_topic', 'mqtt2')) {
-            mqtt2::handleMqttMessage(array($key => $value));
-        }
     }
 }
