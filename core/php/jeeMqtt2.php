@@ -25,7 +25,6 @@ if (isset($_GET['test'])) {
     die();
 }
 $results = json_decode(file_get_contents("php://input"), true);
-//log::add('mqtt2', 'debug', json_encode($results));
 if(is_array($results)){
     foreach ($results as $key => $value) {
         $plugin = mqtt2::getPluginForTopic($key);
@@ -33,9 +32,6 @@ if(is_array($results)){
             $plugin::handleMqttMessage(array($key => $value));
         } else {
             mqtt2::removePluginTopicByPlugin($plugin);
-        }
-        if ($key == config::byKey('root_topic', 'mqtt2')) {
-            mqtt2::handleMqttMessage(array($key => $value));
         }
     }
 }
