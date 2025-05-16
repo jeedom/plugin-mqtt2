@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise-à-jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it only concerns the updating of documentation, translation or text",
+        "25\/11\/2024": "11\/25\/2024",
+        "Plugin compatible debian 11 et plus": "Plugin compatible with Debian 11 and above",
         "07\/10\/2024": "07\/10\/2024",
         "Correction d'un soucis ou certains messages pouvaient être traités en double": "Fixed an issue where some messages could be processed twice",
         "01\/10\/2024": "01\/10\/2024",

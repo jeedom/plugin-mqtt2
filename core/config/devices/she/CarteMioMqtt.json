@@ -1,0 +1,247 @@
+{
+    "name" : "CarteMioMqtt",
+    "commands" : [
+        {
+            "name": "Relais 1",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "relais/state/1"
+        },
+        {
+            "name": "Relais 2",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "relais/state/2"
+        },
+        {
+            "name": "Relais 3",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "relais/state/3"
+        },
+        {
+            "name": "Relais 4",
+            "type": "info",
+            "subtype": "binary",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "relais/state/4"
+        },    
+        {
+            "name": "Compteur 1",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "Wh",
+            "logicalId" : "counter/1"
+        },  
+        {
+            "name": "Compteur 2",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "Wh",
+            "logicalId" : "counter/2"
+        },
+        {
+            "name": "Compteur 3",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "Wh",
+            "logicalId" : "counter/3"
+        }, 
+        {
+            "name": "Compteur 4",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "Wh",
+            "logicalId" : "counter/4"
+        },
+        {
+            "name": "Compteur 5",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "Wh",
+            "logicalId" : "counter/5"
+        },
+        {
+            "name": "Puissance 1",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "W",
+            "logicalId" : "power/1"
+        },
+        {
+            "name": "Puissance 2",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "W",
+            "logicalId" : "power/2"
+        },
+        {
+            "name": "Puissance 3",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "W",
+            "logicalId" : "power/3"
+        }, 
+        {
+            "name": "Puissance 4",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "W",
+            "logicalId" : "power/4"
+        },
+        {
+            "name": "Puissance 5",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "unite": "W",
+            "logicalId" : "power/5"
+        },
+        {
+            "name": "Entrée 1",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "input/1"
+        }, 
+        {
+            "name": "Entrée 2",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "input/2"
+        }, 
+        {
+            "name": "Entrée 3",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "input/3"
+        }, 
+        {
+            "name": "Entrée 4",
+            "type": "info",
+            "subtype": "numeric",
+            "isVisible": 1,
+            "isHistorized": 1,
+            "logicalId" : "input/4"
+        }, 
+        {
+            "name": "On Relais 1",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/1",
+            "configuration":{
+                "message":"1",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "On Relais 2",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/2",
+            "configuration":{
+                "message":"1",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "On Relais 3",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/3",
+            "configuration":{
+                "message":"1",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "On Relais 4",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/4",
+            "configuration":{
+                "message":"1",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "Off Relais 1",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/1",
+            "configuration":{
+                "message":"0",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "Off Relais 2",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/2",
+            "configuration":{
+                "message":"0",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "Off Relais 3",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/3",
+            "configuration":{
+                "message":"0",
+                "retain" : 1
+            }
+        },
+        {
+            "name": "Off Relais 4",
+            "type": "action",
+            "subtype": "message",
+            "isVisible": 1,
+            "logicalId" : "relais/cmd/4",
+            "configuration":{
+                "message":"0",
+                "retain" : 1
+            }
+        }
+    ]
+}
