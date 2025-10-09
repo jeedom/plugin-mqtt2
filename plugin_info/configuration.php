@@ -135,6 +135,12 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="form-group">
+        <label class="col-sm-4 control-label">{{Retenir les messages MQTT (retain)}}</label>
+        <div class="col-sm-2">
+            <input type="checkbox" class="configKey" data-l1key="retain"/>
+        </div>
+    </div>
+      <div class="form-group">
         <label class="col-md-4 control-label">{{Template de publication}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Template de publication des événements Jeedom}} (tags : #value#, #humanName#, #unit#, #name#, #type#, #subtype#)"></i></sup>
         </label>
