@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise-à-jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Recorde-se que se não houver informação sobre a atualização, significa que se trata apenas de atualização de documentação, tradução ou texto",
+        "16\/05\/2025": "16\/05\/2025",
+        "Ajout du template She - Carte MIO MQTT": "Ajout du template She - Carte MIO MQTT",
         "25\/11\/2024": "25\/11\/2024",
         "Plugin compatible debian 11 et plus": "Plugin compatível com Debian 11 e superior",
         "07\/10\/2024": "10\/07\/2024",
