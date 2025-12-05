@@ -1024,6 +1024,10 @@ class mqtt2 extends eqLogic {
       if (!isset($_options['qos'])) {
          $_options['qos'] = intval(config::byKey('qos::default', 'mqtt2', 0));
       }
+      // Ajout : prise en compte de l'option retain globale
+      if (!isset($_options['retain'])) {
+         $_options['retain'] = (int)config::byKey('retain', 'mqtt2', 0);
+      }
       $request_http = new com_http('http://127.0.0.1:' . config::byKey('socketport', __CLASS__) . '/publish?apikey=' . jeedom::getApiKey(__CLASS__));
       $request_http->setHeader(array(
          'Content-Type: application/json'
