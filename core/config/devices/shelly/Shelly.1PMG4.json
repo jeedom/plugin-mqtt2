@@ -1,0 +1,114 @@
+{
+  "name": "Shelly 1PM Gen4",
+  "commands": [
+    {
+      "name": "Online",
+      "type": "info",
+      "subtype": "binary",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "logicalId": "online"
+    },
+    {
+      "name": "Etat",
+      "type": "info",
+      "subtype": "binary",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "status/switch:0/output",
+      "template": {
+        "dashboard": "core::light",
+        "mobile": "core::light"
+      }
+    },
+    {
+      "name": "On",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":0,\"on\":true}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Off",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":0,\"on\":false}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Toggle",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Toggle\",\"params\":{\"id\":0}}"
+      }
+    },
+    {
+      "name": "Puissance",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "W",
+      "logicalId": "status/switch:0/apower"
+    },
+    {
+      "name": "Consommation",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "Wh",
+      "logicalId": "status/switch:0/aenergy/total"
+    },
+    {
+      "name": "Courant",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "A",
+      "logicalId": "status/switch:0/current"
+    },
+    {
+      "name": "Tension",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "V",
+      "logicalId": "status/switch:0/voltage"
+    },
+    {
+      "name": "Fréquence",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "unite": "Hz",
+      "logicalId": "status/switch:0/freq"
+    }
+  ]
+}
