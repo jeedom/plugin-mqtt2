@@ -2,8 +2,9 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Changelog MQTT Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise-à-jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it only concerns the updating of documentation, translation or text",
-        "01\/12\/2025": "",
-        "Correction pour la remonté des batterie en mode mqtt link": "",
+        "Ajout configuration pour Shelly 1PM Gen4": "",
+        "01\/12\/2025": "01\/12\/2025",
+        "Correction pour la remonté des batterie en mode mqtt link": "Correction pour la remonté des batterie en mode mqtt link",
         "16\/05\/2025": "16\/05\/2025",
         "Ajout du template She - Carte MIO MQTT": "Ajout du template She - Carte MIO MQTT",
         "25\/11\/2024": "11\/25\/2024",
