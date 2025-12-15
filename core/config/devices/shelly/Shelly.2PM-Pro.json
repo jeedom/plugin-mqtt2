@@ -8,11 +8,7 @@
       "isVisible": 0,
       "isHistorized": 0,
       "logicalId": "online"
-    },
-
-   
-
-    {
+    },{
       "name": "Etat 1",
       "type": "info",
       "subtype": "binary",
@@ -23,8 +19,7 @@
         "dashboard": "core::light",
         "mobile": "core::light"
       }
-    },
-    {
+    },{
       "name": "On 1",
       "type": "action",
       "subtype": "other",
@@ -39,8 +34,7 @@
         "dashboard": "core::prise",
         "mobile": "core::prise"
       }
-    },
-    {
+    },{
       "name": "Off 1",
       "type": "action",
       "subtype": "other",
@@ -55,8 +49,7 @@
         "dashboard": "core::prise",
         "mobile": "core::prise"
       }
-    },
-    {
+    },{
       "name": "Toggle 1",
       "type": "action",
       "subtype": "other",
@@ -67,8 +60,7 @@
       "configuration": {
         "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Toggle\",\"params\":{\"id\":0}}"
       }
-    },
-    {
+    },{
       "name": "Puissance 1",
       "type": "info",
       "subtype": "numeric",
@@ -76,8 +68,7 @@
       "isHistorized": 1,
       "unite": "W",
       "logicalId": "status/switch:0/apower"
-    },
-    {
+    },{
       "name": "Consommation 1",
       "type": "info",
       "subtype": "numeric",
@@ -85,8 +76,7 @@
       "isHistorized": 1,
       "unite": "Wh",
       "logicalId": "status/switch:0/aenergy/total"
-    },
-    {
+    },{
       "name": "Courant 1",
       "type": "info",
       "subtype": "numeric",
@@ -94,8 +84,7 @@
       "isHistorized": 0,
       "unite": "A",
       "logicalId": "status/switch:0/current"
-    },
-    {
+    },{
       "name": "Tension 1",
       "type": "info",
       "subtype": "numeric",
@@ -103,8 +92,7 @@
       "isHistorized": 0,
       "unite": "V",
       "logicalId": "status/switch:0/voltage"
-    },
-    {
+    },{
       "name": "Fréquence 1",
       "type": "info",
       "subtype": "numeric",
@@ -112,9 +100,7 @@
       "isHistorized": 0,
       "unite": "Hz",
       "logicalId": "status/switch:0/freq"
-    },
-
-    {
+    },{
       "name": "Etat 2",
       "type": "info",
       "subtype": "binary",
@@ -125,8 +111,7 @@
         "dashboard": "core::light",
         "mobile": "core::light"
       }
-    },
-    {
+    },{
       "name": "On 2",
       "type": "action",
       "subtype": "other",
@@ -141,8 +126,7 @@
         "dashboard": "core::prise",
         "mobile": "core::prise"
       }
-    },
-    {
+    },{
       "name": "Off 2",
       "type": "action",
       "subtype": "other",
@@ -157,8 +141,7 @@
         "dashboard": "core::prise",
         "mobile": "core::prise"
       }
-    },
-    {
+    },{
       "name": "Toggle 2",
       "type": "action",
       "subtype": "other",
@@ -169,8 +152,7 @@
       "configuration": {
         "message": "json::{\"id\":2,\"src\":\"jeedom\",\"method\":\"Switch.Toggle\",\"params\":{\"id\":1}}"
       }
-    },
-    {
+    },{
       "name": "Puissance 2",
       "type": "info",
       "subtype": "numeric",
@@ -178,8 +160,7 @@
       "isHistorized": 1,
       "unite": "W",
       "logicalId": "status/switch:1/apower"
-    },
-    {
+    },{
       "name": "Consommation 2",
       "type": "info",
       "subtype": "numeric",
@@ -187,8 +168,7 @@
       "isHistorized": 1,
       "unite": "Wh",
       "logicalId": "status/switch:1/aenergy/total"
-    },
-    {
+    },{
       "name": "Courant 2",
       "type": "info",
       "subtype": "numeric",
@@ -196,8 +176,7 @@
       "isHistorized": 0,
       "unite": "A",
       "logicalId": "status/switch:1/current"
-    },
-    {
+    },{
       "name": "Tension 2",
       "type": "info",
       "subtype": "numeric",
@@ -205,8 +184,7 @@
       "isHistorized": 0,
       "unite": "V",
       "logicalId": "status/switch:1/voltage"
-    },
-    {
+    },{
       "name": "Fréquence 2",
       "type": "info",
       "subtype": "numeric",
