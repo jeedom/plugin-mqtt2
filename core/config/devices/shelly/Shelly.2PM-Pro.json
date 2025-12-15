@@ -1,0 +1,219 @@
+{
+  "name": "Shelly 2PM / Pro 2",
+  "commands": [
+    {
+      "name": "Online",
+      "type": "info",
+      "subtype": "binary",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "logicalId": "online"
+    },
+
+   
+
+    {
+      "name": "Etat 1",
+      "type": "info",
+      "subtype": "binary",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "status/switch:0/output",
+      "template": {
+        "dashboard": "core::light",
+        "mobile": "core::light"
+      }
+    },
+    {
+      "name": "On 1",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 1",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":0,\"on\":true}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Off 1",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 1",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":0,\"on\":false}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Toggle 1",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 1",
+      "configuration": {
+        "message": "json::{\"id\":1,\"src\":\"jeedom\",\"method\":\"Switch.Toggle\",\"params\":{\"id\":0}}"
+      }
+    },
+    {
+      "name": "Puissance 1",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "W",
+      "logicalId": "status/switch:0/apower"
+    },
+    {
+      "name": "Consommation 1",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "Wh",
+      "logicalId": "status/switch:0/aenergy/total"
+    },
+    {
+      "name": "Courant 1",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "A",
+      "logicalId": "status/switch:0/current"
+    },
+    {
+      "name": "Tension 1",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "V",
+      "logicalId": "status/switch:0/voltage"
+    },
+    {
+      "name": "Fréquence 1",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "unite": "Hz",
+      "logicalId": "status/switch:0/freq"
+    },
+
+    {
+      "name": "Etat 2",
+      "type": "info",
+      "subtype": "binary",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "status/switch:1/output",
+      "template": {
+        "dashboard": "core::light",
+        "mobile": "core::light"
+      }
+    },
+    {
+      "name": "On 2",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 2",
+      "configuration": {
+        "message": "json::{\"id\":2,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":1,\"on\":true}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Off 2",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 2",
+      "configuration": {
+        "message": "json::{\"id\":2,\"src\":\"jeedom\",\"method\":\"Switch.Set\",\"params\":{\"id\":1,\"on\":false}}"
+      },
+      "template": {
+        "dashboard": "core::prise",
+        "mobile": "core::prise"
+      }
+    },
+    {
+      "name": "Toggle 2",
+      "type": "action",
+      "subtype": "other",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "logicalId": "rpc",
+      "value": "Etat 2",
+      "configuration": {
+        "message": "json::{\"id\":2,\"src\":\"jeedom\",\"method\":\"Switch.Toggle\",\"params\":{\"id\":1}}"
+      }
+    },
+    {
+      "name": "Puissance 2",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "W",
+      "logicalId": "status/switch:1/apower"
+    },
+    {
+      "name": "Consommation 2",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 1,
+      "unite": "Wh",
+      "logicalId": "status/switch:1/aenergy/total"
+    },
+    {
+      "name": "Courant 2",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "A",
+      "logicalId": "status/switch:1/current"
+    },
+    {
+      "name": "Tension 2",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 1,
+      "isHistorized": 0,
+      "unite": "V",
+      "logicalId": "status/switch:1/voltage"
+    },
+    {
+      "name": "Fréquence 2",
+      "type": "info",
+      "subtype": "numeric",
+      "isVisible": 0,
+      "isHistorized": 0,
+      "unite": "Hz",
+      "logicalId": "status/switch:1/freq"
+    }
+  ]
+}
