@@ -2,7 +2,7 @@
     "changelog.md": {
         "Changelog MQTT Manager": "Administrador de registro de cambios MQTT",
         "Pour rappel s'il n'y a pas d'information sur la mise-à-jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio, si no hay información sobre la actualización, significa que solo se trata de actualización de documentación, traducción o texto",
-        "Ajout configuration pour Shelly 1PM Gen4": "",
+        "Ajout configuration pour Shelly 1PM Gen4": "Ajout configuration pour Shelly 1PM Gen4",
         "01\/12\/2025": "01\/12\/2025",
         "Correction pour la remonté des batterie en mode mqtt link": "Correction pour la remonté des batterie en mode mqtt link",
         "16\/05\/2025": "16\/05\/2025",
