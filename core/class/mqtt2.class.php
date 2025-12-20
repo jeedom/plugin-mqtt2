@@ -459,6 +459,8 @@ class mqtt2 extends eqLogic {
       $return['state'] = 'nok';
       $return['launchable'] = 'ok';
       switch (config::byKey('mode', __CLASS__)) {
+         case 'local':
+            break;
          case 'remote':
             if (empty(config::byKey('remote::protocol', __CLASS__)) || empty(config::byKey('remote::ip', __CLASS__)) || empty(config::byKey('remote::port', __CLASS__))) {
                $return['launchable'] = 'nok';
@@ -475,7 +477,8 @@ class mqtt2 extends eqLogic {
             }
             break;
          default:
-            $return['launchable'] = 'ok';
+            $return['launchable'] = 'nok';
+            $return['launchable_message'] = __("Veuillez sélectionner le mode d'installation du broker", __FILE__);
             break;
       }
 
