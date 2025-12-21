@@ -214,6 +214,7 @@
         "Veuillez installer Mosquitto": "Por favor, instale o Mosquitto",
         "Veuillez d\\'abord installer Mosquitto": "Instale o Mosquitto primeiro",
         "Veuillez renseigner l'adresse complète du broker": "Por favor, preencha o endereço completo do corretor",
+        "Veuillez sélectionner le mode d'installation du broker": "Veuillez sélectionner le mode d'installation du broker",
         "Le topic racine n\\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.": "O tópico raiz é inválido. O tópico raiz não pode ser idêntico a um tópico onde um plugin está inscrito",
         "Service mosquitto non lancé, je lance une installation": "Serviço Mosquitto não iniciado, lanço uma instalação",
         "Veuillez vérifier la configuration": "Por favor, verifique a configuração",

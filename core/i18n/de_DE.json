@@ -214,6 +214,7 @@
         "Veuillez installer Mosquitto": "Bitte installieren Sie Moskito",
         "Veuillez d\\'abord installer Mosquitto": "Bitte installieren Sie zuerst Mosquitto",
         "Veuillez renseigner l'adresse complète du broker": "Bitte tragen Sie die vollständige Adresse des Maklers ein",
+        "Veuillez sélectionner le mode d'installation du broker": "Veuillez sélectionner le mode d'installation du broker",
         "Le topic racine n\\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.": "Das Stammthema ist ungültig. Das Stammthema darf nicht mit einem Thema identisch sein, in dem ein Plugin abonniert ist",
         "Service mosquitto non lancé, je lance une installation": "Der Mosquito-Dienst wurde nicht gestartet. Ich starte eine Installation",
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
