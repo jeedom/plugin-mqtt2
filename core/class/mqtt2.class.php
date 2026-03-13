@@ -512,8 +512,8 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
       }
       self::createListenner();
+      $path_ssl = realpath(__DIR__ . '/../../data/ssl');
       if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
-         $path_ssl = realpath(__DIR__ . '/../../data/ssl');
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
             self::generateClientCert();
             shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
@@ -531,9 +531,14 @@ class mqtt2 extends eqLogic {
          $cmd .= ' --mqtt_server mqtts://127.0.0.1:8883';
          $cmd .= ' --client_key ' . $path_ssl . '/client.key';
          $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
-         $cmd .= ' --ca ' . $path_ssl . '/ca.crt';
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
+         if (config::byKey('mode', __CLASS__) == 'remote' && config::byKey('remote::protocol', __CLASS__)  == 'mqtts' && config::byKey('mqtt::client_key', __CLASS__) != '' && config::byKey('mqtt::client_crt', __CLASS__)!= '') {
+            file_put_contents($path_ssl . '/client.key', config::byKey('mqtt::client_key', __CLASS__));
+            file_put_contents($path_ssl . '/client.crt', config::byKey('mqtt::client_crt', __CLASS__));
+            $cmd .= ' --client_key ' . $path_ssl . '/client.key';
+            $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
+         }
       }
       if (count($authentifications) != 2) {
          $cmd .= ' --username ""';
@@ -542,6 +547,7 @@ class mqtt2 extends eqLogic {
          $cmd .= ' --username "' . $authentifications[0] . '"';
          $cmd .= ' --password "' . $authentifications[1] . '"';
       }
+
       $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'http:127.0.0.1:port:comp') . '/plugins/mqtt2/core/php/jeeMqtt2.php';
       $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__);
       $cmd .= ' --cycle ' . config::byKey('cycle', __CLASS__);

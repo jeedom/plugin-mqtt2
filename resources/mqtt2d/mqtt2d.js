@@ -37,14 +37,13 @@ Jeedom.log.info('Cycle : ' + args.cycle)
 
 Jeedom.log.info('Client key : ' + args.client_key)
 Jeedom.log.info('Client crt : ' + args.client_crt)
-Jeedom.log.info('CA : ' + args.ca)
 
 Jeedom.write_pid(args.pid)
 Jeedom.com.config(args.apikey, args.callback, args.cycle)
 Jeedom.com.test()
 
 var mqtt = require('mqtt')
-if (args.ca) {
+if (args.client_crt && args.client_key) {
   var client = mqtt.connect(args.mqtt_server, {
     clientId: "mqtt-jeedom_"+Math.random().toString(16).substring(0, 8),
     rejectUnauthorized: false,

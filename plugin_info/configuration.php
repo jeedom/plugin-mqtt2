@@ -97,6 +97,21 @@ if (!isConnect()) {
           <textarea class="configKey form-control autogrow" data-l1key="mqtt::password"></textarea>
         </div>
       </div>
+
+      <div class="form-group mqtt2Mode remote">
+        <label class="col-md-4 control-label">{{Certificat client (si mqtts)}}</label>
+        <div class="col-md-7">
+          <textarea class="configKey form-control autogrow" data-l1key="mqtt::client_crt"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group mqtt2Mode remote">
+        <label class="col-md-4 control-label">{{Clef privée client (si mqtts)}}</label>
+        <div class="col-md-7">
+          <textarea class="configKey form-control autogrow" data-l1key="mqtt::client_key"></textarea>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="col-md-4 control-label">{{Port socket interne}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Modification dangereuse}}"></i></sup>
