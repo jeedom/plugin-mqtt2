@@ -24,6 +24,8 @@
         "Port": "Hafen",
         "Authentification": "Authentifizierung",
         "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "Login und Passwort des MQTT-Brokers durch Doppelpunkte getrennt",
+        "Certificat client (si mqtts)": "Clientzertifikat (bei Verwendung von MQTTs)",
+        "Clef privée client (si mqtts)": "Privater Clientschlüssel (bei Verwendung von MQTTs)",
         "Port socket interne": "Interner Sockelanschluss",
         "Modification dangereuse": "Gefährliche Modifikation",
         "Cycle": "Zyklus",

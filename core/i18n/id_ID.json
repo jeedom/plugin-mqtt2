@@ -24,6 +24,8 @@
         "Port": "Port",
         "Authentification": "Authentification",
         "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points": "Identifiant et mot de passe de connexion au broker MQTT séparés par deux-points",
+        "Certificat client (si mqtts)": "Certificat client (si mqtts)",
+        "Clef privée client (si mqtts)": "Clef privée client (si mqtts)",
         "Port socket interne": "Port socket interne",
         "Modification dangereuse": "Modification dangereuse",
         "Cycle": "Cycle",
