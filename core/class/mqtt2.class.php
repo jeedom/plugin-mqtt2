@@ -687,6 +687,7 @@ class mqtt2 extends eqLogic {
          }
          if (config::byKey('autodiscovery', 'mqtt2') == 1) {
             if ($topic == 'homeassistant') {
+               log::add(__CLASS__, 'debug', 'Discovery topic for HA, try to handle it');
                self::ha_discovery($topic, $message);
                continue;
             }
@@ -850,7 +851,7 @@ class mqtt2 extends eqLogic {
       foreach ($_messages as $type => $devices) {
          foreach ($devices as $id => $device) {
             foreach ($device as $name => $configuration) {
-               //log::add(__CLASS__, 'debug', 'HA : ' . print_r($configuration, true));
+               log::add(__CLASS__, 'debug', 'HA discovery : ' . print_r($configuration, true));
                if (!is_array($configuration) || !isset($configuration['config']['dev']['mf']) || !isset($configuration['config']['stat_t'])) {
                   continue;
                }
