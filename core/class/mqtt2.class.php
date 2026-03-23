@@ -523,6 +523,7 @@ class mqtt2 extends eqLogic {
       }
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
+      self::setPassword(config::byKey('mode', __CLASS__));
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
       $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
@@ -570,6 +571,10 @@ class mqtt2 extends eqLogic {
       }
       message::removeAll(__CLASS__, 'unableStartDeamon');
       return true;
+   }
+
+   public static function postConfig_mqtt_password($_value) {
+         self::setPassword(config::byKey('mode', __CLASS__));
    }
 
    public static function deamon_stop() {
