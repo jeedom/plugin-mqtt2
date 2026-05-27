@@ -42,6 +42,7 @@
         "Veuillez désinstaller Mosquitto local": "Veuillez désinstaller Mosquitto local",
         "Veuillez installer Mosquitto": "Veuillez installer Mosquitto",
         "Veuillez renseigner l'adresse complète du broker": "Veuillez renseigner l'adresse complète du broker",
+        "Veuillez sélectionner le mode d'installation du broker": "Selezionare la modalità di installazione del broker",
         "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management": "Veuillez vous référer à la documentation pour supprimer le broker Mosquitto géré par le plugin Docker Management",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration"
     },
