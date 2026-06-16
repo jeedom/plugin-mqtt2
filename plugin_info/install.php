@@ -22,10 +22,12 @@ function mqtt2_install() {
   if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
     config::save('mode', "none", 'mqtt2');
   }
+  mqtt2::ensurePassword();
   mqtt2::createListenner();
 }
 
 function mqtt2_update() {
+  mqtt2::ensurePassword();
   mqtt2::createListenner();
 }
 

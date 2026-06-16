@@ -202,11 +202,16 @@ class mqtt2 extends eqLogic {
       shell_exec(system::getCmdSudo() . ' chown -R www-data ' . $tmp_folder);
    }
 
-   public static function setPassword($_mode = 'local') {
-      $path = __DIR__ . '/../../data/passwords';
+
+   public static function ensurePassword() {
       if (trim(config::byKey('mqtt::password', __CLASS__)) == '') {
          config::save('mqtt::password', "jeedom:" . config::genKey(), __CLASS__);
       }
+   }
+
+   public static function setPassword($_mode = 'local') {
+      $path = __DIR__ . '/../../data/passwords';
+      self::ensurePassword();
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
       if ($_mode == 'docker') {
