@@ -40,30 +40,38 @@ Jeedom.getArgs = function() {
 
 /***************************LOGS*******************************/
 
+Jeedom.log.formatDate = function(){
+  var d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0') + ' ' +
+    String(d.getHours()).padStart(2, '0') + ':' +
+    String(d.getMinutes()).padStart(2, '0') + ':' +
+    String(d.getSeconds()).padStart(2, '0');
+}
+
 Jeedom.log.setLevel = function(_level){
   var convert = {debug  : 0,info : 10,notice : 20,warning : 30,error : 40,critical : 50,none : 60}
   Jeedom.log.level = convert[_level]
 }
 
+Jeedom.log.write = function(_level, _log){
+  console.log('[' + Jeedom.log.formatDate() + '][' + _level + '] : ' + _log)
+}
+
 Jeedom.log.debug  = function(_log){
-  if(Jeedom.log.level > 0){
-    return;
-  }
-  console.log('['+(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''))+'][DEBUG] : '+_log)
+  if(Jeedom.log.level > 0) return;
+  Jeedom.log.write('DEBUG', _log)
 }
 
 Jeedom.log.info  = function(_log){
-  if(Jeedom.log.level > 10){
-    return;
-  }
-  console.log('['+(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''))+'][INFO] : '+_log)
+  if(Jeedom.log.level > 10) return;
+  Jeedom.log.write('INFO', _log)
 }
 
 Jeedom.log.error  = function(_log){
-  if(Jeedom.log.level > 40){
-    return;
-  }
-  console.log('['+(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''))+'][ERROR] : '+_log)
+  if(Jeedom.log.level > 40) return;
+  Jeedom.log.write('ERROR', _log)
 }
 
 /***************************PID*******************************/
