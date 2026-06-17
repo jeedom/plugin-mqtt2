@@ -100,6 +100,22 @@ Jeedom.mergeDeep = function(target, ...sources) {
   return Jeedom.mergeDeep(target, ...sources);
 }
 
+Jeedom.hasConflict = function(target, source) {
+  for (const key in source) {
+    if (!(key in target)) {
+      continue;
+    }
+    if (Jeedom.isObject(target[key]) && Jeedom.isObject(source[key])) {
+      if (Jeedom.hasConflict(target[key], source[key])) {
+        return true;
+      }
+    } else if (target[key] !== source[key]) {
+      return true;
+    }
+  }
+  return false;
+}
+
 Jeedom.com.config = function(_apikey,_callback,_cycle){
   Jeedom.com.apikey = _apikey;
   Jeedom.com.callback = _callback;
@@ -116,9 +132,10 @@ Jeedom.com.config = function(_apikey,_callback,_cycle){
 }
 
 Jeedom.com.add_changes = function(_key,_value){
+  var changes = {}
   if (_key.indexOf('::') != -1){
-    tmp_changes = {}
-    var changes = _value
+    var tmp_changes = {}
+    changes = _value
     var keys = _key.split('::').reverse();
     for (var k in keys){
       if (typeof tmp_changes[keys[k]] == 'undefined'){
@@ -128,18 +145,18 @@ Jeedom.com.add_changes = function(_key,_value){
       changes = tmp_changes
       tmp_changes = {}
     }
-    if (Jeedom.com.cycle <= 0){
-      Jeedom.com.send_change_immediate(changes)
-    }else{
-      Jeedom.com.changes = Jeedom.mergeDeep(Jeedom.com.changes,changes)
-    }
-  } else{
-    if (Jeedom.com.cycle <= 0){
-      Jeedom.com.send_change_immediate({_key:_value})
-    }else{
-      Jeedom.com.changes[_key] = _value
-    }
+  } else {
+    changes[_key] = _value
   }
+  if (Jeedom.com.cycle <= 0){
+    Jeedom.com.send_change_immediate(changes)
+    return
+  }
+  if (Jeedom.hasConflict(Jeedom.com.changes, changes)){
+    Jeedom.com.send_change_immediate(Jeedom.com.changes)
+    Jeedom.com.changes = {}
+  }
+  Jeedom.com.changes = Jeedom.mergeDeep(Jeedom.com.changes, changes)
 }
 
 Jeedom.com.send_change_immediate = function(_changes){
