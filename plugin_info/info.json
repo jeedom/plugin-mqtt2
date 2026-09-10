@@ -45,7 +45,12 @@
 			"mqttTranmit": {
 				"type": "checkbox",
 				"name": {
-					"fr_FR": "Transmettre l'équipement en MQTT"
+					"fr_FR": "Transmettre l'équipement en MQTT",
+					"en_US": "Transmit device data via MQTT",
+					"es_ES": "Transmitir los datos del equipo mediante MQTT",
+					"de_DE": "Geräte über MQTT übertragen",
+					"it_IT": "Trasmissione dei dati delle apparecchiature tramite MQTT",
+					"pt_PT": "Transmitir os dados do equipamento via MQTT"
 				}
 			}
 		}
