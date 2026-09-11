@@ -121,6 +121,8 @@ Jeedom.com.config = function(_apikey,_callback,_cycle){
   Jeedom.com.callback = _callback;
   Jeedom.com.cycle = _cycle;
   Jeedom.com.changes = {};
+  Jeedom.com.queue = [];
+  Jeedom.com.sending = false;
   if(Jeedom.com.cycle > 0){
     setInterval(function() {
       if(Object.keys(Jeedom.com.changes).length > 0){
@@ -159,15 +161,31 @@ Jeedom.com.add_changes = function(_key,_value){
   Jeedom.com.changes = Jeedom.mergeDeep(Jeedom.com.changes, changes)
 }
 
-Jeedom.com.send_change_immediate = function(_changes){
-  Jeedom.log.debug('Send data to jeedom : '+JSON.stringify(_changes));
+Jeedom.com.process_queue = function(){
+  if (Jeedom.com.sending || Jeedom.com.queue.length == 0) {
+    return
+  }
+  Jeedom.com.sending = true
+  var changes = Jeedom.com.queue.shift()
+  Jeedom.log.debug('Send data to jeedom : '+JSON.stringify(changes));
   axios({
     method : 'POST',
     url:Jeedom.com.callback+'?apikey='+Jeedom.com.apikey,
-    data: JSON.stringify(_changes)
+    data: JSON.stringify(changes)
   }).catch(function (error) {
-      Jeedom.log.error('Error on send to jeedom : '+JSON.stringify(error));
+    Jeedom.log.error('Error on send to jeedom : '+JSON.stringify(error));
+  }).finally(function() {
+    Jeedom.com.sending = false
+    Jeedom.com.process_queue()
   })
+}
+
+Jeedom.com.send_change_immediate = function(_changes){
+  if (!Jeedom.isObject(_changes) || Object.keys(_changes).length == 0) {
+    return
+  }
+  Jeedom.com.queue.push(_changes)
+  Jeedom.com.process_queue()
 }
 
 Jeedom.com.test = function(){
