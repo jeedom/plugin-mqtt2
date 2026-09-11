@@ -26,8 +26,38 @@ if (isset($_GET['test'])) {
 }
 $results = json_decode(file_get_contents("php://input"), true);
 if(is_array($results)){
+    $linkedJeedoms = array_filter(array_map('trim', explode(',', config::byKey('jeedom::link', 'mqtt2'))));
     foreach ($results as $key => $value) {
         $plugin = mqtt2::getPluginForTopic($key);
+
+        if ($plugin == 'mqtt2' && in_array($key, $linkedJeedoms, true) && is_array($value) && isset($value['cmd']['event']) && is_array($value['cmd']['event'])) {
+            foreach ($value['cmd']['event'] as $remoteCmdId => $event) {
+                if (!is_array($event) || !array_key_exists('value', $event) || is_array($event['value']) || is_object($event['value'])) {
+                    continue;
+                }
+                $cmds = cmd::byLogicalId('cmd/event/' . $remoteCmdId . '/value', 'info');
+                foreach ($cmds as $cmd) {
+                    $eqLogic = $cmd->getEqLogic();
+                    if (!is_object($eqLogic) || $eqLogic->getEqType_name() != 'mqtt2' || $eqLogic->getLogicalId() != $key) {
+                        continue;
+                    }
+                    log::add('mqtt2', 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $event['value']);
+                    $eqLogic->checkAndUpdateCmd($cmd, $event['value']);
+                    unset($value['cmd']['event'][$remoteCmdId]);
+                    break;
+                }
+            }
+            if (count($value['cmd']['event']) == 0) {
+                unset($value['cmd']['event']);
+            }
+            if (isset($value['cmd']) && count($value['cmd']) == 0) {
+                unset($value['cmd']);
+            }
+            if (count($value) == 0) {
+                continue;
+            }
+        }
+
         if (class_exists($plugin) && method_exists($plugin, 'handleMqttMessage')) {
             $plugin::handleMqttMessage(array($key => $value));
         } else {
