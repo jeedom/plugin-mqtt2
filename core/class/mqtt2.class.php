@@ -762,7 +762,7 @@ class mqtt2 extends eqLogic {
                continue;
             }
             if (is_array($value) || is_object($value)) {
-               $value = json_encode($cmd);
+               $value = json_encode($value);
             }
             log::add(__CLASS__, 'debug', $cmd->getHumanName() . ' ' . __(' mise à jour de  la valeur avec ', __FILE__) . ' : ' . $value);
             $eqlogic->checkAndUpdateCmd($cmd, $value);
