@@ -8,6 +8,8 @@
 - Meilleurs gestion de l'authentification mqtt lors de la sauvegarde #55
 - Correction de la perte de messages lorsque plusieurs payloads arrivent coup sur coup sur un même topic pendant un cycle (le lot en attente est désormais envoyé avant d'être écrasé). Corrige notamment les capteurs zwavejs-ui type Shelly Wave Door/Window (Door state / Door state (simple))
 - Correction d'un bug d'initialisation des password obligeant a rafraichir la page lors de la 1er installation
+- Correction de bugs
+- Optimisation du code et des performances
 
 # 01/12/2025
 
