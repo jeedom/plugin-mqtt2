@@ -18,7 +18,7 @@ const axios = require('axios');
 var express = require('express');
 const http = require('http');
 
-axios.defaults.httpAgent = new http.Agent({ keepAlive: false });
+axios.defaults.httpAgent = new http.Agent({ keepAlive: true });
 
 var Jeedom = {}
 Jeedom.log = {}
