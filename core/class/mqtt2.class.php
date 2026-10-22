@@ -149,7 +149,7 @@ class mqtt2 extends eqLogic {
       if ($mode == 'none') {
          return;
       }
-      if ($mode != 'local' && $mode != 'docker') {
+      if ($mode != 'local' && $mode != 'docker' && $mode != 'jeego') {
          return;
       }
       if ($mode == 'docker' && is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
@@ -211,6 +211,30 @@ class mqtt2 extends eqLogic {
 
    public static function setPassword($_mode = 'local') {
       $path = __DIR__ . '/../../data/passwords';
+      if ($_mode == 'jeego') {
+         self::ensurePassword();
+         $temporary = tempnam(dirname($path), '.passwords-');
+         if ($temporary === false) {
+            throw new Exception(__('Impossible de préparer le fichier de mots de passe MQTT', __FILE__));
+         }
+         try {
+            if (file_put_contents($temporary, config::byKey('mqtt::password', __CLASS__)) === false) {
+               throw new Exception(__('Impossible d’écrire les identifiants MQTT', __FILE__));
+            }
+            exec('mosquitto_passwd -U ' . escapeshellarg($temporary) . ' 2>&1', $output, $status);
+            if ($status !== 0) {
+               throw new Exception(__('mosquitto_passwd indisponible ou en échec ; mettez à jour l’image Core', __FILE__));
+            }
+            if (!chmod($temporary, 0640) || !rename($temporary, $path)) {
+               throw new Exception(__('Impossible de publier le fichier de mots de passe MQTT', __FILE__));
+            }
+         } finally {
+            if (file_exists($temporary)) {
+               unlink($temporary);
+            }
+         }
+         return;
+      }
       self::ensurePassword();
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
@@ -288,7 +312,7 @@ class mqtt2 extends eqLogic {
             throw new Exception(__("Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller", __FILE__));
          }
          self::installDocker2();
-      } else {
+      } elseif ($_mode != 'jeego') {
          self::installLocalMosquitto();
       }
       self::generateCertificates();
@@ -346,7 +370,7 @@ class mqtt2 extends eqLogic {
          unlink(__DIR__ . '/../../data/mosquitto.conf');
       }
 
-      if ($_mode == 'local') {
+      if ($_mode == 'local' || $_mode == 'jeego') {
          $replace = array(
             ' /mosquitto/' => ' ' . __DIR__ . '/../../data/',
             '/data/config/ssl/' => '/data/ssl/',
@@ -364,6 +388,36 @@ class mqtt2 extends eqLogic {
          '#cloud_username#' => mb_strtolower(config::byKey('market::username')),
          '#cloud_password#' => config::byKey('market::password'),
       );
+      if ($_mode == 'jeego') {
+         $configuration = str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__));
+         $configuration = str_replace(
+            array(__DIR__ . '/../../data/', __DIR__ . '/../config/'),
+            array(dirname(__DIR__, 2) . '/data/', dirname(__DIR__) . '/config/'),
+            $configuration
+         );
+         $configuration = preg_replace('/^[\t ]*(?:log_dest|persistence_location)[\t ]+[^\n]*$/m', '', $configuration);
+         $configuration = "# MQTT2 broker managed by Jeego\nlog_dest stdout\npersistence_location /mosquitto/data/\n" . ltrim($configuration);
+         $path = __DIR__ . '/../../data/mosquitto.conf';
+         $temporary = tempnam(dirname($path), '.mosquitto-');
+         if ($temporary === false) {
+            throw new Exception(__('Impossible de préparer la configuration Mosquitto', __FILE__));
+         }
+         try {
+            if (file_put_contents($temporary, $configuration) === false || !chmod($temporary, 0640) || !rename($temporary, $path)) {
+               throw new Exception(__('Impossible de publier la configuration Mosquitto', __FILE__));
+            }
+         } finally {
+            if (file_exists($temporary)) {
+               unlink($temporary);
+            }
+         }
+         event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'plugin',
+            'message' => __('Configuration préparée. Installez ou redémarrez Mosquitto dans Jeego, onglet Services, pour l’appliquer.', __FILE__),
+         ));
+         return;
+      }
       shell_exec(system::getCmdSudo() . ' chmod 777 ' . __DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
@@ -389,6 +443,9 @@ class mqtt2 extends eqLogic {
    }
 
    public static function uninstallMosquitto() {
+      if (config::byKey('mode', __CLASS__) == 'jeego') {
+         throw new Exception(__('Gérez le conteneur Mosquitto dans Jeego, onglet Services', __FILE__));
+      }
       if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
          event::add('jeedom::alert', array(
             'level' => 'warning',
@@ -406,6 +463,8 @@ class mqtt2 extends eqLogic {
 
    public static function restartMosquitto() {
       switch (config::byKey('mode', __CLASS__)) {
+         case 'jeego':
+            throw new Exception(__('Gérez le conteneur Mosquitto dans Jeego, onglet Services', __FILE__));
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;
@@ -433,6 +492,8 @@ class mqtt2 extends eqLogic {
 
    public static function stopMosquitto() {
       switch (config::byKey('mode', __CLASS__)) {
+         case 'jeego':
+            throw new Exception(__('Gérez le conteneur Mosquitto dans Jeego, onglet Services', __FILE__));
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;
@@ -465,6 +526,7 @@ class mqtt2 extends eqLogic {
       $return['launchable'] = 'ok';
       switch (config::byKey('mode', __CLASS__)) {
          case 'local':
+         case 'jeego':
             break;
          case 'remote':
             if (empty(config::byKey('remote::protocol', __CLASS__)) || empty(config::byKey('remote::ip', __CLASS__)) || empty(config::byKey('remote::port', __CLASS__))) {
@@ -518,7 +580,7 @@ class mqtt2 extends eqLogic {
       }
       self::createListenner();
       $path_ssl = realpath(__DIR__ . '/../../data/ssl');
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(config::byKey('mode', __CLASS__), array('local', 'docker', 'jeego'))) {
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
             self::generateClientCert();
             shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
@@ -533,7 +595,7 @@ class mqtt2 extends eqLogic {
       $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
       $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__);
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(config::byKey('mode', __CLASS__), array('local', 'docker', 'jeego'))) {
          $cmd .= ' --mqtt_server mqtts://127.0.0.1:8883';
          $cmd .= ' --client_key ' . $path_ssl . '/client.key';
          $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
@@ -633,7 +695,7 @@ class mqtt2 extends eqLogic {
    public static function getFormatedInfos() {
       $infos = array();
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(config::byKey('mode', __CLASS__), array('local', 'docker', 'jeego'))) {
          $infos['ip'] = '127.0.0.1';
          $infos['port'] = '1883';
          $infos['protocol'] = 'mqtt';

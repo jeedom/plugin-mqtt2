@@ -34,6 +34,7 @@ if (!isConnect()) {
             <option value="none" disabled>{{A configurer}}</option>
             <option value="local">{{Broker local (par défaut)}}</option>
             <option value="docker">{{Broker local docker}}</option>
+            <option value="jeego">{{Broker géré par Jeego}}</option>
             <option value="remote">{{Broker distant}}</option>
           </select>
         </div>
@@ -68,6 +69,15 @@ if (!isConnect()) {
             echo '<span class="label label-info">{{N/A}}</span>';
           }
           ?>
+        </div>
+      </div>
+
+      <div class="form-group mqtt2Mode jeego">
+        <label class="col-md-4 control-label">{{Broker Mosquitto}}</label>
+        <div class="col-md-8">
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2PrepareJeego"><i class="fas fa-save"></i> {{Préparer la configuration}}</a>
+          <a class="btn btn-xs btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
+          <p class="help-block">{{MQTT Manager conserve la configuration, les identifiants, les certificats et les liaisons entre Jeedom. Après préparation ou modification d’une liaison, installez ou redémarrez Mosquitto dans Jeego, onglet Services. Les journaux et les commandes du conteneur sont disponibles dans Jeego.}}</p>
         </div>
       </div>
 
@@ -177,14 +187,14 @@ if (!isConnect()) {
           <input class="configKey form-control" data-l1key="jeedom::link">
         </div>
       </div>
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Mqtt tranmission local}}</label>
         <div class="col-md-8"> 
           <a class="btn btn-xs btn-info" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-info-circle"></i> {{Informations MQTT}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-import"></i> {{Recevoir}}</a>
          </div>
       </div>
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Mqtt transmission cloud service (non disponible)}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
         </label>
@@ -209,7 +219,7 @@ if (!isConnect()) {
     </div>
 
     <div class="col-lg-6">
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Paramètres Mosquitto}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
         </label>
@@ -449,7 +459,7 @@ if (!isConnect()) {
     })
   })
 
-  $('#bt_mqtt2InstallMosquitto').off('click').on('click', function() {
+  $('#bt_mqtt2InstallMosquitto, #bt_mqtt2PrepareJeego').off('click').on('click', function() {
     $.ajax({
       type: "POST",
       url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
@@ -466,7 +476,7 @@ if (!isConnect()) {
           return
         }
         $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-        $.fn.showAlert({message: '{{Installation réussie}}',level: 'success',emptyBefore: true})
+        $.fn.showAlert({message: $('.configKey[data-l1key=mode]').value() === 'jeego' ? '{{Configuration préparée. Appliquez-la dans Jeego, onglet Services.}}' : '{{Installation réussie}}',level: 'success',emptyBefore: true})
       }
     })
   })
