@@ -414,7 +414,7 @@ class mqtt2 extends eqLogic {
          event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'plugin',
-            'message' => __('Configuration préparée. Installez ou redémarrez Mosquitto dans Jeego, onglet Services, pour l’appliquer.', __FILE__),
+            'message' => __('Configuration préparée. Cliquez sur (Re)Démarrer pour l’appliquer ; installez d’abord le broker dans Jeego si nécessaire.', __FILE__),
          ));
          return;
       }
@@ -461,10 +461,86 @@ class mqtt2 extends eqLogic {
       }
    }
 
+   private static function jeegoMessage($_message) {
+      return substr(str_replace((string) getenv('JEEGO_API_KEY'), '[masquée]', $_message), 0, 512);
+   }
+
+   private static function jeegoRequest($_method, $_path, $_timeout = 5) {
+      $url = rtrim((string) getenv('JEEGO_API_URL'), '/');
+      $key = (string) getenv('JEEGO_API_KEY');
+      $server = parse_url($url);
+      $host = isset($server['host']) ? trim($server['host'], '[]') : '';
+      $loopback = $host == '::1' || (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false && substr($host, 0, 4) == '127.');
+      if (!is_array($server) || !isset($server['scheme'], $server['port'], $server['path'])
+         || $server['scheme'] != 'http' || !$loopback || $server['port'] < 1 || $server['port'] > 65535
+         || $server['path'] != '/api/v1' || isset($server['user']) || isset($server['pass'])
+         || isset($server['query']) || isset($server['fragment']) || !preg_match('/^[a-f0-9]{64}$/D', $key)) {
+         throw new Exception(__('API Jeego non configurée. Mettez à jour Jeego et recréez le conteneur Jeedom pour recevoir ses accès.', __FILE__));
+      }
+      if (!function_exists('curl_init')) {
+         throw new Exception(__('L’extension PHP cURL est nécessaire pour joindre Jeego', __FILE__));
+      }
+      $request = curl_init($url . $_path);
+      curl_setopt_array($request, array(
+         CURLOPT_RETURNTRANSFER => true,
+         CURLOPT_CUSTOMREQUEST => $_method,
+         CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $key, 'Accept: application/json', 'Content-Type: application/json'),
+         CURLOPT_CONNECTTIMEOUT => 2,
+         CURLOPT_TIMEOUT => max(1, $_timeout),
+         CURLOPT_FOLLOWLOCATION => false,
+         CURLOPT_PROXY => '',
+      ));
+      if ($_method == 'POST') {
+         curl_setopt($request, CURLOPT_POSTFIELDS, '{}');
+      }
+      $response = curl_exec($request);
+      $status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+      curl_close($request);
+      if ($response === false) {
+         throw new Exception(__('API Jeego injoignable ; vérifiez le service Jeego. Une demande déjà acceptée peut continuer dans son historique.', __FILE__));
+      }
+      $data = json_decode($response, true);
+      if ($status != ($_method == 'POST' ? 202 : 200)) {
+         $message = isset($data['error']['message']) && is_string($data['error']['message']) ? $data['error']['message'] : __('Réponse HTTP inattendue', __FILE__) . ' (' . $status . ')';
+         throw new Exception('Jeego : ' . self::jeegoMessage($message));
+      }
+      if (!is_array($data)) {
+         throw new Exception(__('Réponse JSON de Jeego invalide', __FILE__));
+      }
+      return $data;
+   }
+
+   private static function restartJeegoMosquitto() {
+      $deadline = microtime(true) + 60;
+      $task = self::jeegoRequest('POST', '/services/mosquitto/actions/restart');
+      if (!isset($task['id']) || !is_string($task['id']) || !preg_match('/^[a-f0-9]{32}$/D', $task['id'])) {
+         throw new Exception(__('Identifiant de tâche Jeego invalide', __FILE__));
+      }
+      $id = $task['id'];
+      while (true) {
+         if (!isset($task['id'], $task['status']) || $task['id'] !== $id || !in_array($task['status'], array('running', 'succeeded', 'failed', 'interrupted'), true)) {
+            throw new Exception(__('État de tâche Jeego invalide', __FILE__));
+         }
+         if ($task['status'] == 'succeeded') {
+            return;
+         }
+         if ($task['status'] == 'failed' || $task['status'] == 'interrupted') {
+            $message = isset($task['error']) && is_string($task['error']) ? $task['error'] : __('Redémarrage de Mosquitto échoué ou interrompu', __FILE__);
+            throw new Exception('Jeego : ' . self::jeegoMessage($message));
+         }
+         if (microtime(true) >= $deadline) {
+            throw new Exception(__('Redémarrage non confirmé dans le délai prévu ; consultez l’historique de Jeego avant de réessayer', __FILE__));
+         }
+         usleep(500000);
+         $task = self::jeegoRequest('GET', '/tasks/' . $id, min(5, max(1, (int) ceil($deadline - microtime(true)))));
+      }
+   }
+
    public static function restartMosquitto() {
       switch (config::byKey('mode', __CLASS__)) {
          case 'jeego':
-            throw new Exception(__('Gérez le conteneur Mosquitto dans Jeego, onglet Services', __FILE__));
+            self::restartJeegoMosquitto();
+            break;
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;

@@ -75,9 +75,10 @@ if (!isConnect()) {
       <div class="form-group mqtt2Mode jeego">
         <label class="col-md-4 control-label">{{Broker Mosquitto}}</label>
         <div class="col-md-8">
+          <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartJeego"><i class="fas fa-play"></i> {{(Re)Démarrer}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2PrepareJeego"><i class="fas fa-save"></i> {{Préparer la configuration}}</a>
           <a class="btn btn-xs btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
-          <p class="help-block">{{MQTT Manager conserve la configuration, les identifiants, les certificats et les liaisons entre Jeedom. Après préparation ou modification d’une liaison, installez ou redémarrez Mosquitto dans Jeego, onglet Services. Les journaux et les commandes du conteneur sont disponibles dans Jeego.}}</p>
+          <p class="help-block">{{MQTT Manager conserve la configuration, les identifiants, les certificats et les liaisons entre Jeedom. Après préparation ou modification d’une liaison, cliquez sur (Re)Démarrer pour appliquer la configuration. L’installation du broker et ses journaux restent disponibles dans Jeego, onglet Services.}}</p>
         </div>
       </div>
 
@@ -415,7 +416,7 @@ if (!isConnect()) {
     })
   })
 
-  $('#bt_mqtt2RestartMosquitto').off('click').on('click', function() {
+  $('#bt_mqtt2RestartMosquitto, #bt_mqtt2RestartJeego').off('click').on('click', function() {
     $.ajax({
       type: "POST",
       url: "plugins/mqtt2/core/ajax/mqtt2.ajax.php",
@@ -476,7 +477,7 @@ if (!isConnect()) {
           return
         }
         $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-        $.fn.showAlert({message: $('.configKey[data-l1key=mode]').value() === 'jeego' ? '{{Configuration préparée. Appliquez-la dans Jeego, onglet Services.}}' : '{{Installation réussie}}',level: 'success',emptyBefore: true})
+        $.fn.showAlert({message: $('.configKey[data-l1key=mode]').value() === 'jeego' ? '{{Configuration préparée. Cliquez sur (Re)Démarrer pour l’appliquer.}}' : '{{Installation réussie}}',level: 'success',emptyBefore: true})
       }
     })
   })
