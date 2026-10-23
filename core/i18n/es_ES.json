@@ -51,6 +51,7 @@
         "Erreur lors de la génération des certificats client": "Error al generar certificados de cliente"
     },
     "plugins\/mqtt2\/core\/php\/jeeMqtt2.php": {
+        " mise à jour de  la valeur avec ": "actualizando el valor con",
         "Vous n\\'êtes pas autorisé à effectuer cette action": "No estás autorizado para realizar esta acción"
     },
     "plugins\/mqtt2\/desktop\/js\/mqtt2.js": {
