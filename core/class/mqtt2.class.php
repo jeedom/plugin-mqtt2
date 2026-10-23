@@ -668,7 +668,7 @@ class mqtt2 extends eqLogic {
       chdir($mqtt2_path);
       self::setPassword(config::byKey('mode', __CLASS__));
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
+      $cmd = system::getCmdSudo() . ' node ' . escapeshellarg($mqtt2_path . '/mqtt2d.js');
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
       $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__);
       if (in_array(config::byKey('mode', __CLASS__), array('local', 'docker', 'jeego'))) {
