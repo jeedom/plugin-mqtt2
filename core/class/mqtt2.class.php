@@ -199,6 +199,9 @@ class mqtt2 extends eqLogic {
    public static function generateClientCert() {
       $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
+         if (self::getMode() == 'jeego') {
+            throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton (Re)Démarrer Mosquitto', __FILE__));
+         }
          throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer Mosquitto', __FILE__));
       }
       $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
@@ -570,7 +573,7 @@ class mqtt2 extends eqLogic {
    public static function restartMosquitto() {
       switch (self::getMode()) {
          case 'jeego':
-            self::jeegoMosquittoAction('restart');
+            self::installMosquitto('jeego');
             break;
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);

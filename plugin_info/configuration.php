@@ -54,7 +54,9 @@ if (mqtt2::isJeego() && config::byKey('mode', 'mqtt2') != $mode) {
         <div class="col-md-8">
           <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter}}</a>
+          <?php if (!mqtt2::isJeego()) { ?>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer}}</a>
+          <?php } ?>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller}}</a>
           <a class="btn btn-xs btn-primary" id="bt_mqtt2LogMosquitto"><i class="far fa-file"></i> {{Log}}</a>
           <a class="btn btn-xs btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
@@ -208,7 +210,11 @@ if (mqtt2::isJeego() && config::byKey('mode', 'mqtt2') != $mode) {
     <div class="col-lg-6">
       <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Paramètres Mosquitto}}
+          <?php if (mqtt2::isJeego()) { ?>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et redémarrer Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <?php } else { ?>
           <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <?php } ?>
         </label>
         <div class="col-md-7">
           <textarea class="configKey form-control autogrow" data-l1key="mosquitto::parameters"></textarea>
