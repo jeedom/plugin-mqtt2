@@ -199,10 +199,7 @@ class mqtt2 extends eqLogic {
    public static function generateClientCert() {
       $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
-         if (self::getMode() == 'jeego') {
-            throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton (Re)Démarrer Mosquitto', __FILE__));
-         }
-         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer Mosquitto', __FILE__));
+         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer/(Re)Démarrer Mosquitto', __FILE__));
       }
       $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
       if (file_exists($tmp_folder)) {
@@ -227,30 +224,6 @@ class mqtt2 extends eqLogic {
    public static function setPassword($_mode = 'local') {
       $_mode = self::getMode($_mode);
       $path = __DIR__ . '/../../data/passwords';
-      if ($_mode == 'jeego') {
-         self::ensurePassword();
-         $temporary = tempnam(dirname($path), '.passwords-');
-         if ($temporary === false) {
-            throw new Exception(__('Impossible de préparer le fichier de mots de passe MQTT', __FILE__));
-         }
-         try {
-            if (file_put_contents($temporary, config::byKey('mqtt::password', __CLASS__)) === false) {
-               throw new Exception(__('Impossible d’écrire les identifiants MQTT', __FILE__));
-            }
-            exec('mosquitto_passwd -U ' . escapeshellarg($temporary) . ' 2>&1', $output, $status);
-            if ($status !== 0) {
-               throw new Exception(__('mosquitto_passwd indisponible ou en échec ; mettez à jour l’image Core', __FILE__));
-            }
-            if (!chmod($temporary, 0640) || !rename($temporary, $path)) {
-               throw new Exception(__('Impossible de publier le fichier de mots de passe MQTT', __FILE__));
-            }
-         } finally {
-            if (file_exists($temporary)) {
-               unlink($temporary);
-            }
-         }
-         return;
-      }
       self::ensurePassword();
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
@@ -320,7 +293,6 @@ class mqtt2 extends eqLogic {
    }
 
    public static function installMosquitto($_mode = 'local') {
-      $_mode = self::getMode($_mode);
       if ($_mode == 'remote') {
          return;
       }
@@ -510,25 +482,25 @@ class mqtt2 extends eqLogic {
          || isset($server['query']) || isset($server['fragment']) || !preg_match('/^[a-f0-9]{64}$/D', $key)) {
          throw new Exception(__('API Jeego non configurée. Mettez à jour Jeego et recréez le conteneur Jeedom pour recevoir ses accès.', __FILE__));
       }
-      if (!function_exists('curl_init')) {
-         throw new Exception(__('L’extension PHP cURL est nécessaire pour joindre Jeego', __FILE__));
-      }
-      $request = curl_init($url . $_path);
-      curl_setopt_array($request, array(
-         CURLOPT_RETURNTRANSFER => true,
+      $request = new com_http($url . $_path);
+      $request->setHeader(array(
+         'Authorization: Bearer ' . $key,
+         'Accept: application/json',
+         'Content-Type: application/json',
+      ));
+      $request->setNoSslCheck(false);
+      $request->setNoReportError(true);
+      $request->setCURLOPT(array(
          CURLOPT_CUSTOMREQUEST => $_method,
-         CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $key, 'Accept: application/json', 'Content-Type: application/json'),
          CURLOPT_CONNECTTIMEOUT => 2,
-         CURLOPT_TIMEOUT => max(1, $_timeout),
          CURLOPT_FOLLOWLOCATION => false,
          CURLOPT_PROXY => '',
       ));
       if ($_method == 'POST') {
-         curl_setopt($request, CURLOPT_POSTFIELDS, json_encode((object) $_body));
+         $request->setPost(json_encode((object) $_body));
       }
-      $response = curl_exec($request);
-      $status = curl_getinfo($request, CURLINFO_HTTP_CODE);
-      curl_close($request);
+      $response = $request->exec(max(1, $_timeout), 1);
+      $status = $request->getHttpCode();
       if ($response === false) {
          throw new Exception(__('API Jeego injoignable ; vérifiez le service Jeego. Une demande déjà acceptée peut continuer dans son historique.', __FILE__));
       }
