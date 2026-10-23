@@ -64,22 +64,7 @@ if (mqtt2::isJeego() && config::byKey('mode', 'mqtt2') != $mode) {
       <div class="form-group mqtt2Mode local docker jeego">
         <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
         <div class="col-md-7">
-          <?php
-          if ($mode == 'local' || $mode == 'jeego') {
-            try {
-              $running = mqtt2::isMosquittoRunning();
-            } catch (Exception $e) {
-              $running = false;
-            }
-            if (!$running) {
-              echo '<span class="label label-danger">{{NOK}}</span>';
-            } else {
-              echo '<span class="label label-success">{{OK}}</span>';
-            }
-          } else {
-            echo '<span class="label label-info">{{N/A}}</span>';
-          }
-          ?>
+          <span id="span_mqtt2MosquittoState" class="label label-info" data-mode="<?php echo htmlspecialchars($mode, ENT_QUOTES, 'UTF-8'); ?>">…</span>
         </div>
       </div>
 
@@ -361,10 +346,57 @@ if (mqtt2::isJeego() && config::byKey('mode', 'mqtt2') != $mode) {
     }
   })
 
-  $('.configKey[data-l1key=mode]').off('change').on('change', function() {
-    $('.mqtt2Mode').hide()
-    $('.mqtt2Mode.' + $(this).value()).show()
-  })
+  ;(function() {
+    var state = $('#span_mqtt2MosquittoState')
+    var requestedMode = null
+    var request = null
+
+    function displayState(text, level) {
+      state.attr('class', 'label label-' + level).text(text)
+    }
+
+    function refreshMosquittoState(mode) {
+      if (mode === requestedMode || !document.body.contains(state[0])) return
+      requestedMode = mode
+      if (request) request.abort()
+      if (mode !== 'local' && mode !== 'jeego') {
+        displayState('{{N/A}}', 'info')
+        return
+      }
+      displayState('…', 'info')
+      request = $.ajax({
+        type: 'POST',
+        url: 'plugins/mqtt2/core/ajax/mqtt2.ajax.php',
+        data: {action: 'getMosquittoState'},
+        dataType: 'json',
+        global: false,
+        timeout: 4000,
+        success: function(data) {
+          if (!document.body.contains(state[0]) || requestedMode !== mode) return
+          if (data.state !== 'ok' || !data.result) {
+            displayState('{{Indisponible}}', 'info')
+          } else if (data.result.mode !== mode) {
+            displayState('{{N/A}}', 'info')
+          } else if (typeof data.result.running !== 'boolean') {
+            displayState('{{Indisponible}}', 'info')
+          } else {
+            displayState(data.result.running ? '{{OK}}' : '{{NOK}}', data.result.running ? 'success' : 'danger')
+          }
+        },
+        error: function(xhr, status) {
+          if (status === 'abort' || !document.body.contains(state[0]) || requestedMode !== mode) return
+          displayState('{{Indisponible}}', 'info')
+        }
+      })
+    }
+
+    $('.configKey[data-l1key=mode]').off('change').on('change', function() {
+      $('.mqtt2Mode').hide()
+      $('.mqtt2Mode.' + $(this).value()).show()
+      refreshMosquittoState($(this).value())
+    })
+    refreshMosquittoState(state.attr('data-mode'))
+  })()
 
   $('.bt_removePluginTopic').off('click').on('click', function() {
     let topic = $(this).attr('data-topic')

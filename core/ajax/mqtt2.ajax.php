@@ -76,6 +76,14 @@ try {
   }
   
 
+  if (init('action') == 'getMosquittoState') {
+    $mode = mqtt2::getMode();
+    ajax::success(array(
+      'mode' => $mode,
+      'running' => in_array($mode, array('local', 'jeego'), true) ? mqtt2::isMosquittoRunning() : null
+    ));
+  }
+
   if (init('action') == 'installMosquitto') {
     mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
     ajax::success();
