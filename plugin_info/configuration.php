@@ -21,6 +21,10 @@ if (!isConnect()) {
   include_file('desktop', '404', 'php');
   die();
 }
+$mode = mqtt2::getMode();
+if (mqtt2::isJeego() && config::byKey('mode', 'mqtt2') != $mode) {
+  config::save('mode', $mode, 'mqtt2');
+}
 ?>
 <form class="form-horizontal">
   <fieldset>
@@ -32,42 +36,37 @@ if (!isConnect()) {
         <div class="col-md-7">
           <select class="configKey form-control" data-l1key="mode">
             <option value="none" disabled>{{A configurer}}</option>
+            <?php if (mqtt2::isJeego()) { ?>
+            <option value="jeego">{{Broker géré par Jeego (par défaut)}}</option>
+            <?php } else { ?>
             <option value="local">{{Broker local (par défaut)}}</option>
             <option value="docker">{{Broker local docker}}</option>
+            <?php } ?>
             <option value="remote">{{Broker distant}}</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group mqtt2Mode local docker">
+      <div class="form-group mqtt2Mode local docker jeego">
         <label class="col-md-4 control-label">{{Broker Mosquitto}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Installer, désinstaller ou télécharger le certificat client du broker Mosquitto}}"></i></sup>
         </label>
         <div class="col-md-8">
           <a class="btn btn-xs btn-warning" id="bt_mqtt2RestartMosquitto"><i class="fas fa-play"></i> {{(Re)Démarrer}}</a>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2StopMosquitto"><i class="fas fa-stop"></i> {{Arrêter}}</a>
+          <?php if (!mqtt2::isJeego()) { ?>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2InstallMosquitto"><i class="fas fa-plus-square"></i> {{(Ré)Installer}}</a>
+          <?php } ?>
           <a class="btn btn-xs btn-danger" id="bt_mqtt2UninstallMosquitto"><i class="fas fa-minus-square"></i> {{Désinstaller}}</a>
           <a class="btn btn-xs btn-primary" id="bt_mqtt2LogMosquitto"><i class="far fa-file"></i> {{Log}}</a>
           <a class="btn btn-xs btn-primary" target="_blank" href="plugins/mqtt2/core/php/downloadClientSsl.php"><i class="fas fa-key"></i> {{Télécharger le certificat client}}</a>
         </div>
       </div>
 
-      <div class="form-group mqtt2Mode local docker">
+      <div class="form-group mqtt2Mode local docker jeego">
         <label class="col-md-4 control-label">{{Etat Broker Mosquitto}}</label>
         <div class="col-md-7">
-          <?php
-          if (config::byKey('mode', 'mqtt2') == 'local') {
-            $state = shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l');
-            if ($state == 0) {
-              echo '<span class="label label-danger">{{NOK}}</span>';
-            } else {
-              echo '<span class="label label-success">{{OK}}</span>';
-            }
-          } else {
-            echo '<span class="label label-info">{{N/A}}</span>';
-          }
-          ?>
+          <span id="span_mqtt2MosquittoState" class="label label-info" data-mode="<?php echo htmlspecialchars($mode, ENT_QUOTES, 'UTF-8'); ?>">…</span>
         </div>
       </div>
 
@@ -177,14 +176,14 @@ if (!isConnect()) {
           <input class="configKey form-control" data-l1key="jeedom::link">
         </div>
       </div>
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Mqtt tranmission local}}</label>
         <div class="col-md-8"> 
           <a class="btn btn-xs btn-info" id="bt_mqtt2GetLocalMqttInformation"><i class="fas fa-info-circle"></i> {{Informations MQTT}}</a>
           <a class="btn btn-xs btn-warning" id="bt_mqtt2SendToLocalMqtt"><i class="fas fa-file-import"></i> {{Recevoir}}</a>
          </div>
       </div>
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Mqtt transmission cloud service (non disponible)}}
           <sup><i class="fas fa-question-circle tooltips" title="{{Jeedom cloud est un service Jeedom MQTT qui permet d'envoyer des données sur un brocker cloud et d'en recevoir. C'est à utilisé pour faire discuter 2 jeedoms a travers internet (WAN)}}"></i></sup>
         </label>
@@ -209,9 +208,13 @@ if (!isConnect()) {
     </div>
 
     <div class="col-lg-6">
-      <div class="form-group mqtt2Mode docker local">
+      <div class="form-group mqtt2Mode docker local jeego">
         <label class="col-md-4 control-label">{{Paramètres Mosquitto}}
+          <?php if (mqtt2::isJeego()) { ?>
+          <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et redémarrer Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <?php } else { ?>
           <sup><i class="fas fa-question-circle tooltips" title="{{Sauvegarder et relancer l'installation de Mosquitto pour prendre en compte les modifications de ce champ de configuration}}"></i></sup>
+          <?php } ?>
         </label>
         <div class="col-md-7">
           <textarea class="configKey form-control autogrow" data-l1key="mosquitto::parameters"></textarea>
@@ -349,10 +352,57 @@ if (!isConnect()) {
     }
   })
 
-  $('.configKey[data-l1key=mode]').off('change').on('change', function() {
-    $('.mqtt2Mode').hide()
-    $('.mqtt2Mode.' + $(this).value()).show()
-  })
+  ;(function() {
+    var state = $('#span_mqtt2MosquittoState')
+    var requestedMode = null
+    var request = null
+
+    function displayState(text, level) {
+      state.attr('class', 'label label-' + level).text(text)
+    }
+
+    function refreshMosquittoState(mode) {
+      if (mode === requestedMode || !document.body.contains(state[0])) return
+      requestedMode = mode
+      if (request) request.abort()
+      if (mode !== 'local' && mode !== 'jeego') {
+        displayState('{{N/A}}', 'info')
+        return
+      }
+      displayState('…', 'info')
+      request = $.ajax({
+        type: 'POST',
+        url: 'plugins/mqtt2/core/ajax/mqtt2.ajax.php',
+        data: {action: 'getMosquittoState'},
+        dataType: 'json',
+        global: false,
+        timeout: 4000,
+        success: function(data) {
+          if (!document.body.contains(state[0]) || requestedMode !== mode) return
+          if (data.state !== 'ok' || !data.result) {
+            displayState('{{Indisponible}}', 'info')
+          } else if (data.result.mode !== mode) {
+            displayState('{{N/A}}', 'info')
+          } else if (typeof data.result.running !== 'boolean') {
+            displayState('{{Indisponible}}', 'info')
+          } else {
+            displayState(data.result.running ? '{{OK}}' : '{{NOK}}', data.result.running ? 'success' : 'danger')
+          }
+        },
+        error: function(xhr, status) {
+          if (status === 'abort' || !document.body.contains(state[0]) || requestedMode !== mode) return
+          displayState('{{Indisponible}}', 'info')
+        }
+      })
+    }
+
+    $('.configKey[data-l1key=mode]').off('change').on('change', function() {
+      $('.mqtt2Mode').hide()
+      $('.mqtt2Mode.' + $(this).value()).show()
+      refreshMosquittoState($(this).value())
+    })
+    refreshMosquittoState(state.attr('data-mode'))
+  })()
 
   $('.bt_removePluginTopic').off('click').on('click', function() {
     let topic = $(this).attr('data-topic')

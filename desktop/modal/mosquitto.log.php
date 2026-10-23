@@ -19,7 +19,7 @@ if (!isConnect('admin')) {
 }
 ?>
 <a class="btn btn-primary pull-right" id="bt_refreshMosquittoLog"><i class="fas fa-sync"></i></a>
-<pre><?php echo shell_exec(system::getCmdSudo().' cat /var/log/mosquitto/mosquitto.log'); ?></pre>
+<pre><?php echo htmlspecialchars(mqtt2::getMosquittoLog(), ENT_QUOTES, 'UTF-8'); ?></pre>
 
 <script>
 $('#bt_refreshMosquittoLog').off('click').on('click', function() {

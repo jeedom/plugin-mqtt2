@@ -21,6 +21,18 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mqtt2 extends eqLogic {
 
+   public static function isJeego() {
+      return trim((string) getenv('JEEGO_API_URL')) != '';
+   }
+
+   public static function getMode($_mode = null) {
+      $mode = $_mode === null ? config::byKey('mode', __CLASS__, 'local') : $_mode;
+      if (self::isJeego() && in_array($mode, array('', 'none', 'local', 'docker'), true)) {
+         return 'jeego';
+      }
+      return $mode;
+   }
+
    public static function createListenner() {
       $listeners = listener::searchClassFunctionOption('mqtt2', 'handleEvent');
       if (count($listeners) > 1) {
@@ -65,7 +77,7 @@ class mqtt2 extends eqLogic {
       $conf .= "# End autogenerate for " . $_local_topic . " <-> cloud-" . $_remote_topic . "\n";
       $current_conf = preg_replace('/(# Begin autogenerate for ' . $_local_topic . ' <-> cloud-' . $_remote_topic . ')((.|\n)*)(# End autogenerate for ' . $_local_topic . ' <-> cloud-' . $_remote_topic . ')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
       config::save('mosquitto::parameters', trim($current_conf) . "\n\n" . trim($conf), __CLASS__);
-      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+      mqtt2::installMosquitto(self::getMode());
    }
 
    public static function syncTopicToLocalMqtt($_local_topic, $_remote_topic, $_username, $_password, $_ip, $_port = 1883) {
@@ -100,7 +112,7 @@ class mqtt2 extends eqLogic {
       $conf .= "# End autogenerate for " . $_local_topic . " <-> " . $_remote_topic . "\n";
       $current_conf = preg_replace('/(# Begin autogenerate for ' . $_local_topic . ' <-> ' . $_remote_topic . ')((.|\n)*)(# End autogenerate for ' . $_local_topic . ' <-> ' . $_remote_topic . ')/m', "", config::byKey('mosquitto::parameters', __CLASS__));
       config::save('mosquitto::parameters', trim($current_conf) . "\n\n" . trim($conf), __CLASS__);
-      mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+      mqtt2::installMosquitto(self::getMode());
    }
 
    public static function cronDaily() {
@@ -145,11 +157,11 @@ class mqtt2 extends eqLogic {
    }
 
    public static function dependancy_end() {
-      $mode = config::byKey('mode', __CLASS__, 'local');
+      $mode = self::getMode();
       if ($mode == 'none') {
          return;
       }
-      if ($mode != 'local' && $mode != 'docker') {
+      if ($mode != 'local' && $mode != 'docker' && $mode != 'jeego') {
          return;
       }
       if ($mode == 'docker' && is_object(eqLogic::byLogicalId('1::mqtt2_mosquitto', 'docker2'))) {
@@ -187,7 +199,7 @@ class mqtt2 extends eqLogic {
    public static function generateClientCert() {
       $path = realpath(__DIR__ . '/../../data/ssl');
       if (!file_exists($path) || !file_exists($path . '/ca.key') || !file_exists($path . '/ca.crt')) {
-         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer Mosquitto', __FILE__));
+         throw new Exception(__('Aucun dossier SSL trouvé, veuillez rétablir les droits sur les dossiers et fichiers depuis la configuration Jeedom (onglet OS/DB) puis cliquez sur le bouton Installer/(Re)Démarrer Mosquitto', __FILE__));
       }
       $tmp_folder = jeedom::getTmpFolder(__CLASS__) . '/ssl';
       if (file_exists($tmp_folder)) {
@@ -210,8 +222,33 @@ class mqtt2 extends eqLogic {
    }
 
    public static function setPassword($_mode = 'local') {
+      $_mode = self::getMode($_mode);
       $path = __DIR__ . '/../../data/passwords';
       self::ensurePassword();
+      if (in_array($_mode, array('local', 'jeego'), true)) {
+         $temporary = tempnam(dirname($path), '.passwords-');
+         if ($temporary === false) {
+            throw new Exception(__('Impossible de préparer le fichier de mots de passe MQTT', __FILE__));
+         }
+         try {
+            $passwords = (string) config::byKey('mqtt::password', __CLASS__);
+            if (file_put_contents($temporary, $passwords) !== strlen($passwords)) {
+               throw new Exception(__('Impossible d’écrire les identifiants MQTT', __FILE__));
+            }
+            exec('mosquitto_passwd -U ' . escapeshellarg($temporary) . ' 2>&1', $output, $status);
+            if ($status !== 0) {
+               throw new Exception(__('Impossible de hacher les identifiants MQTT : mosquitto_passwd indisponible ou en échec', __FILE__));
+            }
+            if (!chmod($temporary, $_mode == 'jeego' ? 0640 : 0644) || !rename($temporary, $path)) {
+               throw new Exception(__('Impossible de publier le fichier de mots de passe MQTT', __FILE__));
+            }
+         } finally {
+            if (file_exists($temporary)) {
+               unlink($temporary);
+            }
+         }
+         return;
+      }
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
       if ($_mode == 'docker') {
@@ -279,7 +316,10 @@ class mqtt2 extends eqLogic {
       }
    }
 
-   public static function installMosquitto($_mode = 'local') {
+   public static function installMosquitto($_mode = null) {
+      if ($_mode === null) {
+         $_mode = self::getMode();
+      }
       if ($_mode == 'remote') {
          return;
       }
@@ -288,7 +328,7 @@ class mqtt2 extends eqLogic {
             throw new Exception(__("Un broker Mosquitto est déjà installé en local sur la machine. Veuillez le désinstaller", __FILE__));
          }
          self::installDocker2();
-      } else {
+      } elseif ($_mode != 'jeego') {
          self::installLocalMosquitto();
       }
       self::generateCertificates();
@@ -346,7 +386,7 @@ class mqtt2 extends eqLogic {
          unlink(__DIR__ . '/../../data/mosquitto.conf');
       }
 
-      if ($_mode == 'local') {
+      if ($_mode == 'local' || $_mode == 'jeego') {
          $replace = array(
             ' /mosquitto/' => ' ' . __DIR__ . '/../../data/',
             '/data/config/ssl/' => '/data/ssl/',
@@ -364,6 +404,32 @@ class mqtt2 extends eqLogic {
          '#cloud_username#' => mb_strtolower(config::byKey('market::username')),
          '#cloud_password#' => config::byKey('market::password'),
       );
+      if ($_mode == 'jeego') {
+         $configuration = str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__));
+         $configuration = str_replace(
+            array(__DIR__ . '/../../data/', __DIR__ . '/../config/'),
+            array(dirname(__DIR__, 2) . '/data/', dirname(__DIR__) . '/config/'),
+            $configuration
+         );
+         $configuration = preg_replace('/^[\t ]*(?:log_dest|persistence_location)[\t ]+[^\n]*$/m', '', $configuration);
+         $configuration = "# MQTT2 broker managed by Jeego\nlog_dest stdout\npersistence_location /mosquitto/data/\n" . ltrim($configuration);
+         $path = __DIR__ . '/../../data/mosquitto.conf';
+         $temporary = tempnam(dirname($path), '.mosquitto-');
+         if ($temporary === false) {
+            throw new Exception(__('Impossible de préparer la configuration Mosquitto', __FILE__));
+         }
+         try {
+            if (file_put_contents($temporary, $configuration) === false || !chmod($temporary, 0640) || !rename($temporary, $path)) {
+               throw new Exception(__('Impossible de publier la configuration Mosquitto', __FILE__));
+            }
+         } finally {
+            if (file_exists($temporary)) {
+               unlink($temporary);
+            }
+         }
+         self::jeegoMosquittoAction('install');
+         return;
+      }
       shell_exec(system::getCmdSudo() . ' chmod 777 ' . __DIR__ . '/../../data/mosquitto.conf');
       file_put_contents(__DIR__ . '/../../data/mosquitto.conf', str_replace(array_keys($replace), $replace, config::byKey('mosquitto::parameters', __CLASS__)));
       if ($_mode == 'docker') {
@@ -389,6 +455,10 @@ class mqtt2 extends eqLogic {
    }
 
    public static function uninstallMosquitto() {
+      if (self::getMode() == 'jeego') {
+         self::jeegoMosquittoAction('remove');
+         return;
+      }
       if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
          event::add('jeedom::alert', array(
             'level' => 'warning',
@@ -404,8 +474,106 @@ class mqtt2 extends eqLogic {
       }
    }
 
+   public static function isMosquittoRunning() {
+      if (self::getMode() == 'jeego') {
+         $service = self::jeegoRequest('GET', '/services/mosquitto');
+         return isset($service['status']) && $service['status'] == 'running';
+      }
+      return shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') != 0;
+   }
+
+   public static function getMosquittoLog() {
+      if (self::getMode() == 'jeego') {
+         $data = self::jeegoRequest('GET', '/services/mosquitto/logs');
+         if (!isset($data['logs']) || !is_string($data['logs'])) {
+            throw new Exception(__('Journaux Mosquitto invalides', __FILE__));
+         }
+         return str_replace((string) getenv('JEEGO_API_KEY'), '[masquée]', $data['logs']);
+      }
+      return (string) shell_exec(system::getCmdSudo() . ' cat /var/log/mosquitto/mosquitto.log');
+   }
+
+   private static function jeegoMessage($_message) {
+      return substr(str_replace((string) getenv('JEEGO_API_KEY'), '[masquée]', $_message), 0, 512);
+   }
+
+   private static function jeegoRequest($_method, $_path, $_timeout = 5, $_body = array()) {
+      $url = rtrim((string) getenv('JEEGO_API_URL'), '/');
+      $key = (string) getenv('JEEGO_API_KEY');
+      $server = parse_url($url);
+      $host = isset($server['host']) ? trim($server['host'], '[]') : '';
+      $loopback = $host == '::1' || (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false && substr($host, 0, 4) == '127.');
+      if (!is_array($server) || !isset($server['scheme'], $server['port'], $server['path'])
+         || $server['scheme'] != 'http' || !$loopback || $server['port'] < 1 || $server['port'] > 65535
+         || $server['path'] != '/api/v1' || isset($server['user']) || isset($server['pass'])
+         || isset($server['query']) || isset($server['fragment']) || !preg_match('/^[a-f0-9]{64}$/D', $key)) {
+         throw new Exception(__('API Jeego non configurée. Mettez à jour Jeego et recréez le conteneur Jeedom pour recevoir ses accès.', __FILE__));
+      }
+      $request = new com_http($url . $_path);
+      $request->setHeader(array(
+         'Authorization: Bearer ' . $key,
+         'Accept: application/json',
+         'Content-Type: application/json',
+      ));
+      $request->setNoSslCheck(false);
+      $request->setNoReportError(true);
+      $request->setCURLOPT(array(
+         CURLOPT_CUSTOMREQUEST => $_method,
+         CURLOPT_CONNECTTIMEOUT => 2,
+         CURLOPT_FOLLOWLOCATION => false,
+         CURLOPT_PROXY => '',
+      ));
+      if ($_method == 'POST') {
+         $request->setPost(json_encode((object) $_body));
+      }
+      $response = $request->exec(max(1, $_timeout), 1);
+      $status = $request->getHttpCode();
+      if ($response === false) {
+         throw new Exception(__('API Jeego injoignable ; vérifiez le service Jeego. Une demande déjà acceptée peut continuer dans son historique.', __FILE__));
+      }
+      $data = json_decode($response, true);
+      if ($status != ($_method == 'POST' ? 202 : 200)) {
+         $message = isset($data['error']['message']) && is_string($data['error']['message']) ? $data['error']['message'] : __('Réponse HTTP inattendue', __FILE__) . ' (' . $status . ')';
+         throw new Exception('Jeego : ' . self::jeegoMessage($message));
+      }
+      if (!is_array($data)) {
+         throw new Exception(__('Réponse JSON de Jeego invalide', __FILE__));
+      }
+      return $data;
+   }
+
+   private static function jeegoMosquittoAction($_action) {
+      $deadline = microtime(true) + ($_action == 'install' ? 300 : 60);
+      $body = $_action == 'remove' ? array('confirm' => true) : array();
+      $task = self::jeegoRequest('POST', '/services/mosquitto/actions/' . $_action, 5, $body);
+      if (!isset($task['id']) || !is_string($task['id']) || !preg_match('/^[a-f0-9]{32}$/D', $task['id'])) {
+         throw new Exception(__('Identifiant de tâche Jeego invalide', __FILE__));
+      }
+      $id = $task['id'];
+      while (true) {
+         if (!isset($task['id'], $task['status']) || $task['id'] !== $id || !in_array($task['status'], array('running', 'succeeded', 'failed', 'interrupted'), true)) {
+            throw new Exception(__('État de tâche Jeego invalide', __FILE__));
+         }
+         if ($task['status'] == 'succeeded') {
+            return;
+         }
+         if ($task['status'] == 'failed' || $task['status'] == 'interrupted') {
+            $message = isset($task['error']) && is_string($task['error']) ? $task['error'] : __('Opération Mosquitto échouée ou interrompue', __FILE__);
+            throw new Exception('Jeego : ' . self::jeegoMessage($message));
+         }
+         if (microtime(true) >= $deadline) {
+            throw new Exception(__('Opération non confirmée dans le délai prévu ; consultez l’historique de Jeego avant de réessayer', __FILE__));
+         }
+         usleep(500000);
+         $task = self::jeegoRequest('GET', '/tasks/' . $id, min(5, max(1, (int) ceil($deadline - microtime(true)))));
+      }
+   }
+
    public static function restartMosquitto() {
-      switch (config::byKey('mode', __CLASS__)) {
+      switch (self::getMode()) {
+         case 'jeego':
+            self::installMosquitto('jeego');
+            break;
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;
@@ -432,7 +600,10 @@ class mqtt2 extends eqLogic {
    }
 
    public static function stopMosquitto() {
-      switch (config::byKey('mode', __CLASS__)) {
+      switch (self::getMode()) {
+         case 'jeego':
+            self::jeegoMosquittoAction('stop');
+            break;
          case 'remote':
             throw new Exception(__('Cette action est impossible avec un brocker distant', __FILE__), 1);
             break;
@@ -463,8 +634,9 @@ class mqtt2 extends eqLogic {
       $return['log'] = __CLASS__;
       $return['state'] = 'nok';
       $return['launchable'] = 'ok';
-      switch (config::byKey('mode', __CLASS__)) {
+      switch (self::getMode()) {
          case 'local':
+         case 'jeego':
             break;
          case 'remote':
             if (empty(config::byKey('remote::protocol', __CLASS__)) || empty(config::byKey('remote::ip', __CLASS__)) || empty(config::byKey('remote::port', __CLASS__))) {
@@ -505,10 +677,10 @@ class mqtt2 extends eqLogic {
          throw new Exception(__('Le topic racine n\'est pas valide. Le topic racine ne peut etre identique à un topic ou un plugin est abonné.', __FILE__));
       }
       log::remove(__CLASS__ . '_update');
-      if (config::byKey('mode', __CLASS__, 'local') == 'local') {
+      if (self::getMode() == 'local') {
          if (shell_exec(system::getCmdSudo() . ' ps ax | grep mosquitto | grep mqtt2 | grep -v grep | wc -l') == 0) {
             log::add(__CLASS__, 'warning', __('Service mosquitto non lancé, je lance une installation', __FILE__));
-            self::installMosquitto(config::byKey('mode', __CLASS__, 'local'));
+            self::installMosquitto(self::getMode());
          }
       }
       self::deamon_stop();
@@ -518,7 +690,7 @@ class mqtt2 extends eqLogic {
       }
       self::createListenner();
       $path_ssl = realpath(__DIR__ . '/../../data/ssl');
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(self::getMode(), array('local', 'docker', 'jeego'))) {
          if (!file_exists($path_ssl . '/client.crt') || !file_exists($path_ssl . '/client.key') || filesize($path_ssl . '/client.crt') == 0  || filesize($path_ssl . '/client.key') == 0) {
             self::generateClientCert();
             shell_exec(system::getCmdSudo() . ' cp ' . jeedom::getTmpFolder(__CLASS__) . '/ssl/client.* ' . $path_ssl . '/');
@@ -528,18 +700,18 @@ class mqtt2 extends eqLogic {
       }
       $mqtt2_path = realpath(dirname(__FILE__) . '/../../resources/mqtt2d');
       chdir($mqtt2_path);
-      self::setPassword(config::byKey('mode', __CLASS__));
+      self::setPassword(self::getMode());
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      $cmd = system::getCmdSudo() . ' /usr/bin/node ' . $mqtt2_path . '/mqtt2d.js';
+      $cmd = system::getCmdSudo() . ' node ' . escapeshellarg($mqtt2_path . '/mqtt2d.js');
       $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
       $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__);
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(self::getMode(), array('local', 'docker', 'jeego'))) {
          $cmd .= ' --mqtt_server mqtts://127.0.0.1:8883';
          $cmd .= ' --client_key ' . $path_ssl . '/client.key';
          $cmd .= ' --client_crt ' . $path_ssl . '/client.crt';
       } else {
          $cmd .= ' --mqtt_server ' . config::byKey('remote::protocol', __CLASS__) . '://' . config::byKey('remote::ip', __CLASS__) . ':' . config::byKey('remote::port', __CLASS__);
-         if (config::byKey('mode', __CLASS__) == 'remote' && config::byKey('remote::protocol', __CLASS__)  == 'mqtts' && config::byKey('mqtt::client_key', __CLASS__) != '' && config::byKey('mqtt::client_crt', __CLASS__)!= '') {
+         if (self::getMode() == 'remote' && config::byKey('remote::protocol', __CLASS__)  == 'mqtts' && config::byKey('mqtt::client_key', __CLASS__) != '' && config::byKey('mqtt::client_crt', __CLASS__)!= '') {
             file_put_contents($path_ssl . '/client.key', config::byKey('mqtt::client_key', __CLASS__));
             file_put_contents($path_ssl . '/client.crt', config::byKey('mqtt::client_crt', __CLASS__));
             $cmd .= ' --client_key ' . $path_ssl . '/client.key';
@@ -579,7 +751,7 @@ class mqtt2 extends eqLogic {
    }
 
    public static function postConfig_mqtt_password($_value) {
-         self::setPassword(config::byKey('mode', __CLASS__));
+         self::setPassword(self::getMode());
    }
 
    public static function deamon_stop() {
@@ -633,7 +805,7 @@ class mqtt2 extends eqLogic {
    public static function getFormatedInfos() {
       $infos = array();
       $authentifications = explode(':', explode("\n", config::byKey('mqtt::password', __CLASS__))[0]);
-      if (config::byKey('mode', __CLASS__) == 'local' || config::byKey('mode', __CLASS__) == 'docker') {
+      if (in_array(self::getMode(), array('local', 'docker', 'jeego'))) {
          $infos['ip'] = '127.0.0.1';
          $infos['port'] = '1883';
          $infos['protocol'] = 'mqtt';

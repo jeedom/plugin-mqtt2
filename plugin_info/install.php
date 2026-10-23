@@ -19,7 +19,9 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mqtt2_install() {
-  if (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
+  if (mqtt2::isJeego()) {
+    config::save('mode', mqtt2::getMode(), 'mqtt2');
+  } elseif (shell_exec(system::getCmdSudo() . ' which mosquitto | wc -l') != 0) {
     config::save('mode', "none", 'mqtt2');
   }
   mqtt2::ensurePassword();
@@ -27,6 +29,9 @@ function mqtt2_install() {
 }
 
 function mqtt2_update() {
+  if (mqtt2::isJeego()) {
+    config::save('mode', mqtt2::getMode(), 'mqtt2');
+  }
   mqtt2::ensurePassword();
   mqtt2::createListenner();
 }
