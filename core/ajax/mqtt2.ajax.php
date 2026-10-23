@@ -85,7 +85,7 @@ try {
   }
 
   if (init('action') == 'installMosquitto') {
-    mqtt2::installMosquitto(config::byKey('mode', 'mqtt2'));
+    mqtt2::installMosquitto();
     ajax::success();
   }
 

@@ -225,6 +225,30 @@ class mqtt2 extends eqLogic {
       $_mode = self::getMode($_mode);
       $path = __DIR__ . '/../../data/passwords';
       self::ensurePassword();
+      if (in_array($_mode, array('local', 'jeego'), true)) {
+         $temporary = tempnam(dirname($path), '.passwords-');
+         if ($temporary === false) {
+            throw new Exception(__('Impossible de préparer le fichier de mots de passe MQTT', __FILE__));
+         }
+         try {
+            $passwords = (string) config::byKey('mqtt::password', __CLASS__);
+            if (file_put_contents($temporary, $passwords) !== strlen($passwords)) {
+               throw new Exception(__('Impossible d’écrire les identifiants MQTT', __FILE__));
+            }
+            exec('mosquitto_passwd -U ' . escapeshellarg($temporary) . ' 2>&1', $output, $status);
+            if ($status !== 0) {
+               throw new Exception(__('Impossible de hacher les identifiants MQTT : mosquitto_passwd indisponible ou en échec', __FILE__));
+            }
+            if (!chmod($temporary, $_mode == 'jeego' ? 0640 : 0644) || !rename($temporary, $path)) {
+               throw new Exception(__('Impossible de publier le fichier de mots de passe MQTT', __FILE__));
+            }
+         } finally {
+            if (file_exists($temporary)) {
+               unlink($temporary);
+            }
+         }
+         return;
+      }
       unlink($path);
       file_put_contents($path, config::byKey('mqtt::password', __CLASS__));
       if ($_mode == 'docker') {
@@ -292,7 +316,10 @@ class mqtt2 extends eqLogic {
       }
    }
 
-   public static function installMosquitto($_mode = 'local') {
+   public static function installMosquitto($_mode = null) {
+      if ($_mode === null) {
+         $_mode = self::getMode();
+      }
       if ($_mode == 'remote') {
          return;
       }
